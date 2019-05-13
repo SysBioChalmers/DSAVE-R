@@ -1,12 +1,12 @@
 Package: DSAVER
-Title: What the Package Does (One Line, Title Case)
+Title: Dissecting Cell-to-cell Variation in Single-cell RNA-Seq Data
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Juan Salvador",
+           family = "Inda Díaz",
            role = c("aut", "cre"),
-           email = "first.last@example.com")
-Description: What the package does (one paragraph).
-License: What license it uses
+           email = "inda@chalmers.se")
+Description: Calculates DSAVE Total Cell Pool Variation Estimation, DSAVE Variation Score, DSAVE Gene-wise Variation Metric and DSAVE Cell-wise Variation Metric.
+License: MIT License. Copyright (c) 2019 Systems and Synthetic Biology at Chalmers University of Technology.
 Encoding: UTF-8
 LazyData: true
