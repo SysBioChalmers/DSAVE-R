@@ -18,8 +18,9 @@ Imports a txt file and creates a Sample object
 Imports a txt tab separated, takes first column as rows' names and first row as columns' name
 }
 \examples{
-\\dotrun{
-samp <- ImportTabSepSamples("~/Downloads/dsaver/tcellCD4ProfilesTMMNormalized.txt", "tcellCD4Profiles")
+\dontrun{
+samp <- ImportTabSepSamples("~/Downloads/dsaver/tcellCD4ProfilesTMMNormalized.txt",
+"tcellCD4Profiles")
 }
 }
 \author{

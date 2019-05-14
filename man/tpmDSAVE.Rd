@@ -7,7 +7,7 @@
 tpmDSAVE(counts)
 }
 \arguments{
-\item{count}{A matrix.}
+\item{counts}{A matrix.}
 }
 \value{
 A matrix

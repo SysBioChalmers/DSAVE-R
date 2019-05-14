@@ -32,11 +32,11 @@ a Sample object
 Samples object elements and methods
 }
 \details{
-Creates Samples object, updates its values and contains the functions of 
+Creates Samples object, updates its values and contains the functions of
 this object
 }
 \examples{
-\\dotrun{
+\dontrun{
 s <- Samples$new("tcellCD4Profiles", tcellCD4Profiles)
 s2 <- s$geneSubset(genesToKeep = rownames(tcellCD4Profiles)[1:10])
 s3 <- s$geneSubset(genesToKeep = rownames(tcellCD4Profiles)[11:20])

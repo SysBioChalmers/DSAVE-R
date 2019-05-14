@@ -1,10 +1,10 @@
-#' tpmDSAVE 
-#' 
+#' tpmDSAVE
+#'
 #' Standarizes by column making it sum to 1e6
-#' 
+#'
 #' Standarizes by column making it sum to 1e6
-#' 
-#' @param count A matrix.
+#'
+#' @param counts A matrix.
 #' @return A matrix
 #' @author Juan Inda, <inda@@chalmers.se>
 tpmDSAVE <- function(counts){

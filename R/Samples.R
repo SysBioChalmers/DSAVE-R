@@ -1,10 +1,10 @@
 #' Samples object
-#' 
+#'
 #' Samples object elements and methods
-#' 
-#' Creates Samples object, updates its values and contains the functions of 
+#'
+#' Creates Samples object, updates its values and contains the functions of
 #' this object
-#' 
+#'
 #' @param name Name of the object
 #' @param data Numeric matrix
 #' @param genes name of the rows or genes
@@ -18,7 +18,7 @@
 #' @author Juan Inda, <inda@@chalmers.se>
 #' @return a Sample object
 #' @examples
-#' \dotrun{
+#' \dontrun{
 #' s <- Samples$new("tcellCD4Profiles", tcellCD4Profiles)
 #' s2 <- s$geneSubset(genesToKeep = rownames(tcellCD4Profiles)[1:10])
 #' s3 <- s$geneSubset(genesToKeep = rownames(tcellCD4Profiles)[11:20])
@@ -32,18 +32,18 @@ Samples <- R6Class("Samples", list(
   # sample name
   name = NULL,
   # columns are samples, rows are genes
-  data = NULL, 
-  # % one column with all gene names. 
+  data = NULL,
+  # % one column with all gene names.
   #Use name convention "GAPDH" etc and not "ENS..." or "NM..."
-  genes = NULL, 
+  genes = NULL,
   # one row with sample ids
   sampleIds = NULL,
   #usage:
   #l is a logical vector or a vector of indices
-  
+
   # number of genes
   numberGenes = NULL,
-  
+
   initialize = function(name, data = NULL, genes = NULL, sampleIds = NULL) {
     stopifnot(is.character(name), length(name) == 1)
     stopifnot(!is.null(data), is.numeric(data), is.matrix(is.numeric(data)))
@@ -76,12 +76,12 @@ Samples <- R6Class("Samples", list(
           self$sampleIds <- colnames(data)
         }
       }
-    } 
-    
+    }
+
     self$numberGenes <- dim(data)[1]
     invisible(self)
   },
-  
+
   print = function(...){
     cat("Sample: \n")
     cat("  name: ", self$name, "\n", sep = "")
@@ -92,7 +92,7 @@ Samples <- R6Class("Samples", list(
     cat("  number of samples:  ", dim(self$data)[2], "\n", sep = "")
     invisible(self)
   },
-  
+
   #genesToKeep should be a vertical cell array, logical array, numeric array or names of genes
   geneSubset = function(genesToKeep = NULL, sortGenes = NULL, ...){
     stopifnot(is.numeric(genesToKeep) | is.logical(genesToKeep) | is.character(genesToKeep))
@@ -116,10 +116,10 @@ Samples <- R6Class("Samples", list(
     invisible(self)
     return(sNew)
   },
-  
+
   #removes any genes that do not exist in both datasets and scales the columns to sum 1e6
   #returns a Samples object
-  
+
   innerJoin = function(ds, name = ""){
     if(!is.matrix(ds) & class(ds)[1] != "Samples"){
       stop("The ds is not a matrix neither a Sample object")
@@ -138,7 +138,7 @@ Samples <- R6Class("Samples", list(
     }
    return(Samples$new(paste("Intersection", self$name, "and", newS$name), calcTPM))
   },
-  
+
   #keeps all genes that exist in any dataset and sets them to zero for
   #cells where there is no data
   fullOuterJoin = function(ds, name = ""){
