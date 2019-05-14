@@ -7,6 +7,9 @@ Authors@R:
            role = c("aut", "cre"),
            email = "inda@chalmers.se")
 Description: Calculates DSAVE Total Cell Pool Variation Estimation, DSAVE Variation Score, DSAVE Gene-wise Variation Metric and DSAVE Cell-wise Variation Metric.
+Depends: R (>= 3.5.1)
 License: MIT License. Copyright (c) 2019 Systems and Synthetic Biology at Chalmers University of Technology.
 Encoding: UTF-8
 LazyData: true
+Imports: R6
+RoxygenNote: 6.1.1

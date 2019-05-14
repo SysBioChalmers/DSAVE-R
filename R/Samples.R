@@ -1,11 +1,31 @@
-#s <- Samples$new("tcellCD4Profiles", tcellCD4Profiles)
-#s2 <- s$geneSubset(genesToKeep = rownames(tcellCD4Profiles)[1:10])
-#s3 <- s$geneSubset(genesToKeep = rownames(tcellCD4Profiles)[11:20])
-#tpm1 <- s$innerJoin(s2, "s2")
-
-#colnames(s3$data) <- paste(colnames(s3$data),"s3")
-#tpm2 <- s2$fullOuterJoin(s3)
-
+#' Samples object
+#' 
+#' Samples object elements and methods
+#' 
+#' Creates Samples object, updates its values and contains the functions of 
+#' this object
+#' 
+#' @param name Name of the object
+#' @param data Numeric matrix
+#' @param genes name of the rows or genes
+#' @param sampleIds name of the columns or samples
+#' @param genesToKeep subsample of the genes to keep
+#' @param sortGenes .
+#' @param name for inner and outerjoin the name of the added Sample object if it was a matrix
+#' @param ds another sample object or matrix to do merge to the original sample
+#' @import R6
+#' @export
+#' @author Juan Inda, <inda@@chalmers.se>
+#' @return a Sample object
+#' @examples
+#' \dotrun{
+#' s <- Samples$new("tcellCD4Profiles", tcellCD4Profiles)
+#' s2 <- s$geneSubset(genesToKeep = rownames(tcellCD4Profiles)[1:10])
+#' s3 <- s$geneSubset(genesToKeep = rownames(tcellCD4Profiles)[11:20])
+#' tpm1 <- s$innerJoin(s2, "s2")
+#' colnames(s3$data) <- paste(colnames(s3$data),"s3")
+#' tpm2 <- s2$fullOuterJoin(s3)
+#' }
 
 
 Samples <- R6Class("Samples", list(
@@ -26,24 +46,37 @@ Samples <- R6Class("Samples", list(
   
   initialize = function(name, data = NULL, genes = NULL, sampleIds = NULL) {
     stopifnot(is.character(name), length(name) == 1)
-    stopifnot(!is.null(data), is.numeric(data))
+    stopifnot(!is.null(data), is.numeric(data), is.matrix(is.numeric(data)))
     self$name <- name
     self$data <- data
     if(is.null(genes)){
       self$genes <- rownames(data)
     } else {
-      if(length(genes) == dim(data)[1]){
+      if(is.character(genes) & length(genes) == dim(data)[1]){
         self$genes <- genes
       } else {
-        warning("The length of the genes array does not match the number of rows in data.\n
-                The genes will be replaced by the name of the rows in data.")
+        self$genes <- 1:dim(data)[1]
+          warning("The length of the genes array does not match the number of rows in data and/or \n
+                it is not character. The genes will be replaced by the name of the rows in data.\n")
       }
     }
-    if(is.null(colnames(data))){
-      self$sampleIds <- paste(name, 1:dim(data)[2])
-    } else{
-      self$sampleIds <- colnames(data)
-    }
+    if(is.null(sampleIds)){
+      if(is.null(colnames(data))){
+        self$sampleIds <- paste(name, 1:dim(data)[2])
+      } else{
+        self$sampleIds <- colnames(data)
+      }
+    } else {
+      if(is.character(sampleIds) & length(sampleIds) == dim(data)[2]){
+        self$sampleIds <- sampleIds
+      } else {
+        if(is.null(colnames(data))){
+          self$sampleIds <- paste(name, 1:dim(data)[2])
+        } else{
+          self$sampleIds <- colnames(data)
+        }
+      }
+    } 
     
     self$numberGenes <- dim(data)[1]
     invisible(self)
