@@ -1,2 +1,5 @@
+^Meta$
+^doc$
+^\.travis\.yml$
 ^DSAVER\.Rproj$
 ^\.Rproj\.user$

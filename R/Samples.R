@@ -30,7 +30,7 @@
 
 Samples <- R6Class("Samples", list(
   # sample name
-  name = NULL,
+  name = "sample",
   # columns are samples, rows are genes
   data = NULL,
   # % one column with all gene names.
@@ -40,13 +40,14 @@ Samples <- R6Class("Samples", list(
   sampleIds = NULL,
   #usage:
   #l is a logical vector or a vector of indices
-
   # number of genes
   numberGenes = NULL,
+  # number of samples
+  numberSamples = NULL,
 
   initialize = function(name, data = NULL, genes = NULL, sampleIds = NULL) {
     stopifnot(is.character(name), length(name) == 1)
-    stopifnot(!is.null(data), is.numeric(data), is.matrix(is.numeric(data)))
+    stopifnot(!is.null(data), is.numeric(data), is.matrix(data))
     self$name <- name
     self$data <- data
     if(is.null(genes)){
@@ -77,7 +78,7 @@ Samples <- R6Class("Samples", list(
         }
       }
     }
-
+    self$numberSamples <- dim(data)[2]
     self$numberGenes <- dim(data)[1]
     invisible(self)
   },
@@ -89,8 +90,30 @@ Samples <- R6Class("Samples", list(
     cat("  genes:  ", self$genes[1:5], "... \n", sep = "")
     cat("  number of genes:  ", self$numberGenes, "\n", sep = "")
     cat("  samplesId:  ", self$sampleIds[1:2], "... \n", sep = "")
-    cat("  number of samples:  ", dim(self$data)[2], "\n", sep = "")
+    cat("  number of samples:  ", self$numberSamples, "\n", sep = "")
     invisible(self)
+  },
+
+  #samplesToKeep should be an array, logical array, numeric array or names of samples
+  sampleSubset = function(samplesToKeep = NULL, ...){
+    stopifnot(is.numeric(samplesToKeep) | is.logical(samplesToKeep) | is.character(samplesToKeep))
+    if(length(samplesToKeep) > self$numberSamples){
+      stop("The length of the desired samples is larger than the number of samples in the object")
+    }
+    if(is.character(samplesToKeep)){
+      if(sum(!(samplesToKeep %in% self$sampleIds)) > 0){
+        stop("Could not find all the samples wanted in the Sample's columns")
+      }
+    }
+    if(is.numeric(samplesToKeep)){
+      if(self$numberSamples < max(samplesToKeep) | min(samplesToKeep) <= 0){
+        stop("Invalid selection of columns")
+      }
+    }
+    sNew <- Samples$new(name = paste("subSample", self$name), data =  self$data[,samplesToKeep],
+                        genes = rownames(self$data), sampleIds = colnames(self$data[,samplesToKeep]))
+    invisible(self)
+    return(sNew)
   },
 
   #genesToKeep should be a vertical cell array, logical array, numeric array or names of genes
@@ -109,10 +132,8 @@ Samples <- R6Class("Samples", list(
         stop("Invalid selection of genes")
       }
     }
-    sNew <- self$clone()
-    sNew$data <- sNew$data[genesToKeep,]
-    sNew$genes <- rownames(sNew$data)
-    sNew$numberGenes <- length(sNew$genes)
+    sNew <- Samples$new(name = paste("subSample", self$name), data =  self$data[genesToKeep,],
+                        genes = rownames(self$data[genesToKeep,]), sampleIds = self$sampleIds)
     invisible(self)
     return(sNew)
   },
@@ -163,6 +184,10 @@ Samples <- R6Class("Samples", list(
       calcTPM <- tpmDSAVE(new_matrix)
       return(Samples$new(paste("Union", self$name, "and", newS$name), calcTPM))
     }
+  },
+
+  reScale = function(){
+    self$data <- tpmDSAVE(self$data)
   }
 ))
 

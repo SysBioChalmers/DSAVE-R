@@ -1,0 +1,75 @@
+---
+title: "DSAVE-R Total Variation"
+author: "Juan Inda"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{DSAVE-R Total Variation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Total variation from bulk data
+
+```{r}
+library(ggplot2)
+library(DSAVER)
+data(tcellCD4ProfilesTMMNormalized, package = "DSAVER")
+ub <- 100000
+lb <- 0.5
+
+bulkMean1Vs1 <- DSAVEGetTotalVariationFromBulk(tcellCD4ProfilesTMMNormalized, 
+                    pool4samples = FALSE, upperBoundTPM = ub,
+                    lowerBoundTPM = lb, rescale = FALSE)
+bulkMean4Vs4 = DSAVEGetTotalVariationFromBulk(tcellCD4ProfilesTMMNormalized, 
+                    pool4samples = TRUE, upperBoundTPM = ub, na.rm = TRUE, seed = 2019L, 
+                    lowerBoundTPM = lb, nComb = 10000L, rescale =FALSE)
+```
+
+
+## Total variation from subsampled single cell data
+
+```{r}
+data(PBMC68K_Tcells, package = "DSAVER")
+
+scTotalVariation <- list()
+pools <- seq(200, 4000, by = 400)
+
+for(poolSize in pools){
+  scTotalVariation[[as.character(poolSize)]] <- DSAVEGetTotalVariationPoolSize(PBMC68K_Tcells, 
+        poolSize = poolSize, upperBoundTPM = 1e5, lowerBoundTPM = 5e-1, na.rm = TRUE, seed = NULL,
+        repetitionPerSize = 30L, rescale = FALSE)
+}
+
+```
+
+## Plot
+
+```{r, fig.show = 'asis'}
+bulkMean1Vs1 <- rep(mean(bulkMean1Vs1), length(pools))
+bulkMean4Vs4 <- rep(mean(bulkMean4Vs4), length(pools))
+sc <- rbind(cbind(pools, sapply(scTotalVariation, function(v) mean(v)), "Tcells", "sc"), 
+            cbind(pools, bulkMean1Vs1, "single bulk", "bulk"), 
+            cbind(pools, bulkMean4Vs4, "mean of 4 bulk", "bulk"))
+sc <- as.data.frame(sc)
+colnames(sc) <- c("PoolSize", "TotalVariation", "DataSet", "DataType")
+sc$PoolSize <- as.numeric(as.character(sc$PoolSize))
+sc$TotalVariation <- as.numeric(as.character(sc$TotalVariation))
+ggplot(sc, aes(x=PoolSize, y=TotalVariation, group = DataSet)) +
+  ggtitle("Total Variation") +
+  geom_line(aes(color = DataSet, linetype = DataType)) +
+  ylim(0, max(sc$TotalVariation)) +
+  theme(legend.title = element_text(size = 10),
+        legend.text = element_text(size = 8),
+        axis.text.x = element_text(size = 10, angle = 90),
+        axis.text.y = element_text(size = 10)) + 
+  guides(linetype = FALSE)
+
+```
