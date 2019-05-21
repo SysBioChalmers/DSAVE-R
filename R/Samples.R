@@ -45,7 +45,7 @@ Samples <- R6Class("Samples", list(
   # number of samples
   numberSamples = NULL,
 
-  initialize = function(name, data = NULL, genes = NULL, sampleIds = NULL) {
+  initialize = function(name, data = NULL, genes = NULL, sampleIds = NULL, ...) {
     stopifnot(is.character(name), length(name) == 1)
     stopifnot(!is.null(data), is.numeric(data), is.matrix(data))
     self$name <- name
@@ -141,7 +141,7 @@ Samples <- R6Class("Samples", list(
   #removes any genes that do not exist in both datasets and scales the columns to sum 1e6
   #returns a Samples object
 
-  innerJoin = function(ds, name = ""){
+  innerJoin = function(ds, name = "", scale = TRUE){
     if(!is.matrix(ds) & class(ds)[1] != "Samples"){
       stop("The ds is not a matrix neither a Sample object")
     }
@@ -155,14 +155,14 @@ Samples <- R6Class("Samples", list(
       stop("No overlap between the two datasets")
     } else {
       newData <- cbind(self$data[id,], newS$data[id,])
-      calcTPM <- tpmDSAVE(newData)
+      if(scale) calcTPM <- tpmDSAVE(newData) else calcTPM <- newData
     }
    return(Samples$new(paste("Intersection", self$name, "and", newS$name), calcTPM))
   },
 
   #keeps all genes that exist in any dataset and sets them to zero for
   #cells where there is no data
-  fullOuterJoin = function(ds, name = ""){
+  fullOuterJoin = function(ds, name = "", scale = TRUE){
     if(!is.matrix(ds) & class(ds)[1] != "Samples"){
       stop("The ds is not a matrix neither a Sample object")
     }
@@ -181,7 +181,7 @@ Samples <- R6Class("Samples", list(
       colnames(new_matrix) <- idcol
       new_matrix[rownames(self$data), colnames(self$data)] <- self$data[rownames(self$data), colnames(self$data)]
       new_matrix[rownames(newS$data), colnames(newS$data)] <- newS$data[rownames(newS$data), colnames(newS$data)]
-      calcTPM <- tpmDSAVE(new_matrix)
+      if(scale) calcTPM <- tpmDSAVE(newData) else calcTPM <- newData
       return(Samples$new(paste("Union", self$name, "and", newS$name), calcTPM))
     }
   },
