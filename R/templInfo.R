@@ -73,6 +73,8 @@ templInfo <- R6Class("templInfo", inherit = Samples, list(
     templInfo.binningInfo.means <- 10.^meansLog
     cat("Re-scaling data \n")
     self$data <- tpmDSAVE(self$data)
+
+    gm <- tpmDSAVE(as.matrix(rowMeans(self$data), ncol = 1))
     gmLog <- log10(gm)
 
     lbs <- rep(0, numPoints)
