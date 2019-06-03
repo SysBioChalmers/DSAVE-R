@@ -7,7 +7,7 @@
 #' of 4 randomly selected samples with the mean of 4 others. This expects a
 #' list of 8 samples.
 #'
-#' @param sample object sample to get the data from
+#' @param data a numericl matrix
 #' @param pool4samples logic value, if TRUE, the function will compare the mean
 #' of 4 randomly selected samples with the mean of 4 others
 #' @param upperBoundTPM filters out the genes with mean expression higher than this value
@@ -26,10 +26,10 @@
 #' }
 #'
 
-DSAVEGetTotalVariationFromBulk <- function(sample, pool4samples, upperBoundTPM = 1e5,
+DSAVEGetTotalVariationFromBulk <- function(data, pool4samples, upperBoundTPM = 1e5,
                                            lowerBoundTPM = 5e-1, na.rm = TRUE,
                                            nComb = 1000L, seed = NULL, rescale = TRUE){
-  stopifnot(class(sample)[1] == "Samples",
+  stopifnot(is.matrix(data),
             is.logical(pool4samples), length(pool4samples) == 1,
             is.numeric(upperBoundTPM), length(upperBoundTPM) == 1,
             is.numeric(lowerBoundTPM), length(lowerBoundTPM) == 1,
@@ -37,12 +37,12 @@ DSAVEGetTotalVariationFromBulk <- function(sample, pool4samples, upperBoundTPM =
             is.logical(rescale), length(rescale) == 1,
             (is.null(seed) | is.integer(seed)), is.integer(nComb))
 
-  if(rescale) sample$reScale()
-  row_means <- rowMeans(sample$data, na.rm = na.rm)
-  genesToKeep <- names(which(row_means >= lowerBoundTPM & row_means <= upperBoundTPM))
-  sample <- sample$geneSubset(genesToKeep = genesToKeep);
-  numSamp <- sample$numberSamples
-  numGenes <- sample$numberGenes
+  if(rescale) {data <- tpmDSAVE(data)}
+  row_means <- rowMeans(data, na.rm = na.rm)
+  genesToKeep <- which(row_means >= lowerBoundTPM & row_means <= upperBoundTPM)
+  sample <- data[genesToKeep,]
+  numSamp <- dim(data)[2]
+  numGenes <- dim(data)[1]
   diffs <- matrix(0.0, nrow = numGenes, ncol = numSamp*(numSamp-1)/2)
 
 
@@ -57,8 +57,8 @@ DSAVEGetTotalVariationFromBulk <- function(sample, pool4samples, upperBoundTPM =
     }
 
     mean_vector <- sapply(combs.list, function(v){
-      a <- sample$data[,v$a]
-      b <- sample$data[,v$b]
+      a <- data[,v$a]
+      b <- data[,v$b]
       mean(abs(log((a + 0.05) / (b + 0.05))))
     })
 
@@ -91,8 +91,8 @@ DSAVEGetTotalVariationFromBulk <- function(sample, pool4samples, upperBoundTPM =
       }
 
       mean_vector <- sapply(combs.list, function(v){
-        a <- rowMeans(sample$data[,v$a], na.rm = na.rm)
-        b <- rowMeans(sample$data[,v$b], na.rm = na.rm)
+        a <- rowMeans(data[,v$a], na.rm = na.rm)
+        b <- rowMeans(data[,v$b], na.rm = na.rm)
         mean(abs(log((a + 0.05) / (b + 0.05))))
       })
     }

@@ -5,14 +5,14 @@
 #' Calculates the average pairwise total variation between two pools of cells with specific size,
 #' with a TPM filtration on the genes.
 #'
-#' @param sample object sample to get the data from
+#' @param data a numeric matrix
 #' @param poolSize numeric value, it should be maximum half of the total size of the data
-#' in the sample object
+#' in the data object
 #' @param upperBoundTPM filters out the genes with mean expression higher than this value
 #' @param lowerBoundTPM filters out the genes with mean expression lower than this value
 #' @param na.rm logical, sends na.rm value to the rowMeans function
 #' @param rescale logical, determine if the data should be rescaled
-#' @param seed positive integer for to set the seed of the samples
+#' @param seed positive integer for to set the seed of the datas
 #' @param repetitionPerSize positive integer how many times the variation is calculated at each
 #' pool size
 #' @export
@@ -20,16 +20,16 @@
 #' @return numeric vector
 #' @examples
 #' \dontrun{
-#' DSAVEGetTotalVariationPoolSize(samples, poolSize = 50, upperBoundTPM = 1000,
+#' DSAVEGetTotalVariationPoolSize(data, poolSize = 50, upperBoundTPM = 1000,
 #' lowerBoundTPM = 0.01, na.rm = TRUE, seed = 1, repetitionPerSize = 30, 0.5)
 #' }
 #'
 
-DSAVEGetTotalVariationPoolSize <- function(sample, poolSize = 4, upperBoundTPM = 1e5,
+DSAVEGetTotalVariationPoolSize <- function(data, poolSize = 4, upperBoundTPM = 1e5,
                                            lowerBoundTPM = 5e-1, na.rm = TRUE, seed = NULL,
                                            repetitionPerSize = 30L, rescale = TRUE){
   #print("Control parameters")
-  stopifnot(class(sample)[1] == "Samples",
+  stopifnot(is.matrix(data),
             is.numeric(poolSize), length(poolSize) == 1,
             is.numeric(upperBoundTPM), length(upperBoundTPM) == 1,
             is.numeric(lowerBoundTPM), length(lowerBoundTPM) == 1,
@@ -38,20 +38,18 @@ DSAVEGetTotalVariationPoolSize <- function(sample, poolSize = 4, upperBoundTPM =
             (is.null(seed) | is.integer(seed)),
             is.integer(repetitionPerSize), repetitionPerSize > 0)
 
-  if(poolSize > floor(sample$numberSamples/2)){
+  if(poolSize > floor(dim(data)[2]/2)){
     stop("Cannot make non-overlapping pool of cells. Choose a smaller poolSize.")
   } else {
     #print("Re-scaling")
-    if(rescale) sample$reScale()
+    if(rescale) data <- tpmDSAVE(data)
     #print("Filtering genes")
-    row_means <- rowMeans(sample$data, na.rm = na.rm)
+    row_means <- rowMeans(data, na.rm = na.rm)
     genesToKeep <- names(which(row_means >= lowerBoundTPM & row_means <= upperBoundTPM))
-    sample <- sample$geneSubset(genesToKeep = genesToKeep);
-    numSamp <- sample$numberSamples
-    numGenes <- sample$numberGenes
+    data <- data[genesToKeep, ]
 
     #print("Creating combinations")
-    ind <- as.integer(1:numSamp)
+    ind <- as.integer(1:dim(data)[2])
     ix <- 1
     combs.list <- list()
     ind.tmp <- ind
@@ -70,8 +68,8 @@ DSAVEGetTotalVariationPoolSize <- function(sample, poolSize = 4, upperBoundTPM =
     }
     #print("Calculating variation")
     mean_vector <- sapply(combs.list, function(v){
-      a <- rowMeans(sample$data[,v$a], na.rm = na.rm)
-      b <- rowMeans(sample$data[,v$b], na.rm = na.rm)
+      a <- rowMeans(data[,v$a], na.rm = na.rm)
+      b <- rowMeans(data[,v$b], na.rm = na.rm)
       mean(abs(log((a + 0.05) / (b + 0.05))))
     })
 

@@ -40,12 +40,12 @@ bulkMean4Vs4 = DSAVEGetTotalVariationFromBulk(tcellCD4ProfilesTMMNormalized,
 data(PBMC68K_Tcells, package = "DSAVER")
 
 scTotalVariation <- list()
-pools <- seq(100, 4000, by = 1000)
+pools <- seq(100, 4000, by = 2000)
 
 for(poolSize in pools){
-  scTotalVariation[[as.character(poolSize)]] <- DSAVEGetTotalVariationPoolSize(PBMC68K_Tcells, 
-        poolSize = poolSize, upperBoundTPM = 1e5, lowerBoundTPM = 5e-1, na.rm = TRUE, seed = NULL,
-        repetitionPerSize = 30L, rescale = FALSE)
+  scTotalVariation[[as.character(poolSize)]] <- DSAVEGetTotalVariationPoolSize(PBMC68K_Tcells,
+        poolSize = poolSize, upperBoundTPM = 1e5, lowerBoundTPM = 5e-1, na.rm = TRUE, 
+        seed = NULL, repetitionPerSize = 30L, rescale = FALSE)
 }
 
 ```

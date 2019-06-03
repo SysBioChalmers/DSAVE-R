@@ -86,8 +86,8 @@ Samples <- R6Class("Samples", list(
   print = function(...){
     cat("Sample: \n")
     cat("  name: ", self$name, "\n", sep = "")
-    cat("  data:  ", self$data[1,1:5], "... \n", sep = "")
-    cat("  genes:  ", self$genes[1:5], "... \n", sep = "")
+    cat("  data:  ", self$data[1,1], "... \n", sep = "")
+    cat("  genes:  ", self$genes[1], "... \n", sep = "")
     cat("  number of genes:  ", self$numberGenes, "\n", sep = "")
     cat("  samplesId:  ", self$sampleIds[1:2], "... \n", sep = "")
     cat("  number of samples:  ", self$numberSamples, "\n", sep = "")
@@ -98,11 +98,12 @@ Samples <- R6Class("Samples", list(
   sampleSubset = function(samplesToKeep = NULL, ...){
     stopifnot(is.numeric(samplesToKeep) | is.logical(samplesToKeep) | is.character(samplesToKeep))
     if(length(samplesToKeep) > self$numberSamples){
-      stop("The length of the desired samples is larger than the number of samples in the object")
+      warning("The length of the desired samples is larger than the number of samples in the object")
     }
     if(is.character(samplesToKeep)){
       if(sum(!(samplesToKeep %in% self$sampleIds)) > 0){
-        stop("Could not find all the samples wanted in the Sample's columns")
+        warning("Could not find all the samples wanted in the Sample's columns")
+
       }
     }
     if(is.numeric(samplesToKeep)){
@@ -110,8 +111,9 @@ Samples <- R6Class("Samples", list(
         stop("Invalid selection of columns")
       }
     }
-    sNew <- Samples$new(name = paste("subSample", self$name), data =  self$data[,samplesToKeep],
-                        genes = rownames(self$data), sampleIds = colnames(self$data[,samplesToKeep]))
+    new_sample <- self$sampleIds[self$sampleIds %in% samplesToKeep]
+    sNew <- Samples$new(name = paste("subSample", self$name), data =  self$data[,new_sample],
+                        genes = rownames(self$data), sampleIds = colnames(self$data[,new_sample]))
     invisible(self)
     return(sNew)
   },
@@ -120,11 +122,11 @@ Samples <- R6Class("Samples", list(
   geneSubset = function(genesToKeep = NULL, sortGenes = NULL, ...){
     stopifnot(is.numeric(genesToKeep) | is.logical(genesToKeep) | is.character(genesToKeep))
     if(length(genesToKeep) > self$numberGenes){
-      stop("The length of the desired genes is larger than the number of genes in the sample")
+      warning("The length of the desired genes is larger than the number of genes in the sample")
     }
     if(is.character(genesToKeep)){
       if(sum(!(genesToKeep %in% self$genes)) > 0){
-        stop("Could not find all the genes wanted in the Sample's genes")
+        warning("Could not find all the genes wanted in the Sample's genes")
       }
     }
     if(is.numeric(genesToKeep)){
@@ -132,8 +134,9 @@ Samples <- R6Class("Samples", list(
         stop("Invalid selection of genes")
       }
     }
-    sNew <- Samples$new(name = paste("subSample", self$name), data =  self$data[genesToKeep,],
-                        genes = rownames(self$data[genesToKeep,]), sampleIds = self$sampleIds)
+    new_genes <- self$genes[self$genes %in% genesToKeep]
+    sNew <- Samples$new(name = paste("subSample", self$name), data =  self$data[new_genes,],
+                        genes = rownames(self$data[new_genes,]), sampleIds = self$sampleIds)
     invisible(self)
     return(sNew)
   },

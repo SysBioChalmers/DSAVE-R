@@ -70,11 +70,12 @@ templInfo <- R6Class("templInfo", inherit = Samples, list(
     stopifnot(is.numeric(step), length(step) == 1)
 
     meansLog <- seq(log10(lbnonlog), log10(ubnonlog), length.out =numPoints)
-    templInfo.binningInfo.means <- 10.^meansLog
-    cat("Re-scaling data \n")
-    self$data <- tpmDSAVE(self$data)
+    templInfo.binningInfo.means <- 10^meansLog
+    cat("Re-scaling gene means \n")
+    tpmData <- tpmDSAVE(self$data)
+    #self$data <- tpmDSAVE(self$data)
 
-    gm <- tpmDSAVE(as.matrix(rowMeans(self$data), ncol = 1))
+    gm <- as.matrix(rowMeans(tpmData), ncol = 1)
     gmLog <- log10(gm)
 
     lbs <- rep(0, numPoints)
@@ -106,13 +107,14 @@ templInfo <- R6Class("templInfo", inherit = Samples, list(
       ubs[i] <- 10^ub
     }
     self$binningInfo.lbs <- lbs
-    self$binningInfo.ubs <- lbs
+    self$binningInfo.ubs <- ubs
     self$template.built = TRUE
     invisible(self)
   },
 
   subGenes = function(genesToKeep = NULL,...){
     s2 <- self$geneSubset(genesToKeep)
+    s2 <- templInfo$new(name = paste(self$name,"gene subset"), data = s2$data)
     return(s2)
   },
 
@@ -121,9 +123,11 @@ templInfo <- R6Class("templInfo", inherit = Samples, list(
     if(numCells > self$numberSamples){
       stop("The number of desired cells is larger than the number of cells in the dataset")
     } else {
-      s2 <- self$sampleSubset(1:numCells)
+      samplesToKeep <- sort(sample(self$numberSamples, numCells, replace = F))
+      s2 <- self$sampleSubset(self$sampleIds[samplesToKeep])
+      s2 <- templInfo$new(name = paste(self$name,"sample subset"), data = s2$data)
+      return(s2)
     }
-    return(s2)
   },
 
   setUMIDistr = function(numUMI = NULL, ...){
@@ -142,7 +146,7 @@ templInfo <- R6Class("templInfo", inherit = Samples, list(
         subtr <- hist(indToRem, breaks = edges, plot = F)$counts
         UMIDistr <- UMIDistr - subtr
       }
-      self$UMIDistr <- UMIDistr
+      self$UMIDistr <- sort(UMIDistr)
     }
   },
 
