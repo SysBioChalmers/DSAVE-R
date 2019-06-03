@@ -4,15 +4,15 @@
 \alias{DSAVEGetTotalVariationPoolSize}
 \title{DSAVEGetTotalVariationPoolSize}
 \usage{
-DSAVEGetTotalVariationPoolSize(sample, poolSize = 4,
+DSAVEGetTotalVariationPoolSize(data, poolSize = 4,
   upperBoundTPM = 1e+05, lowerBoundTPM = 0.5, na.rm = TRUE,
   seed = NULL, repetitionPerSize = 30L, rescale = TRUE)
 }
 \arguments{
-\item{sample}{object sample to get the data from}
+\item{data}{a numeric matrix}
 
 \item{poolSize}{numeric value, it should be maximum half of the total size of the data
-in the sample object}
+in the data object}
 
 \item{upperBoundTPM}{filters out the genes with mean expression higher than this value}
 
@@ -20,7 +20,7 @@ in the sample object}
 
 \item{na.rm}{logical, sends na.rm value to the rowMeans function}
 
-\item{seed}{positive integer for to set the seed of the samples}
+\item{seed}{positive integer for to set the seed of the datas}
 
 \item{repetitionPerSize}{positive integer how many times the variation is calculated at each
 pool size}
@@ -39,7 +39,7 @@ with a TPM filtration on the genes.
 }
 \examples{
 \dontrun{
-DSAVEGetTotalVariationPoolSize(samples, poolSize = 50, upperBoundTPM = 1000,
+DSAVEGetTotalVariationPoolSize(data, poolSize = 50, upperBoundTPM = 1000,
 lowerBoundTPM = 0.01, na.rm = TRUE, seed = 1, repetitionPerSize = 30, 0.5)
 }
 

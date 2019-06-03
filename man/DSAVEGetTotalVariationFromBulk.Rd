@@ -4,12 +4,12 @@
 \alias{DSAVEGetTotalVariationFromBulk}
 \title{DSAVEGetTotalVariationFromBulk}
 \usage{
-DSAVEGetTotalVariationFromBulk(sample, pool4samples,
-  upperBoundTPM = 1e+05, lowerBoundTPM = 0.5, na.rm = TRUE,
-  nComb = 1000L, seed = NULL, rescale = TRUE)
+DSAVEGetTotalVariationFromBulk(data, pool4samples, upperBoundTPM = 1e+05,
+  lowerBoundTPM = 0.5, na.rm = TRUE, nComb = 1000L, seed = NULL,
+  rescale = TRUE)
 }
 \arguments{
-\item{sample}{object sample to get the data from}
+\item{data}{a numericl matrix}
 
 \item{pool4samples}{logic value, if TRUE, the function will compare the mean
 of 4 randomly selected samples with the mean of 4 others}
