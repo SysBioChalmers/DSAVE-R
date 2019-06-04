@@ -34,9 +34,13 @@ setBinningInfo = function(data = NULL, lbnonlog = NULL, ubnonlog = NULL,
 
   meansLog <- seq(log10(lbnonlog), log10(ubnonlog), length.out =numPoints)
   templInfo.binningInfo.means <- 10^meansLog
-  cat("Re-scaling gene means \n")
 
-  if(reScale) {data <- tpmDSAVE(data)}
+
+  if(reScale){
+    cat("Re-scaling gene means \n")
+    data <- tpmDSAVE(data)
+    }
+
   gm <- as.matrix(rowMeans(data), ncol = 1)
   gmLog <- log10(gm)
 
@@ -69,6 +73,7 @@ setBinningInfo = function(data = NULL, lbnonlog = NULL, ubnonlog = NULL,
     ubs[i] <- 10^ub
   }
   output <- list()
+  output[["binningInfo.means"]] <- templInfo.binningInfo.means
   output[["binningInfo.lbs"]] <- lbs
   output[["binningInfo.ubs"]] <- ubs
   return(output)
