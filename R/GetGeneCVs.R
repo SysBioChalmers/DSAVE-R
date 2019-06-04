@@ -14,15 +14,19 @@
 #' \dontrun{
 #' }
 GetGeneCVs <- function(ds, logTPMAddon, toLog=FALSE){
-  ds_red <- tpmDSAVE(ds)
+  ds <- tpmDSAVE(ds)
   if(toLog){
     totset <- log(ds + logTPMAddon)
+    avgRefExpr <- rowMeans(totset)
+    sd <- apply(totset, 1, sd)
+    logcv <- sd / (avgRefExpr + 0.01)
   } else{
     totset <- ds
+    avgRefExpr <- rowMeans(totset)
+    sd <- apply(totset, 1, sd)
+    logcv <- log( sd / (avgRefExpr + 0.05) +1)
   }
-  avgRefExpr <- rowMeans(totset)
-  sd <- apply(totset, 1, sd)
-  logcv <- sd / (avgRefExpr + 0.01)
+
   return(logcv)
 }
 

@@ -56,10 +56,7 @@ DSAVECalcBTMScore <- function(data, templInfo, skipAlignment=TRUE, iterations = 
 
     alignedGeneCVs <- GetGeneCVs(aligned, logTPMAddon, toLog=useLogTransform);
     SNOGeneCVs <- GetGeneCVs(SNO, logTPMAddon, toLog=useLogTransform)
-    if(!useLogTransform){
-      alignedGeneCVs <- log(alignedGeneCVs + 1)
-      SNOGeneCVs <- log(SNOGeneCVs + 1)
-    }
+
 
     #throw away the most and least variable genes
     numGenes <- dim(aligned)[1]
@@ -78,7 +75,7 @@ DSAVECalcBTMScore <- function(data, templInfo, skipAlignment=TRUE, iterations = 
     }
 
     alData <- tpmDSAVE(aligned)
-    SNOData = tpmDSAVE(SNO)
+    SNOData <- tpmDSAVE(SNO)
     if(length(discard)>0){
       alData <- alData[-discard,]
       SNOData <- SNOData[-discard,]
@@ -88,7 +85,7 @@ DSAVECalcBTMScore <- function(data, templInfo, skipAlignment=TRUE, iterations = 
     alXes <- alCVs[[2]]
     alCVs <- alCVs[[1]]
 
-    saCVs <- AverageIntoBins(SNO, SNOGeneCVsRem, templInfo)
+    saCVs <- AverageIntoBins(SNOData, SNOGeneCVsRem, templInfo)
     saXes <- saCVs[[2]]
     saCVs <- saCVs[[1]]
 
@@ -101,17 +98,21 @@ DSAVECalcBTMScore <- function(data, templInfo, skipAlignment=TRUE, iterations = 
     ia <- !duplicated(alXes)
     alXes <- alXes[ia]
     alCVs = alCVs[ia]
+    alXes <- alXes[!is.na(alXes)]
+    alCVs <- alCVs[!is.na(alCVs)]
+
     ia <- !duplicated(saXes)
     saXes <- saXes[ia]
-    saCVs = saCVs[ia]
-
+    saCVs <- saCVs[ia]
+    saXes <- saXes[!is.na(saXes)]
+    saCVs <- saCVs[!is.na(saCVs)]
 
     #then use linear interpolation
     #if the code fails on either of these two lines, that is because there are no genes that fits some bins
     #in that case, try using a template that discards fewer outliers
-    alignedCVs[it,] <- approx(alXes,alCVs,xes)$y
-    samplingCVs[it,] <- approx(saXes,saCVs,xes)$y
-    differenceCVs[it,] = alignedCVs[it,] - samplingCVs[it,]
+    alignedCVs[it,] <- approx(alXes,alCVs,xes, rule = 2)$y
+    samplingCVs[it,] <- approx(saXes,saCVs,xes, rule = 2)$y
+    differenceCVs[it,] <- alignedCVs[it,] - samplingCVs[it,]
   }
 
   results = list();

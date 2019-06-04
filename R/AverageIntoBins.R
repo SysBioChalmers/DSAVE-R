@@ -24,11 +24,14 @@ AverageIntoBins <- function(TPMData, logcv, templInfo){
     #select the genes within the expression range
     sel <- avgRefExpr >= templInfo$binningInfo$binningInfo.lbs[i] & avgRefExpr <= templInfo$binningInfo$binningInfo.ubs[i]
     #y value in the graph
-    cv[i] = mean(logcv[sel])
-    #geometric-ish mean
-    meanGeneExpr[i] <- 2^mean(log2(avgRefExpr[sel]+0.05)) - 0.05
+    if(sum(sel) == 0){
+      cv[i] = 0
+      meanGeneExpr[i] <- 0
+    }else{
+      cv[i] = mean(logcv[sel])
+      meanGeneExpr[i] <- 2^mean(log2(avgRefExpr[sel]+0.05)) - 0.05
+    }
   }
-
   return(list(cv = cv, meanGeneExpr = meanGeneExpr))
 }
 
