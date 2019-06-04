@@ -46,36 +46,32 @@ DSAVEGetTotalVariationPoolSize <- function(data, poolSize = 4, upperBoundTPM = 1
     #print("Filtering genes")
     row_means <- rowMeans(data, na.rm = na.rm)
     genesToKeep <- names(which(row_means >= lowerBoundTPM & row_means <= upperBoundTPM))
-    data <- data[genesToKeep, ]
+    data <- data[genesToKeep, , drop=FALSE]
 
     #print("Creating combinations")
     ind <- as.integer(1:dim(data)[2])
     ix <- 1
+    numCells = dim(data)[2]
     combs.list <- list()
-    ind.tmp <- ind
     if(!is.null(seed)) set.seed(seed)
-    while(ix <= repetitionPerSize ){#  & ix <= maxComb){
-      if(length(ind.tmp) >= 2*poolSize){
-        a <- sample(ind.tmp, poolSize)
-        ind.tmp <- ind.tmp[-a]
-        if(length(ind.tmp) == 1){
-          b <- ind.tmp} else{
-          b <- sample(ind.tmp, poolSize)
-        }
-        ind.tmp <- ind.tmp[-b]
-        combs.list[[ix]] <- list(a = a, b = b)
-        ix <- ix + 1
-      } else {
-        ind.tmp <- ind
-      }
+
+    while(ix <= repetitionPerSize ) {
+      #Don't use sample with a vector, it behaves differently when the vector is of size 1!
+      ind.tmp <- ind
+      a <- sample(numCells, poolSize)
+      ind.tmp <- ind[-a, drop=FALSE]
+      b <- ind.tmp[sample(numCells-poolSize, poolSize),drop=FALSE]
+      combs.list[[ix]] <- list(a = a, b = b)
+      ix <- ix + 1
+
     }
     #print("Calculating variation")
     mean_vector <- sapply(combs.list, function(v){
-      a <- rowMeans(data[,v$a], na.rm = na.rm)
-      b <- rowMeans(data[,v$b], na.rm = na.rm)
+      a <- rowMeans(data[,v$a,drop=FALSE], na.rm = na.rm)
+      b <- rowMeans(data[,v$b,drop=FALSE], na.rm = na.rm)
       mean(abs(log((a + 0.05) / (b + 0.05))))
     })
 
   }
-  return(mean_vector)
+  return(mean(mean_vector))
 }

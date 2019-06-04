@@ -10,8 +10,8 @@
 tpmDSAVE <- function(counts){
   counts2 <- counts
   for(i in 1:dim(counts)[2]){
-    s <- seq(from=1, to=dim(counts)[2], by = round(dim(counts)[2]/10))
-    if(i %in% s) print(paste("Doing: ", round(i/dim(counts)[2] * 100), "%"))
+    #s <- seq(from=1, to=dim(counts)[2], by = round(dim(counts)[2]/10))
+    #if(i %in% s) print(paste("Doing: ", round(i/dim(counts)[2] * 100), "%"))
     nc <- counts[,i] / sum(counts[,i])
     nc[is.na(nc)] <- 0
     counts2[,i] <- nc * 1e6
