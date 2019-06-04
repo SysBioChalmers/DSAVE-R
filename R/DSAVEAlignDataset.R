@@ -30,7 +30,7 @@ DSAVEAlignDataset <- function(data, templInfo){
   stopifnot(!is.null(rownames(data)))
 
   if(is.null(colnames(data))){ colnames(data) <- 1:nCells}
-  gd <- rownames(data)[rownames(data) %in% templInfo$geneSet]
+  gd <- rownames(data) %in% templInfo$geneSet
   if(length(gd) == 0){stop("there are not ovelapping genes between template and dataset")}
 
   id <- sample(1:nCells, length(templInfo$UMIDistr))

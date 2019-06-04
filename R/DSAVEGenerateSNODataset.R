@@ -55,7 +55,7 @@ DSAVEGenerateSNODataset <- function(templDs, numCells=NULL, noiseLevel=0, templD
   probSum <- cumsum(prob)
   #add right edge; make sure it is not smaller than the previous due to roundoff problems.
 
-  edges <- c(0, probSum + min(prob[prob!=0]) / 10)
+  edges <- c(0, probSum)
 
 
   #create vector of number of UMIs
@@ -96,7 +96,7 @@ DSAVEGenerateSNODataset <- function(templDs, numCells=NULL, noiseLevel=0, templD
       probTmp <- probTmp / sum(probTmp)
       #have to recalculate edges
       probSum <- cumsum(prob)
-      edges <- c(0, probSum + min(probTmp[probTmp!=0]) / 10)
+      edges <- c(0, probSum)
       r <- runif(UMIs[i])
       ds[,i] <- hist(r, breaks = edges, plot = F)$counts
     }

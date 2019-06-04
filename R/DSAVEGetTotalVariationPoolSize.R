@@ -58,7 +58,10 @@ DSAVEGetTotalVariationPoolSize <- function(data, poolSize = 4, upperBoundTPM = 1
       if(length(ind.tmp) >= 2*poolSize){
         a <- sample(ind.tmp, poolSize)
         ind.tmp <- ind.tmp[-a]
-        b <- sample(ind.tmp, poolSize)
+        if(length(ind.tmp) == 1){
+          b <- ind.tmp} else{
+          b <- sample(ind.tmp, poolSize)
+        }
         ind.tmp <- ind.tmp[-b]
         combs.list[[ix]] <- list(a = a, b = b)
         ix <- ix + 1

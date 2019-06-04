@@ -35,13 +35,14 @@ setBinningInfo = function(data = NULL, lbnonlog = NULL, ubnonlog = NULL,
   meansLog <- seq(log10(lbnonlog), log10(ubnonlog), length.out =numPoints)
   templInfo.binningInfo.means <- 10^meansLog
 
-
+  data0 <- data
   if(reScale){
     cat("Re-scaling gene means \n")
     data <- tpmDSAVE(data)
     }
 
   gm <- as.matrix(rowMeans(data), ncol = 1)
+  #gm <- tpmDSAVE(as.matrix(rowMeans(data0), ncol = 1))
   gmLog <- log10(gm)
 
   lbs <- rep(0, numPoints)
@@ -59,9 +60,10 @@ setBinningInfo = function(data = NULL, lbnonlog = NULL, ubnonlog = NULL,
     for(s in 1:toplim){
       sel <- gmLog >= lb & gmLog <= ub
       numGenes <- sum(sel)
-      if(numGenes >= poolSize) break
+      if(numGenes >= poolSize) {break}
 
       # increase bounds
+
       if(numGenes == 0) { meanOfCaughtGenes <- 0} else { meanOfCaughtGenes <- mean(gmLog[sel])}
       if(meanOfCaughtGenes > meansLog[i]){
         lb <- lb - step

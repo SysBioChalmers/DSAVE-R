@@ -63,7 +63,7 @@ DSAVECalcBTMScore <- function(data, templInfo, skipAlignment=TRUE, iterations = 
     numToDiscardUpper <- round(templInfo$fractionUpperOutliers * numGenes)
     numToDiscardLower <- round(templInfo$fractionLowerOutliers * numGenes)
     difference <- alignedGeneCVs - SNOGeneCVs
-    gi <- sort(difference, decreasing = FALSE)
+    gi <- order(difference, decreasing = FALSE)
     discard <- unique(c(head(gi,numToDiscardLower), tail(gi,numToDiscardUpper)))
     anyToDiscard <- sum(discard) > 0
 
