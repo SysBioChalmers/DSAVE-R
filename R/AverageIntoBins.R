@@ -25,10 +25,10 @@ AverageIntoBins <- function(TPMData, logcv, templInfo){
     sel <- avgRefExpr >= templInfo$binningInfo$binningInfo.lbs[i] & avgRefExpr <= templInfo$binningInfo$binningInfo.ubs[i]
     #y value in the graph
     if(sum(sel) == 0){
-      cv[i] = 0
+      cv[i] <- 0
       meanGeneExpr[i] <- 0
     }else{
-      cv[i] = mean(logcv[sel])
+      cv[i] <- mean(logcv[sel])
       meanGeneExpr[i] <- 2^mean(log2(avgRefExpr[sel]+0.05)) - 0.05
     }
   }
