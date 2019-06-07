@@ -19,7 +19,7 @@ GetGeneCVs <- function(ds, logTPMAddon, toLog=FALSE){
     totset <- log(ds + logTPMAddon)
     avgRefExpr <- rowMeans(totset)
     sd <- apply(totset, 1, sd)
-    logcv <- sd / (avgRefExpr + 0.01)
+    logcv <- sd / (avgRefExpr + 0.05)
   } else{
     totset <- ds
     avgRefExpr <- rowMeans(totset)
