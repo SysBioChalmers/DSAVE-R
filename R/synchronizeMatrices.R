@@ -1,6 +1,6 @@
 #' synchronizeMatrices
 #'
-#' Not so optimal merge of vectors or matrices
+#' Merge of vectors or matrices
 #'
 #' Merges vectors or matrices, or vectors and matrices
 #'
