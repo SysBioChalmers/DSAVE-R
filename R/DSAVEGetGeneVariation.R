@@ -17,16 +17,11 @@
 #' @examples
 #' \dontrun{templ <- DSAVEGetGeneVariation(ds, 1, 10000, 1000)
 #' }
-DSAVEGetGeneVariation <- function(data, lb=NULL, iterations = NULL, maxNumCells=NULL){
+DSAVEGetGeneVariation <- function(data, lb=10, iterations = 100, maxNumCells=2000){
   stopifnot(is.numeric(data), is.matrix(data))
   stopifnot(iterations == round(iterations), length(iterations) == 1)
   stopifnot(is.numeric(lb),  length(lb)==1)
   stopifnot(maxNumCells == round(maxNumCells), length(maxNumCells) == 1)
-
-  #cut down to 2000 cells to get somewhat reasonable computation times
-  if(is.null(maxNumCells)){maxNumCells <- 2000 }
-  if(is.null(iterations)){iterations <- 100}
-  if(is.null(lb)){iterations <- 10}
 
   numCells <- dim(data)[2]
   if(numCells > maxNumCells){
