@@ -20,8 +20,8 @@ knitr::opts_chunk$set(
 
 ```{r}
 library(ggplot2)
-library(DSAVER)
-data(tcellCD4ProfilesTMMNormalized, package = "DSAVER")
+library(DSAVE)
+data(tcellCD4ProfilesTMMNormalized, package = "DSAVE")
 ub <- 100000
 lb <- 0.5
 
@@ -37,7 +37,7 @@ bulkMean4Vs4 = DSAVEGetTotalVariationFromBulk(tcellCD4ProfilesTMMNormalized,
 ## Total variation from subsampled single cell data
 
 ```{r}
-data(PBMC68K_Tcells, package = "DSAVER")
+data(PBMC68K_Tcells, package = "DSAVE")
 
 scTotalVariation <- list()
 pools <- seq(100, 4000, by = 1000)

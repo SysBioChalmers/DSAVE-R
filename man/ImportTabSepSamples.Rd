@@ -19,7 +19,7 @@ Imports a txt tab separated, takes first column as rows' names and first row as 
 }
 \examples{
 \dontrun{
-samp <- ImportTabSepSamples("~/Downloads/dsaver/tcellCD4ProfilesTMMNormalized.txt",
+samp <- ImportTabSepSamples("~/Downloads/dsave/tcellCD4ProfilesTMMNormalized.txt",
 "tcellCD4Profiles")
 }
 }

@@ -11,7 +11,7 @@
 #' @author Juan Inda, <inda@@chalmers.se>
 #' @examples
 #' \dontrun{
-#' samp <- ImportTabSepSamples("~/Downloads/dsaver/tcellCD4ProfilesTMMNormalized.txt",
+#' samp <- ImportTabSepSamples("~/Downloads/dsave/tcellCD4ProfilesTMMNormalized.txt",
 #' "tcellCD4Profiles")
 #' }
 ImportTabSepSamples <- function(filename, sampleName){
