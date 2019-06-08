@@ -6,7 +6,7 @@
 #'
 #' @param data numeric matrix, the input dataset (cell population)
 #' @param templInfo template information
-#' @param skipAlignment logical, defalut TRUE, if FALSE, alignment will be done against the template data
+#' @param skipAlignment logical, default FALSE. If FALSE, alignment will be done against the template data
 #' @param iterations number of iterations; defaults to 15
 #' @param useLogTransform default FALSE, if TRUE calculation will be done on log transformed data
 #' @param logTPMAddon default 1, when using log transformed data, this number is added to the data before transforming to avoid log(0)
@@ -18,11 +18,11 @@
 #' \dontrun{
 #' }
 
-DSAVECalcBTMScore <- function(data, templInfo, skipAlignment=TRUE, iterations = 15, useLogTransform=FALSE, logTPMAddon=NULL){
+DSAVECalcBTMScore <- function(data, templInfo, skipAlignment=FALSE, iterations = 15, useLogTransform=FALSE, logTPMAddon=1){
 
-  stopifnot(is.numeric(data), is.matrix(data))
-  stopifnot(is.integer(iterations), length(iterations) == 1)
-  stopifnot((is.numeric(logTPMAddon) & length(logTPMAddon) == 1) | is.null(logTPMAddon))
+  stopifnot(is.matrix(data) | is(data, 'sparseMatrix'))
+  stopifnot(iterations == round(iterations), length(iterations) == 1)
+  stopifnot(is.numeric(logTPMAddon) & length(logTPMAddon) == 1)
   stopifnot(is.logical(skipAlignment), length(skipAlignment) == 1)
   stopifnot(is.logical(useLogTransform), length(useLogTransform) == 1)
   stopifnot(length(templInfo) == 5, sum(!names(templInfo) %in%
@@ -31,7 +31,6 @@ DSAVECalcBTMScore <- function(data, templInfo, skipAlignment=TRUE, iterations = 
                                             "fractionLowerOutliers",
                                             "binningInfo")) == 0)
 
-  if(is.null(logTPMAddon)){ logTPMAddon <- 1}
 
   lbnonlog <- 10
   ubnonlog <- 1000
@@ -51,6 +50,8 @@ DSAVECalcBTMScore <- function(data, templInfo, skipAlignment=TRUE, iterations = 
     } else {
       aligned <- DSAVEAlignDataset(data, templInfo) #%use a different subset of cells in each loop iteration
     }
+
+    aligned = as.matrix(aligned); # unsparse if needed
 
     SNO <- DSAVEGenerateSNODataset(aligned)
 
