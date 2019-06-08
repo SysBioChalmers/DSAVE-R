@@ -14,7 +14,11 @@
 #' }
 
 GetVarAndLogCV <- function(dsdata, UMIsPerCell){
-  dsdata <- (1e6) * dsdata / UMIsPerCell
+  #tpm with specified UMIs per cell
+  #There's no good way to do this without a loop in R
+  for(i in 1:dim(dsdata)[2]){
+    dsdata[,i] <- dsdata[,i] * 1e6 / UMIsPerCell[i]
+  }
   avgRefExpr <- rowMeans(dsdata)
   variances <- apply(dsdata, 1, var)
   sds <- sqrt(variances)

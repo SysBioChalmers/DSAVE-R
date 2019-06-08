@@ -17,11 +17,11 @@
 #' @examples
 #' \dontrun{templ <- DSAVEGetGeneVariation(ds, 1, 10000, 1000)
 #' }
-DSAVECalcBTMScore <- function(data, lb=NULL, iterations = NULL, maxNumCells=NULL){
+DSAVEGetGeneVariation <- function(data, lb=NULL, iterations = NULL, maxNumCells=NULL){
   stopifnot(is.numeric(data), is.matrix(data))
-  stopifnot(is.integer(iterations), length(iterations) == 1)
+  stopifnot(iterations == round(iterations), length(iterations) == 1)
   stopifnot(is.numeric(lb),  length(lb)==1)
-  stopifnot(is.integer(maxNumCells), length(maxNumCells) == 1)
+  stopifnot(maxNumCells == round(maxNumCells), length(maxNumCells) == 1)
 
   #cut down to 2000 cells to get somewhat reasonable computation times
   if(is.null(maxNumCells)){maxNumCells <- 2000 }
@@ -48,11 +48,10 @@ DSAVECalcBTMScore <- function(data, lb=NULL, iterations = NULL, maxNumCells=NULL
   #No point in looking at too lowly expressed ones anyway, they will not become significant.
   stopifnot(sum(sel) > 0)
 
-  data <- data[sel,]
+  data <- data[sel,,drop=FALSE]
   numGenes <- dim(data)[1]
 
   #generate SNO TPMs
-  #SNOTPMs = (10.^(-.3:0.005:4)).';
   #convert the TPMs into counts
   SNOUMIsPerCell <- colSums(data)
   SNOCountsPerGene <- unique(rowSums(data))
@@ -60,9 +59,6 @@ DSAVECalcBTMScore <- function(data, lb=NULL, iterations = NULL, maxNumCells=NULL
   id <- SNOCountsPerGene>=2
   stopifnot(sum(id)>0)
   SNOCountsPerGene <- SNOCountsPerGene[id]
-
-  #countsPerGenePre = round(SNOTPMs.*sumUMIsPerCell./10^6);
-  #SNOCountsPerGene = unique(countsPerGenePre); #some of the low TPMs are sometimes the same count
 
   numCountVals <- length(SNOCountsPerGene)
 
@@ -74,7 +70,7 @@ DSAVECalcBTMScore <- function(data, lb=NULL, iterations = NULL, maxNumCells=NULL
 
   #precalc things for generating SNO datasets
   #generate probabilities
-  prob <- SNOUMIsPerCell/rowSums(SNOUMIsPerCell)
+  prob <- SNOUMIsPerCell/sum(SNOUMIsPerCell)
 
   #generate a vector with the sum of probabilities up to this cell (including this cell)
   probSum <-cumsum(prob) #just create a vector of the right size
@@ -118,7 +114,7 @@ DSAVECalcBTMScore <- function(data, lb=NULL, iterations = NULL, maxNumCells=NULL
   #so subtraction of CVs
   logCVSNOm <- rowMeans(SNOLogCVS)
 
-  logCVDifference <- logCVDS - logCVSNOm[indices,]
+  logCVDifference <- logCVDS - logCVSNOm[indices]
 
   return(list(genes = genes, logCVDifference = logCVDifference,
               pVals = pVals, SNOVariances = SNOVariances,
