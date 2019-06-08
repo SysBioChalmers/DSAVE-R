@@ -4,9 +4,9 @@
 \alias{DSAVEGetTotalVariationPoolSize}
 \title{DSAVEGetTotalVariationPoolSize}
 \usage{
-DSAVEGetTotalVariationPoolSize(data, poolSize = 4,
-  upperBoundTPM = 1e+05, lowerBoundTPM = 0.5, na.rm = TRUE,
-  seed = NULL, repetitionPerSize = 30L, rescale = TRUE)
+DSAVEGetTotalVariationPoolSize(data, poolSize = 4, upperBound = 1e+05,
+  lowerBound = 0.5, na.rm = TRUE, seed = NULL,
+  repetitionPerSize = 30L, rescale = TRUE)
 }
 \arguments{
 \item{data}{a numeric matrix}
@@ -14,9 +14,9 @@ DSAVEGetTotalVariationPoolSize(data, poolSize = 4,
 \item{poolSize}{numeric value, it should be maximum half of the total size of the data
 in the data object}
 
-\item{upperBoundTPM}{filters out the genes with mean expression higher than this value}
+\item{upperBound}{filters out the genes with mean expression higher than this value}
 
-\item{lowerBoundTPM}{filters out the genes with mean expression lower than this value}
+\item{lowerBound}{filters out the genes with mean expression lower than this value}
 
 \item{na.rm}{logical, sends na.rm value to the rowMeans function}
 
@@ -39,8 +39,8 @@ with a TPM filtration on the genes.
 }
 \examples{
 \dontrun{
-DSAVEGetTotalVariationPoolSize(data, poolSize = 50, upperBoundTPM = 1000,
-lowerBoundTPM = 0.01, na.rm = TRUE, seed = 1, repetitionPerSize = 30, 0.5)
+DSAVEGetTotalVariationPoolSize(data, poolSize = 50, upperBound = 1000,
+lowerBound = 0.01, na.rm = TRUE, seed = 1, repetitionPerSize = 30, 0.5)
 }
 
 }

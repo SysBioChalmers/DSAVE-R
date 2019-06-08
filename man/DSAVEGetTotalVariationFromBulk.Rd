@@ -4,8 +4,8 @@
 \alias{DSAVEGetTotalVariationFromBulk}
 \title{DSAVEGetTotalVariationFromBulk}
 \usage{
-DSAVEGetTotalVariationFromBulk(data, pool4samples, upperBoundTPM = 1e+05,
-  lowerBoundTPM = 0.5, na.rm = TRUE, nComb = 1000L, seed = NULL,
+DSAVEGetTotalVariationFromBulk(data, pool4samples, upperBound = 1e+05,
+  lowerBound = 0.5, na.rm = TRUE, nComb = 1000L, seed = NULL,
   rescale = TRUE)
 }
 \arguments{
@@ -14,9 +14,9 @@ DSAVEGetTotalVariationFromBulk(data, pool4samples, upperBoundTPM = 1e+05,
 \item{pool4samples}{logic value, if TRUE, the function will compare the mean
 of 4 randomly selected samples with the mean of 4 others}
 
-\item{upperBoundTPM}{filters out the genes with mean expression higher than this value}
+\item{upperBound}{filters out the genes with mean expression higher than this value}
 
-\item{lowerBoundTPM}{filters out the genes with mean expression lower than this value}
+\item{lowerBound}{filters out the genes with mean expression lower than this value}
 
 \item{na.rm}{logical, sends na.rm value to the rowMeans function}
 
@@ -24,7 +24,7 @@ of 4 randomly selected samples with the mean of 4 others}
 
 \item{seed}{positive integer for to set the seed of the samples}
 
-\item{rescale}{logical, determine if the data should be rescaled}
+\item{rescale}{logical, determine if the data should be rescaled to TPM}
 }
 \value{
 numeric vector
@@ -40,8 +40,8 @@ list of 8 samples.
 }
 \examples{
 \dontrun{
-DSAVEGetTotalVariationFromBulk(sample, pool4samples = FALSE, upperBoundTPM = 100000,
-lowerBoundTPM = 0.5)
+DSAVEGetTotalVariationFromBulk(sample, pool4samples = FALSE, upperBound = 100000,
+lowerBound = 0.5)
 }
 
 }

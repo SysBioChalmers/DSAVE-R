@@ -17,7 +17,7 @@ synchronizeMatrices(mat1 = NULL, mat2 = NULL, discardRows = TRUE)
 A matrix or vector
 }
 \description{
-Not so optimal merge of vectors or matrices
+Merge of vectors or matrices
 }
 \details{
 Merges vectors or matrices, or vectors and matrices

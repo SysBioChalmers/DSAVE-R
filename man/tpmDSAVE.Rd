@@ -19,5 +19,5 @@ Standarizes by column making it sum to 1e6
 Standarizes by column making it sum to 1e6
 }
 \author{
-Juan Inda, <inda@chalmers.se>
+Juan Inda, <inda@chalmers.se>, Johan Gustafsson, <gustajo@chalmers.se>
 }
