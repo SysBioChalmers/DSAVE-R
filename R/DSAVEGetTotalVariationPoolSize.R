@@ -8,8 +8,8 @@
 #' @param data a numeric matrix
 #' @param poolSize numeric value, it should be maximum half of the total size of the data
 #' in the data object
-#' @param upperBoundTPM filters out the genes with mean expression higher than this value
-#' @param lowerBoundTPM filters out the genes with mean expression lower than this value
+#' @param upperBound filters out the genes with mean expression higher than this value
+#' @param lowerBound filters out the genes with mean expression lower than this value
 #' @param na.rm logical, sends na.rm value to the rowMeans function
 #' @param rescale logical, determine if the data should be rescaled
 #' @param seed positive integer for to set the seed of the datas
@@ -20,19 +20,19 @@
 #' @return numeric vector
 #' @examples
 #' \dontrun{
-#' DSAVEGetTotalVariationPoolSize(data, poolSize = 50, upperBoundTPM = 1000,
-#' lowerBoundTPM = 0.01, na.rm = TRUE, seed = 1, repetitionPerSize = 30, 0.5)
+#' DSAVEGetTotalVariationPoolSize(data, poolSize = 50, upperBound = 1000,
+#' lowerBound = 0.01, na.rm = TRUE, seed = 1, repetitionPerSize = 30, 0.5)
 #' }
 #'
 
-DSAVEGetTotalVariationPoolSize <- function(data, poolSize = 4, upperBoundTPM = 1e5,
-                                           lowerBoundTPM = 5e-1, na.rm = TRUE, seed = NULL,
+DSAVEGetTotalVariationPoolSize <- function(data, poolSize = 4, upperBound = 1e5,
+                                           lowerBound = 5e-1, na.rm = TRUE, seed = NULL,
                                            repetitionPerSize = 30L, rescale = TRUE){
   #print("Control parameters")
   stopifnot(is.matrix(data),
             is.numeric(poolSize), length(poolSize) == 1,
-            is.numeric(upperBoundTPM), length(upperBoundTPM) == 1,
-            is.numeric(lowerBoundTPM), length(lowerBoundTPM) == 1,
+            is.numeric(upperBound), length(upperBound) == 1,
+            is.numeric(lowerBound), length(lowerBound) == 1,
             is.logical(na.rm), length(na.rm) == 1,
             is.logical(rescale), length(rescale) == 1,
             (is.null(seed) | is.integer(seed)),
@@ -45,7 +45,7 @@ DSAVEGetTotalVariationPoolSize <- function(data, poolSize = 4, upperBoundTPM = 1
     if(rescale) data <- tpmDSAVE(data)
     #print("Filtering genes")
     row_means <- rowMeans(data, na.rm = na.rm)
-    genesToKeep <- names(which(row_means >= lowerBoundTPM & row_means <= upperBoundTPM))
+    genesToKeep <- names(which(row_means >= lowerBound & row_means <= upperBound))
     data <- data[genesToKeep, , drop=FALSE]
 
     #print("Creating combinations")
