@@ -1,0 +1,28 @@
+test_that("TR005 - DSAVEAlignDataset",{
+  # First, create a dataset that we know will have a higher UMI distribution
+  # for all cells (depends on the current template that comes with the package)
+  templInfo = DSAVEGetStandardTemplate();
+  ds = LoadAndDownloadBCells();
+  ds2 = ds[, 4001:6000];
+  ds3 = DSAVEAlignDataset(ds2, templInfo);
+  ds3m = as.matrix(ds3);
+  UMIDistr3 = sort(as.vector(colSums(as.matrix(ds3))))
+  UMIDistrExp = sort(templInfo$UMIDistr)
+  expect_equal(UMIDistr3, UMIDistrExp, info = "TR005: UMIDistr mismatch, no move of counts")
+
+  #Now, create a dataset that we know will not have a higher UMI distr for all cells
+  allUMICounts = as.vector(colSums(as.matrix(ds)))
+  ds4 = ds[,allUMICounts < 4000];
+  ds5 = DSAVEAlignDataset(ds4, templInfo);
+  UMIDistr5 = sort(as.vector(colSums(as.matrix(ds5))))
+  #first, make sure that the test case has succeeded to create a test where counts
+  #need to be moved between cells
+  expect_false(isTRUE(all.equal(UMIDistr5, UMIDistrExp)), info = "TR005: UMIDistr matches when it should not, the test case is not testing what it should")
+  #then check that it succeeded in the moving, i.e. the sum of all counts should be the same
+  expect_equal(sum(UMIDistr5), sum(UMIDistrExp), info = "TR005: UMIDistr false total count")
+  #then check that it included the relevant genes only
+  expect_equal(sort(rownames(ds5)), sort(templInfo$geneSet), info = "TR005: Failed to synchronize genes")
+  #then check that the total number of cells are the same
+  expect_equal(dim(ds5)[2], length(templInfo$UMIDistr), info = "TR005: Wrong number of cells")
+
+})
