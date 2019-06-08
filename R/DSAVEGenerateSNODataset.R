@@ -28,11 +28,20 @@
 #' }
 
 DSAVEGenerateSNODataset <- function(templDs, numCells=NULL, noiseLevel=0, templDSForProfile=NULL){
-  stopifnot(is.numeric(templDs), is.matrix(templDs))
+  stopifnot(is.matrix(templDs) | is(templDs, 'sparseMatrix'))
   stopifnot((is.integer(numCells) & length(numCells) == 1) | is.null(numCells))
   stopifnot(is.numeric(noiseLevel), length(noiseLevel) == 1, noiseLevel >= 0)
+
+  #unsparsify if needed
+  wasSparse = is(templDs, 'sparseMatrix')
+  if (wasSparse) {
+    templDs = as.matrix(templDs);
+  }
+
   if(is.null(templDSForProfile)){ templDSForProfile <- templDs}
   if(is.null(numCells)) {numCells <- dim(templDs)[2]}
+
+
 
   #create empty dataset
   ds <- templDs
@@ -47,14 +56,7 @@ DSAVEGenerateSNODataset <- function(templDs, numCells=NULL, noiseLevel=0, templD
   }
   #generate a vector with the sum of probabilities up to this gene (including this gene)
 
-  ###   probSum <- rep(0, length(prob))  #just create a vector of the right size
-  ###   numGenes <- dim(tmpTempl)[1]
-  ###    for(i in 2:numGenes){
-  ###     probSum[i] <- probSum[i-1] + prob[i-1]
-  ###   }
   probSum <- cumsum(prob)
-  #add right edge; make sure it is not smaller than the previous due to roundoff problems.
-
   edges <- c(0, probSum)
 
 
@@ -101,6 +103,12 @@ DSAVEGenerateSNODataset <- function(templDs, numCells=NULL, noiseLevel=0, templD
       ds[,i] <- hist(r, breaks = edges, plot = F)$counts
     }
   }
+
+  if (wasSparse) {
+    ds = as(ds, "sparseMatrix");
+  }
+
+
   return(ds)
 }
 
