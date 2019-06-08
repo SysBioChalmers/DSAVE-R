@@ -24,5 +24,13 @@ test_that("TR005 - DSAVEAlignDataset",{
   expect_equal(sort(rownames(ds5)), sort(templInfo$geneSet), info = "TR005: Failed to synchronize genes")
   #then check that the total number of cells are the same
   expect_equal(dim(ds5)[2], length(templInfo$UMIDistr), info = "TR005: Wrong number of cells")
+  #check that sparse input gives sparse output
+  expect_true(is(ds4, 'sparseMatrix') & is(ds5, 'sparseMatrix'), info = "TR005: Failure on sparse input")
+
+  #check that non-sparse input gives non-sparse output
+  ds6 = as.matrix(ds[,1:2000]);
+  ds7 = DSAVEAlignDataset(ds6, templInfo);
+  expect_true(is.matrix(ds6) & is.matrix(ds7), info = "TR005: Failure on non-sparse input")
+
 
 })
