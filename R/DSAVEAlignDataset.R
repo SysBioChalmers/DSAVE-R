@@ -6,7 +6,7 @@
 #' All datasets successfully aligned to the same template will have almost
 #' identical sampling noise.
 #'
-#' @param data numeric matrix, the input dataset (cell population)
+#' @param data matrix or sparse matrix, the type is preserved in the output
 #' @param templInfo list with one element called UMIDistr containing template information
 #' @importFrom graphics hist
 #' @export
@@ -17,7 +17,7 @@
 #' }
 
 DSAVEAlignDataset <- function(data, templInfo){
-  stopifnot(is.numeric(data), is.matrix(data))
+  stopifnot(is.matrix(data) | is(data, 'sparseMatrix'))
   stopifnot(length(templInfo) == 5, sum(!names(templInfo) %in%
                                           c("UMIDistr", "geneSet",
                                             "fractionUpperOutliers",
@@ -26,7 +26,7 @@ DSAVEAlignDataset <- function(data, templInfo){
   # create the adapted dataset of the right size and with the right genes
   nCells <- dim(data)[2]
   stopifnot(nCells >=  length(templInfo$UMIDistr), nCells > 0)
-  stopifnot(!is.null(names(templInfo$UMIDistr)))
+  #stopifnot(!is.null(names(templInfo$UMIDistr)))
   stopifnot(!is.null(rownames(data)))
 
   if(is.null(colnames(data))){ colnames(data) <- 1:nCells}
@@ -38,9 +38,14 @@ DSAVEAlignDataset <- function(data, templInfo){
   ds <- data_sub
 
   #ds.name = ['Aligned dataset from ds ' inDs.name];
-  numGenes <- dim(data_sub)[1]
   numCells <- dim(data_sub)[2]
   ds[,] <- 0
+
+  #unsparsify if needed
+  wasSparse = is(data_sub, 'sparseMatrix')
+  if (wasSparse) {
+    data_sub = as.matrix(data_sub);
+  }
 
   #then do downsampling
   origUMIs <- colSums(data_sub) #sum of UMIs for each cell
@@ -97,5 +102,10 @@ DSAVEAlignDataset <- function(data, templInfo){
     subtr <- hist(indexesToRem, breaks = edges, plot = F)$counts
     ds[,i] <- data_sub[,i] - subtr
   }
+
+  if (wasSparse) {
+    ds = as(ds, "sparseMatrix");
+  }
+
   return(ds)
 }
