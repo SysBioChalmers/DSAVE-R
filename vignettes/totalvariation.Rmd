@@ -26,11 +26,11 @@ ub <- 100000
 lb <- 0.5
 
 bulkMean1Vs1 <- DSAVEGetTotalVariationFromBulk(tcellCD4ProfilesTMMNormalized, 
-                    pool4samples = FALSE, upperBoundTPM = ub,
-                    lowerBoundTPM = lb, rescale = FALSE)
+                    pool4samples = FALSE, upperBound = ub,
+                    lowerBound = lb, rescale = FALSE)
 bulkMean4Vs4 = DSAVEGetTotalVariationFromBulk(tcellCD4ProfilesTMMNormalized, 
-                    pool4samples = TRUE, upperBoundTPM = ub, na.rm = TRUE, seed = 2019L, 
-                    lowerBoundTPM = lb, nComb = 10000L, rescale =FALSE)
+                    pool4samples = TRUE, upperBound = ub, na.rm = TRUE, seed = 2019L, 
+                    lowerBound = lb, nComb = 10000L, rescale =FALSE)
 ```
 
 
