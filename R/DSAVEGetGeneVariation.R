@@ -11,13 +11,14 @@
 #' 10,000 - 100,000 if p-values are of interest. Defaults to 100,000.
 #' @param maxNumCells (optional) ds is reduced to this number of cells if it
 #' contains more, to save computation time. Defaults to 2,000.
+#' @param silent (optional) If true, no progress bar is shown. Defaults to FALSE
 #' @export
 #' @author Juan Inda, <inda@@chalmers.se>
 #' @return list(genes, logCVDifference, pVals, SNOVariances, SNOCountsPerGene)
 #' @examples
 #' \dontrun{templ <- DSAVEGetGeneVariation(ds, 1, 10000, 1000)
 #' }
-DSAVEGetGeneVariation <- function(data, lb=10, iterations = 100, maxNumCells=2000){
+DSAVEGetGeneVariation <- function(data, lb=10, iterations = 100, maxNumCells=2000, silent=FALSE){
   stopifnot(is.numeric(data), is.matrix(data))
   stopifnot(iterations == round(iterations), length(iterations) == 1)
   stopifnot(is.numeric(lb),  length(lb)==1)
@@ -31,6 +32,11 @@ DSAVEGetGeneVariation <- function(data, lb=10, iterations = 100, maxNumCells=200
     numCells <- maxNumCells
   }
 
+  if (!silent) {
+    pb <- progress_bar$new(format = "Calculating gene variation [:bar] :percent eta: :eta",
+                           total = iterations + 1, clear = FALSE)
+    pb$tick();
+  }
 
   data_tpm <- tpmDSAVE(data)
   dstpm <- rowMeans(data_tpm)
@@ -84,8 +90,10 @@ DSAVEGetGeneVariation <- function(data, lb=10, iterations = 100, maxNumCells=200
     varAndLogCV <- GetVarAndLogCV(SNOdata, SNOUMIsPerCell)
     SNOLogCVS[,it] <- varAndLogCV[["logCV"]]
     SNOVariances[,it] <- varAndLogCV[["variances"]]
+    if (!silent) {
+      pb$tick()
+    }
   }
-
 
 
   genes <-  rownames(data)
@@ -110,6 +118,10 @@ DSAVEGetGeneVariation <- function(data, lb=10, iterations = 100, maxNumCells=200
   logCVSNOm <- rowMeans(SNOLogCVS)
 
   logCVDifference <- logCVDS - logCVSNOm[indices]
+
+  if (!silent) {
+    pb$terminate()
+  }
 
   return(list(genes = genes, logCVDifference = logCVDifference,
               pVals = pVals, SNOVariances = SNOVariances,

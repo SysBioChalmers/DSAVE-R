@@ -10,6 +10,7 @@
 #' @param iterations number of iterations; defaults to 15
 #' @param useLogTransform default FALSE, if TRUE calculation will be done on log transformed data
 #' @param logTPMAddon default 1, when using log transformed data, this number is added to the data before transforming to avoid log(0)
+#' @param silent (optional) If true, no progress bar is shown. Defaults to FALSE
 #' @importFrom stats approxfun
 #' @export
 #' @author Juan Inda, <inda@@chalmers.se>
@@ -18,7 +19,8 @@
 #' \dontrun{
 #' }
 
-DSAVECalcBTMScore <- function(data, templInfo, skipAlignment=FALSE, iterations = 15, useLogTransform=FALSE, logTPMAddon=1){
+DSAVECalcBTMScore <- function(data, templInfo, skipAlignment=FALSE, iterations = 15,
+                              useLogTransform=FALSE, logTPMAddon=1, silent=FALSE){
 
   stopifnot(is.matrix(data) | is(data, 'sparseMatrix'))
   stopifnot(iterations == round(iterations), length(iterations) == 1)
@@ -43,6 +45,11 @@ DSAVECalcBTMScore <- function(data, templInfo, skipAlignment=FALSE, iterations =
   samplingCVs <- alignedCVs #zeros(iterations,numXVals);
   differenceCVs <- alignedCVs #zeros(iterations,numXVals);
 
+  if (!silent) {
+    pb <- progress_bar$new(format = "Calculating DSAVE score [:bar] :percent eta: :eta",
+                           total = iterations + 1, clear = FALSE)
+    pb$tick();
+  }
 
   for(it in 1:iterations){
     if(skipAlignment){
@@ -114,6 +121,14 @@ DSAVECalcBTMScore <- function(data, templInfo, skipAlignment=FALSE, iterations =
     alignedCVs[it,] <- approx(alXes,alCVs,xes, rule = 2)$y
     samplingCVs[it,] <- approx(saXes,saCVs,xes, rule = 2)$y
     differenceCVs[it,] <- alignedCVs[it,] - samplingCVs[it,]
+
+    if (!silent) {
+      pb$tick()
+    }
+
+  }
+  if (!silent) {
+    pb$terminate()
   }
 
   results = list();

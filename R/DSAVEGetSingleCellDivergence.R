@@ -10,6 +10,7 @@
 #' @param iterations (optional) The number of times to iterate. Defaults to 15.
 #' @param tpmLowerBound (optional) TPM lower bound, genes below this will not
 #' be included. Defaults to 0 (meaning all genes are included).
+#' @param silent (optional) If true, no progress bar is shown. Defaults to FALSE
 #' @export
 #' @author Johan Gustafsson, <gustajo@@chalmers.se>
 #' @return vector of divergence, one value per cell. The divergence is the
@@ -20,11 +21,18 @@
 #' @examples
 #' \dontrun{templ <- DSAVEGetSingleCellDivergence(ds)
 #' }
-DSAVEGetSingleCellDivergence <- function(data, minUMIsPerCell = 200, tpmLowerBound = 0, iterations = 15) {
+DSAVEGetSingleCellDivergence <- function(data, minUMIsPerCell = 200, tpmLowerBound = 0, iterations = 15, silent=FALSE) {
   stopifnot(is.matrix(data) | is(data, 'sparseMatrix'))
   stopifnot(minUMIsPerCell == round(minUMIsPerCell), length(minUMIsPerCell) == 1)
   stopifnot(is.numeric(tpmLowerBound),  length(tpmLowerBound)==1)
   stopifnot(iterations == round(iterations), length(iterations) == 1)
+
+  if (!silent) {
+    pb <- progress_bar$new(format = "Calculating cell divergence [:bar] :percent eta: :eta",
+                           total = iterations + 1, clear = FALSE)
+    pb$tick();
+  }
+
 
   data = as.matrix(data);
 
@@ -80,11 +88,18 @@ DSAVEGetSingleCellDivergence <- function(data, minUMIsPerCell = 200, tpmLowerBou
         allLls[it,i] = dmnom(dsd[,i], sum(dsd[,i]), prob, log = TRUE);
       }
     }
+    if (!silent) {
+      pb$tick()
+    }
   }
 
 
   #take the median of all runs
   lls = apply(allLls,2,median);
+
+  if (!silent) {
+    pb$terminate()
+  }
 
   return(lls)
 }

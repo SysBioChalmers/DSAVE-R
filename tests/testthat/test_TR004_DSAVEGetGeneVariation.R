@@ -12,7 +12,7 @@ test_that("TR004 - DSAVEGetGeneVariation",{
   #the number of combinations in total are 5^4 = 625
   #the number of combinations with 4 in the same pile is 5
   #the p value should thus be 5/625 = 0.0080
-  results = DSAVEGetGeneVariation(ds,0,100000,10000);
+  results = DSAVEGetGeneVariation(ds,0,100000,10000, silent=TRUE);
   expGenes = c('A','C')
   #calculate the expected CV
   CVDS = log(sd(ds[1,] * 250000) / (200000 + 0.05) + 1);
@@ -46,7 +46,7 @@ test_that("TR004 - DSAVEGetGeneVariation",{
   row.names(ds2) = c('A','B','C')
 
 
-  results2 = DSAVEGetGeneVariation(ds2,0,100000,10000);
+  results2 = DSAVEGetGeneVariation(ds2,0,100000,10000, silent=TRUE);
 
   expect_equal(results$pVals[1], 0.008, info = "TR004: pVals same UMI count", tolerance=2e-3)
   expect_equal(results2$pVals[1], 0.001, info = "TR004: pVals different UMI count", tolerance=0.0007)
