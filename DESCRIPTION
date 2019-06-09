@@ -1,5 +1,5 @@
 Package: DSAVE
-Title: Dissecting Cell-to-cell Variation in Single-cell RNA-Seq Data
+Title: Dissecting Cell-to-Cell Variation in Single-Cell RNA-Seq Data
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Juan Salvador",
@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "inda@chalmers.se")
 Description: Calculates DSAVE Total Cell Pool Variation Estimation, DSAVE Variation Score, DSAVE Gene-wise Variation Metric and DSAVE Cell-wise Variation Metric.
-Depends: R (>= 3.5),testthat,Seurat
+Depends: R (>= 3.5),testthat,Seurat,extraDistr
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
