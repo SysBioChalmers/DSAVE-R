@@ -7,11 +7,11 @@
 GetGeneCVs(ds, logTPMAddon, toLog = FALSE)
 }
 \arguments{
+\item{ds}{numeric matrix}
+
 \item{logTPMAddon}{default 1, when using log transformed data, this number is added to the data before transforming to avoid log(0)}
 
 \item{toLog}{default FALSE, if TRUE calculation will be done on log transformed data}
-
-\item{data}{numeric matrix}
 }
 \value{
 a vector

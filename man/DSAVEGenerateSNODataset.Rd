@@ -8,7 +8,7 @@ DSAVEGenerateSNODataset(templDs, numCells = NULL, noiseLevel = 0,
   templDSForProfile = NULL)
 }
 \arguments{
-\item{templDs}{The input dataset (cell population), numeric matrix}
+\item{templDs}{The input dataset (cell population), numeric matrix (can be sparse)}
 
 \item{numCells}{(optional) Can be used to specify the number of cells. Defaults to the number of cells in the input dataset.}
 

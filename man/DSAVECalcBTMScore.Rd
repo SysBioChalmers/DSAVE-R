@@ -8,7 +8,7 @@ DSAVECalcBTMScore(data, templInfo, skipAlignment = FALSE,
   iterations = 15, useLogTransform = FALSE, logTPMAddon = 1)
 }
 \arguments{
-\item{data}{numeric matrix, the input dataset (cell population)}
+\item{data}{numeric matrix (can be sparse), the input dataset (cell population)}
 
 \item{templInfo}{template information}
 
