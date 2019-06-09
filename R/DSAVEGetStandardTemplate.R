@@ -11,11 +11,6 @@
 #' }
 
 DSAVEGetStandardTemplate <- function() {
-
-  load("data/bc2t_binningInfo.rda")
-  load("data/bc2t_UMIdistribution.rda")
-  load("data/genesForTemplate.rda")
-
   result = list()
   result$binningInfo = bc2t_binningInfo
   result$UMIDistr = as.numeric(bc2t_UMIdistribution)
