@@ -5,7 +5,7 @@
 \title{DSAVEGetGeneVariation}
 \usage{
 DSAVEGetGeneVariation(data, lb = 10, iterations = 100,
-  maxNumCells = 2000)
+  maxNumCells = 2000, silent = FALSE)
 }
 \arguments{
 \item{data}{numeric matrix, the input dataset (cell population)}
@@ -18,6 +18,8 @@ Recommended value is 100 if no p values are needed,
 
 \item{maxNumCells}{(optional) ds is reduced to this number of cells if it
 contains more, to save computation time. Defaults to 2,000.}
+
+\item{silent}{(optional) If true, no progress bar is shown. Defaults to FALSE}
 }
 \value{
 list(genes, logCVDifference, pVals, SNOVariances, SNOCountsPerGene)

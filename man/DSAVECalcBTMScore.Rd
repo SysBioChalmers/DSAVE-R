@@ -5,7 +5,8 @@
 \title{DSAVECalcBTMScore}
 \usage{
 DSAVECalcBTMScore(data, templInfo, skipAlignment = FALSE,
-  iterations = 15, useLogTransform = FALSE, logTPMAddon = 1)
+  iterations = 15, useLogTransform = FALSE, logTPMAddon = 1,
+  silent = FALSE)
 }
 \arguments{
 \item{data}{numeric matrix (can be sparse), the input dataset (cell population)}
@@ -19,6 +20,8 @@ DSAVECalcBTMScore(data, templInfo, skipAlignment = FALSE,
 \item{useLogTransform}{default FALSE, if TRUE calculation will be done on log transformed data}
 
 \item{logTPMAddon}{default 1, when using log transformed data, this number is added to the data before transforming to avoid log(0)}
+
+\item{silent}{(optional) If true, no progress bar is shown. Defaults to FALSE}
 }
 \value{
 list

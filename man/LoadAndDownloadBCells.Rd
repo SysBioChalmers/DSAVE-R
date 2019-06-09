@@ -10,7 +10,12 @@ LoadAndDownloadBCells()
 the template
 }
 \description{
-Gets the standard template that is redistributed with the package. This function uses Seurat.
+Gets the b10k dataset from 10x Genomics. The function tries to save the dataset as an
+.rds file in the package data folder to avoid having to download it every time it is
+requested. If that folder is not writable for some reason, it will use the temp folder,
+which is cleared when you exit R, meaning it will be downloaded again. In such cases, we
+recommend that you save the object separately.
+This function uses Seurat.
 You need to run the following two lines to use it:
 install.packages('Seurat')
 library(Seurat)
