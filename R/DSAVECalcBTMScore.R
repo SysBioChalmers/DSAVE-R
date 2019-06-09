@@ -4,7 +4,7 @@
 #'
 #' Calculate BTM Score
 #'
-#' @param data numeric matrix, the input dataset (cell population)
+#' @param data numeric matrix (can be sparse), the input dataset (cell population)
 #' @param templInfo template information
 #' @param skipAlignment logical, default FALSE. If FALSE, alignment will be done against the template data
 #' @param iterations number of iterations; defaults to 15

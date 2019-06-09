@@ -96,7 +96,7 @@ DSAVEAlignDataset <- function(data, templInfo){
     #edges to the left and right will differ 5.
     cellData <- data_sub[,i]
     edges <- c(0, cumsum(cellData) + 0.1)
-    #we need to add 0.1 to the edges since histcounts checks if edge(k) <= index < edge(k+1). Otherwise, index 1 would not end up between 0 and 1
+    #we need to add 0.1 to the edges since hist checks if edge(k) <= index < edge(k+1). Otherwise, index 1 would not end up between 0 and 1
     #Now get the number of index hits you get within the edge range for
     #each gene
     subtr <- hist(indexesToRem, breaks = edges, plot = F)$counts

@@ -14,7 +14,7 @@
 #' noise multiplied by noiseLevel will be multiplied to the probabilities.
 #' templDSForProfile -
 #'
-#' @param templDs The input dataset (cell population), numeric matrix
+#' @param templDs The input dataset (cell population), numeric matrix (can be sparse)
 #' @param numCells (optional) Can be used to specify the number of cells. Defaults to the number of cells in the input dataset.
 #' @param noiseLevel (optional) The noise level to add; defaults to 0 (no noise)
 #' @param templDSForProfile (optional) can be used if you want to generate data from a different cell type -
