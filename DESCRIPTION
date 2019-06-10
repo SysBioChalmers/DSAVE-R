@@ -7,16 +7,20 @@ Authors@R:
            role = c("aut", "cre"),
            email = "inda@chalmers.se")
 Description: Calculates DSAVE Total Cell Pool Variation Estimation, DSAVE Variation Score, DSAVE Gene-wise Variation Metric and DSAVE Cell-wise Variation Metric.
-Depends: R (>= 3.5),testthat,Seurat,extraDistr,progress
+Depends: R (>= 3.5)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: R6,
          graphics,
-         stats
+         stats,
+         progress
 RoxygenNote: 6.1.1
 Suggests: 
     knitr,
     rmarkdown,
-    ggplot2
+    ggplot2,
+    testthat,
+    extraDistr,
+    Seurat
 VignetteBuilder: knitr
