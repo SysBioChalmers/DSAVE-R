@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 ```{r}
 library(ggplot2)
 library(DSAVE)
-data(tcellCD4ProfilesTMMNormalized, package = "DSAVE")
+#data(tcellCD4ProfilesTMMNormalized, package = "DSAVE")
 ub <- 100000
 lb <- 0.5
 
@@ -37,16 +37,16 @@ lb <- 0.5
 ## Total variation from subsampled single cell data
 
 ```{r}
-data(PBMC68K_Tcells, package = "DSAVE")
+#data(PBMC68K_Tcells, package = "DSAVE")
 
-scTotalVariation <- list()
-pools <- seq(100, 4000, by = 1000)
+#scTotalVariation <- list()
+#pools <- seq(100, 4000, by = 1000)
 
-for(poolSize in pools){
-  scTotalVariation[[as.character(poolSize)]] <- DSAVEGetTotalVariationPoolSize(PBMC68K_Tcells,
-        poolSize = poolSize, upperBound = 1e5, lowerBound = 5e-1, na.rm = TRUE, 
-        seed = NULL, repetitionPerSize = 30L, rescale = FALSE)
-}
+#for(poolSize in pools){
+#  scTotalVariation[[as.character(poolSize)]] <- DSAVEGetTotalVariationPoolSize(PBMC68K_Tcells,
+#        poolSize = poolSize, upperBound = 1e5, lowerBound = 5e-1, na.rm = TRUE, 
+#        seed = NULL, repetitionPerSize = 30L, rescale = FALSE)
+#}
 
 ```
 
