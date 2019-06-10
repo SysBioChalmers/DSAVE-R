@@ -2,7 +2,7 @@
 % Please edit documentation in R/createPackageVariables.R
 \name{createPackageVariables}
 \alias{createPackageVariables}
-\title{LoadAndDownloadT4k}
+\title{createPackageVariables}
 \usage{
 createPackageVariables()
 }
