@@ -13,6 +13,7 @@
 #' @param silent (optional) If true, no progress bar is shown. Defaults to FALSE
 #' @importFrom stats median
 #' @importFrom combinat dmnom
+#' @importFrom stats dmultinom
 #' @importFrom progress progress_bar
 #' @export
 #' @author Johan Gustafsson, <gustajo@@chalmers.se>
@@ -40,7 +41,7 @@ DSAVEGetSingleCellDivergence <- function(data, minUMIsPerCell = 200, tpmLowerBou
   data = as.matrix(data);
 
   #remove all lowly expressed genes
-  me = tpmDSAVE(matrix(rowMeans(data),ncol = 1));
+  me = tpmDSAVE(matrix(rowMeans(data), ncol = 1));
   data = data[(me >= tpmLowerBound) & (me != 0), , drop=FALSE];
 
   numCells = dim(data)[2];
@@ -88,7 +89,7 @@ DSAVEGetSingleCellDivergence <- function(data, minUMIsPerCell = 200, tpmLowerBou
       } else {
         #calculate log likelihood from the
         #multinomial distribution
-        allLls[it,i] = dmnom(dsd[,i], sum(dsd[,i]), prob);#, log = TRUE);
+        allLls[it,i] = dmultinom(dsd[,i], sum(dsd[,i]), prob = prob, log = TRUE)
       }
     }
     if (!silent) {

@@ -5,8 +5,10 @@ date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{DSAVE-R Total Variation}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include = FALSE}
@@ -37,39 +39,54 @@ lb <- 0.5
 ## Total variation from subsampled single cell data
 
 ```{r}
-#data(PBMC68K_Tcells, package = "DSAVE")
+data("datasetScoresHuman", package = "DSAVE")
+bcells <- LoadAndDownloadBCells()
+tcells <- LoadAndDownloadT4k()
+scTotalVariation_bcells <- list()
+scTotalVariation_tcells <- list()
+pools <- seq(3, 5000, by = 200)
+pools2 <- seq(3, 2250, by = 200)
 
-#scTotalVariation <- list()
-#pools <- seq(100, 4000, by = 1000)
+for(poolSize in pools){
+  scTotalVariation_bcells[[as.character(poolSize)]] <- DSAVEGetTotalVariationPoolSize(bcells,
+        poolSize = poolSize, upperBound = 1e5, lowerBound = 5e-1, na.rm = TRUE, 
+        seed = NULL, repetitionPerSize = 30L, rescale = FALSE)
+}
 
-#for(poolSize in pools){
-#  scTotalVariation[[as.character(poolSize)]] <- DSAVEGetTotalVariationPoolSize(PBMC68K_Tcells,
-#        poolSize = poolSize, upperBound = 1e5, lowerBound = 5e-1, na.rm = TRUE, 
-#        seed = NULL, repetitionPerSize = 30L, rescale = FALSE)
-#}
+for(poolSize in pools2){
+  scTotalVariation_tcells[[as.character(poolSize)]] <- DSAVEGetTotalVariationPoolSize(tcells,
+          poolSize = poolSize, upperBound = 1e5, lowerBound = 5e-1, na.rm = TRUE, 
+          seed = NULL, repetitionPerSize = 30L, rescale = FALSE)
+}
 
 ```
 
 ## Plot
 
 ```{r, fig.show = 'asis'}
-#bulkMean1Vs1 <- rep(mean(bulkMean1Vs1), length(pools))
-#bulkMean4Vs4 <- rep(mean(bulkMean4Vs4), length(pools))
-#sc <- rbind(cbind(pools, sapply(scTotalVariation, function(v) mean(v)), "Tcells", "sc"), 
-#            cbind(pools, bulkMean1Vs1, "single bulk", "bulk"), 
-#            cbind(pools, bulkMean4Vs4, "mean of 4 bulk", "bulk"))
-#sc <- as.data.frame(sc)
-#colnames(sc) <- c("PoolSize", "TotalVariation", "DataSet", "DataType")
-#sc$PoolSize <- as.numeric(as.character(sc$PoolSize))
-#sc$TotalVariation <- as.numeric(as.character(sc$TotalVariation))
-#ggplot(sc, aes(x=PoolSize, y=TotalVariation, group = DataSet)) +
-#  ggtitle("Total Variation") +
-#  geom_line(aes(color = DataSet, linetype = DataType)) +
-#  ylim(0, max(sc$TotalVariation)) +
-#  theme(legend.title = element_text(size = 10),
-#        legend.text = element_text(size = 8),
-#        axis.text.x = element_text(size = 10, angle = 90),
-#        axis.text.y = element_text(size = 10)) + 
-#  guides(linetype = FALSE)
+bulkMean1Vs1 <- rep(mean(bulkTotalVar1vs1[[1]][[2]]), 2)
+bulkMean4Vs4 <- rep(mean(bulkTotalVar4vs4[[1]][[2]]), 2)
+sc <- rbind(cbind(pools, sapply(scTotalVariation_bcells, function(v) mean(v)), "B cells", "sc"), 
+            cbind(pools2, sapply(scTotalVariation_tcells, function(v) mean(v)), "T cells", "sc"), 
+            cbind(c(pools[1],pools[length(pools)]), bulkMean1Vs1, "single bulk sample", "bulk"), 
+            cbind(c(pools[1],pools[length(pools)]), bulkMean4Vs4, "mean of 4 bulk samples", "bulk"))
+sc <- as.data.frame(sc)
+colnames(sc) <- c("PoolSize", "TotalVariation", "Dataset", "DataType")
+sc$PoolSize <- as.numeric(as.character(sc$PoolSize))
+sc$TotalVariation <- as.numeric(as.character(sc$TotalVariation))
+p1 <- ggplot(sc, aes(x=PoolSize, y=TotalVariation, group = Dataset)) +
+  ggtitle("Variation per Cell Pool Size, CPM > 0.5") +
+  geom_line(aes(color = Dataset, linetype = DataType)) +
+  ylim(0, max(sc$TotalVariation)) +
+  theme(legend.title = element_text(size = 10),
+        legend.justification = c(1, 1),
+        legend.position = c(1, 1),
+        legend.text = element_text(size = 8),
+        axis.text.x = element_text(size = 10, angle = 90),
+        axis.text.y = element_text(size = 10)) + 
+  #ylab(bquote('Variation ( ~ R[mean])')) +
+  labs(y=expression(paste(Variation (R[mean] ))),
+       x="Pool size (number of cells)") +
+  guides(linetype = FALSE)
 
 ```

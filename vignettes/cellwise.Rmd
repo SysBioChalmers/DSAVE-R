@@ -1,0 +1,37 @@
+---
+title: "DSAVE "
+author: "Juan Inda"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{DSAVE-R Total Variation}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r}
+library(ggplot2)
+library(DSAVE)
+```
+
+
+## Total variation from subsampled single cell data
+
+```{r}
+data("datasetScoresHuman", package = "DSAVE")
+bcells <- LoadAndDownloadBCells()
+bcells_id <- sample(1:dim(bcells)[2], 1000)
+bcells_cell_divergence <- DSAVEGetSingleCellDivergence(bcells[,bcells_id], minUMIsPerCell = 200, tpmLowerBound = 0, iterations = 15, silent=FALSE)
+```
+
+
+```{r}
+
+plot(bcells_cell_divergence, colSums(as.matrix(bcells[,bcells_id])))
+id <- order(bcells_cell_divergence, decreasing = F)
+plot(bcells_cell_divergence[id] )
+```
+

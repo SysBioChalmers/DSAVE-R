@@ -15,6 +15,7 @@
 #' @param seed positive integer for to set the seed of the datas
 #' @param repetitionPerSize positive integer how many times the variation is calculated at each
 #' pool size
+#' @importFrom methods is as
 #' @export
 #' @author Juan Inda, <inda@@chalmers.se>
 #' @return numeric vector
@@ -29,7 +30,7 @@ DSAVEGetTotalVariationPoolSize <- function(data, poolSize = 4, upperBound = 1e5,
                                            lowerBound = 5e-1, na.rm = TRUE, seed = NULL,
                                            repetitionPerSize = 30L, rescale = TRUE){
   #print("Control parameters")
-  stopifnot(is.matrix(data),
+  stopifnot((is.matrix(data) |  is(data, 'sparseMatrix')),
             is.numeric(poolSize), length(poolSize) == 1,
             is.numeric(upperBound), length(upperBound) == 1,
             is.numeric(lowerBound), length(lowerBound) == 1,
@@ -37,6 +38,7 @@ DSAVEGetTotalVariationPoolSize <- function(data, poolSize = 4, upperBound = 1e5,
             is.logical(rescale), length(rescale) == 1,
             (is.null(seed) | is.integer(seed)),
             is.integer(repetitionPerSize), repetitionPerSize > 0)
+  data <- as.matrix(data)
 
   if(poolSize > floor(dim(data)[2]/2)){
     stop("Cannot make non-overlapping pool of cells. Choose a smaller poolSize.")
