@@ -14,8 +14,6 @@
 #' @param lowerBound filters out the genes with mean expression lower than this value
 #' @param na.rm logical, sends na.rm value to the rowMeans function
 #' @param rescale logical, determine if the data should be rescaled to TPM
-#' @param seed positive integer for to set the seed of the samples
-#' @param nComb maximum number of combinations of sub samples of 4
 #' @export
 #' @author Juan Inda, <inda@@chalmers.se>
 #' @return numeric vector
@@ -28,14 +26,13 @@
 
 DSAVEGetTotalVariationFromBulk <- function(data, pool4samples, upperBound = 1e5,
                                            lowerBound = 5e-1, na.rm = TRUE,
-                                           nComb = 1000L, seed = NULL, rescale = TRUE){
+                                           nComb = 1000L, rescale = TRUE){
   stopifnot(is.matrix(data),
             is.logical(pool4samples), length(pool4samples) == 1,
             is.numeric(upperBound), length(upperBound) == 1,
             is.numeric(lowerBound), length(lowerBound) == 1,
             is.logical(na.rm), length(na.rm) == 1,
-            is.logical(rescale), length(rescale) == 1,
-            (is.null(seed) | is.integer(seed)), is.integer(nComb))
+            is.logical(rescale), length(rescale) == 1)
 
   if(rescale) {data <- tpmDSAVE(data)}
   row_means <- rowMeans(data, na.rm = na.rm)

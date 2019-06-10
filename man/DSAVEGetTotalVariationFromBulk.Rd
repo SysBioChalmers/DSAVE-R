@@ -5,8 +5,7 @@
 \title{DSAVEGetTotalVariationFromBulk}
 \usage{
 DSAVEGetTotalVariationFromBulk(data, pool4samples, upperBound = 1e+05,
-  lowerBound = 0.5, na.rm = TRUE, nComb = 1000L, seed = NULL,
-  rescale = TRUE)
+  lowerBound = 0.5, na.rm = TRUE, nComb = 1000L, rescale = TRUE)
 }
 \arguments{
 \item{data}{a numericl matrix}
@@ -19,10 +18,6 @@ of 4 randomly selected samples with the mean of 4 others}
 \item{lowerBound}{filters out the genes with mean expression lower than this value}
 
 \item{na.rm}{logical, sends na.rm value to the rowMeans function}
-
-\item{nComb}{maximum number of combinations of sub samples of 4}
-
-\item{seed}{positive integer for to set the seed of the samples}
 
 \item{rescale}{logical, determine if the data should be rescaled to TPM}
 }

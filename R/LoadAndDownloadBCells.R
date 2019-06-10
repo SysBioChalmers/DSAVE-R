@@ -6,9 +6,6 @@
 #' which is cleared when you exit R, meaning it will be downloaded again. In such cases, we
 #' recommend that you save the object separately.
 #' This function uses Seurat.
-#' You need to run the following two lines to use it:
-#' install.packages('Seurat')
-#' library(Seurat)
 #'
 #' @importFrom graphics hist
 #' @export
