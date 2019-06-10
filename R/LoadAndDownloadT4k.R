@@ -6,9 +6,6 @@
 #' which is cleared when you exit R, meaning it will be downloaded again. In such cases, we
 #' recommend that you save the object separately.
 #' This function uses Seurat.
-#' You need to run the following two lines to use it:
-#' install.packages('Seurat')
-#' library(Seurat)
 #'
 #' @importFrom graphics hist
 #' @export
@@ -28,7 +25,7 @@ LoadAndDownloadT4k <- function() {
   if (is.null(a)) {
     tmpdir = tempdir(check = TRUE)
     tmpdir = gsub('\\','/',tmpdir, fixed=TRUE)
-    a = TryLoadBCells(tmpdir)
+    a = TryLoadT4k(tmpdir)
   }
 
   return(a)
@@ -45,12 +42,12 @@ TryLoadT4k <- function(root) {
   out <- tryCatch(
     {
       if (!file.exists(RDAfilename)) {
-        #download, untar and load the bcell data and then store it in a .rda file
+        #download, untar and load the t4k data and then store it in a .rda file
         download.file("http://cf.10xgenomics.com/samples/cell-exp/2.1.0/t_4k/t_4k_filtered_gene_bc_matrices.tar.gz",
                       gzfilename, "internal")
         untar(gzfilename, exdir = extrDir)
         data <- Read10X(data.dir = dataDir)
-        saveRDS(BCellsData, file=RDAfilename)
+        saveRDS(data, file=RDAfilename)
         file.remove(gzfilename)
         unlink(extrDir, recursive = TRUE) #deletes the directory
       }
