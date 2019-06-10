@@ -9,6 +9,7 @@
 #' @param data matrix or sparse matrix, the type is preserved in the output
 #' @param templInfo list with one element called UMIDistr containing template information
 #' @importFrom graphics hist
+#' @importFrom methods is as
 #' @export
 #' @author Juan Inda, <inda@@chalmers.se>
 #' @return a matrix

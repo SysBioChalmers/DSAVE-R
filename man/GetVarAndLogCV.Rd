@@ -7,9 +7,11 @@
 GetVarAndLogCV(dsdata, UMIsPerCell)
 }
 \arguments{
+\item{dsdata}{numeric matrix, the input dataset (cell population)}
+
 \item{UMIsPerCell}{number of UMIs to normalize by.}
 
-\item{data}{numeric matrix, the input dataset (cell population)}
+\item{GetVarAndLogCV}{?}
 }
 \value{
 list(logCV, variances)

@@ -8,6 +8,7 @@
 #' This function uses Seurat.
 #'
 #' @importFrom graphics hist
+#' @importFrom Seurat Read10X
 #' @export
 #' @author Johan Gustafsson, <gustajo@@chalmers.se>
 #' @return the template

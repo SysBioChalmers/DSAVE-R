@@ -12,6 +12,7 @@
 #' @param maxNumCells (optional) ds is reduced to this number of cells if it
 #' contains more, to save computation time. Defaults to 2,000.
 #' @param silent (optional) If true, no progress bar is shown. Defaults to FALSE
+#' @importFrom progress progress_bar
 #' @export
 #' @author Juan Inda, <inda@@chalmers.se>
 #' @return list(genes, logCVDifference, pVals, SNOVariances, SNOCountsPerGene)

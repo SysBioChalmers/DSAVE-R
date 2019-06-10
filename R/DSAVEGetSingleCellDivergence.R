@@ -11,6 +11,9 @@
 #' @param tpmLowerBound (optional) TPM lower bound, genes below this will not
 #' be included. Defaults to 0 (meaning all genes are included).
 #' @param silent (optional) If true, no progress bar is shown. Defaults to FALSE
+#' @importFrom stats median
+#' @importFrom combinat dmnom
+#' @importFrom progress progress_bar
 #' @export
 #' @author Johan Gustafsson, <gustajo@@chalmers.se>
 #' @return vector of divergence, one value per cell. The divergence is the
@@ -85,7 +88,7 @@ DSAVEGetSingleCellDivergence <- function(data, minUMIsPerCell = 200, tpmLowerBou
       } else {
         #calculate log likelihood from the
         #multinomial distribution
-        allLls[it,i] = dmnom(dsd[,i], sum(dsd[,i]), prob, log = TRUE);
+        allLls[it,i] = dmnom(dsd[,i], sum(dsd[,i]), prob);#, log = TRUE);
       }
     }
     if (!silent) {

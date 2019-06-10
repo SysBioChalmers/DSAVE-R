@@ -20,6 +20,8 @@
 #' @param templDSForProfile (optional) can be used if you want to generate data from a different cell type -
 #' defaults to templDs - the genes in the datasets need to be synchronized
 #' @importFrom graphics hist
+#' @importFrom methods is as
+#' @importFrom stats runif rnorm
 #' @export
 #' @author Juan Inda, <inda@@chalmers.se>
 #' @return a matrix

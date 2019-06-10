@@ -16,7 +16,7 @@ createPackageVariables <- function() {
 
 #public dataset scores
 #The numbers come from the publication, figure 3A.
-datasetScoresHuman <<- list(list("BC", 0.1378),
+datasetScoresHuman <- list(list("BC", 0.1378),
                            list("OC", 0.0389),
                            list("LC", 0.0283),
                            list("LIVC", 0.1102),
@@ -44,45 +44,45 @@ samp = samp * normFact
 bulkMean1Vs1_05_100k <- DSAVEGetTotalVariationFromBulk(samp,
                                                        pool4samples = FALSE, upperBound = 100000,
                                                        lowerBound = 0.5, rescale = FALSE)
-bulkMean4Vs4_05_100k = DSAVEGetTotalVariationFromBulk(samp,
+bulkMean4Vs4_05_100k <- DSAVEGetTotalVariationFromBulk(samp,
                                                       pool4samples = TRUE, upperBound = 100000, na.rm = TRUE,
                                                       lowerBound = 0.5, nComb = 10000L, rescale =FALSE)
 
 bulkMean1Vs1_05_2 <- DSAVEGetTotalVariationFromBulk(samp,
                                                        pool4samples = FALSE, upperBound = 2,
                                                        lowerBound = 0.5, rescale = FALSE)
-bulkMean4Vs4_05_2 = DSAVEGetTotalVariationFromBulk(samp,
+bulkMean4Vs4_05_2 <- DSAVEGetTotalVariationFromBulk(samp,
                                                       pool4samples = TRUE, upperBound = 2, na.rm = TRUE,
                                                       lowerBound = 0.5, nComb = 10000L, rescale =FALSE)
 
 bulkMean1Vs1_100_100k <- DSAVEGetTotalVariationFromBulk(samp,
                                                        pool4samples = FALSE, upperBound = 100000,
                                                        lowerBound = 100, rescale = FALSE)
-bulkMean4Vs4_100_100k = DSAVEGetTotalVariationFromBulk(samp,
+bulkMean4Vs4_100_100k <- DSAVEGetTotalVariationFromBulk(samp,
                                                       pool4samples = TRUE, upperBound = 100000, na.rm = TRUE,
                                                       lowerBound = 100, nComb = 10000L, rescale =FALSE)
 
 bulkMean1Vs1_05_50 <- DSAVEGetTotalVariationFromBulk(samp,
                                                     pool4samples = FALSE, upperBound = 50,
                                                     lowerBound = 0.5, rescale = FALSE)
-bulkMean4Vs4_05_50 = DSAVEGetTotalVariationFromBulk(samp,
+bulkMean4Vs4_05_50 <- DSAVEGetTotalVariationFromBulk(samp,
                                                    pool4samples = TRUE, upperBound = 50, na.rm = TRUE,
                                                    lowerBound = 0.5, nComb = 10000L, rescale =FALSE)
 
 bulkMean1Vs1_2_100 <- DSAVEGetTotalVariationFromBulk(samp,
                                                     pool4samples = FALSE, upperBound = 100,
                                                     lowerBound = 2, rescale = FALSE)
-bulkMean4Vs4_2_100 = DSAVEGetTotalVariationFromBulk(samp,
+bulkMean4Vs4_2_100 <- DSAVEGetTotalVariationFromBulk(samp,
                                                    pool4samples = TRUE, upperBound = 100, na.rm = TRUE,
                                                    lowerBound = 2, nComb = 10000L, rescale =FALSE)
 
-bulkTotalVar1vs1 <<- list(list("PseudoTPM: 0.5-100k", bulkMean1Vs1_05_100k),
+bulkTotalVar1vs1 <- list(list("PseudoTPM: 0.5-100k", bulkMean1Vs1_05_100k),
                           list("PseudoTPM: 0.5-2", bulkMean1Vs1_05_2),
                           list("PseudoTPM: 100-100k", bulkMean1Vs1_100_100k),
                           list("PseudoTPM: 0.5-50", bulkMean1Vs1_05_50),
                           list("PseudoTPM: 2-100", bulkMean1Vs1_2_100))
 
-bulkTotalVar4vs4 <<- list(list("PseudoTPM: 0.5-100k", bulkMean4Vs4_05_100k),
+bulkTotalVar4vs4 <- list(list("PseudoTPM: 0.5-100k", bulkMean4Vs4_05_100k),
                           list("PseudoTPM: 0.5-2", bulkMean4Vs4_05_2),
                           list("PseudoTPM: 100-100k", bulkMean4Vs4_100_100k),
                           list("PseudoTPM: 0.5-50", bulkMean4Vs4_05_50),
