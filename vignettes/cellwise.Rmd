@@ -52,9 +52,11 @@ for(i in 1:length(linevalYs)){
 }
 linevalYs <- c(linevalYs, rep(NA, length(numUMIshcatSub2) - length(linevalYs)))
 linevalXes <- c(linevalXes, rep(NA, length(numUMIshcatSub2) - length(linevalXes)))
+linevalYs[is.na(linevalXes)] <- NA
 id <- order(linevalYs, decreasing = F)
 linevalXes <- linevalXes[id]
 linevalYs <- linevalYs[id]
+
 
 df <- as.data.frame(cbind(bcells_cell_divergence, colSums(as.matrix(bcells[,bcells_id]))))
 ggplot(df, aes(x=bcells_cell_divergence, y=V2, colour = "Individual cell")) + 
@@ -68,8 +70,6 @@ ggplot(df, aes(x=bcells_cell_divergence, y=V2, colour = "Individual cell")) +
         axis.text.x = element_text(size = 10, angle = 90),
         axis.text.y = element_text(size = 10)) +
   geom_path(aes(linevalXes, linevalYs, colour="Mean log-likelihood"))
-
-  
 
 
 id <- order(bcells_cell_divergence, decreasing = F)
