@@ -23,7 +23,6 @@ library(DSAVE)
 - Download the B cells data set.
 
 ```{r}
-data("datasetScoresHuman", package = "DSAVE")
 bcells <- LoadAndDownloadBCells()
 ```
 

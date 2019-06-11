@@ -23,16 +23,6 @@ knitr::opts_chunk$set(
 ```{r}
 library(ggplot2)
 library(DSAVE)
-#data(tcellCD4ProfilesTMMNormalized, package = "DSAVE")
-ub <- 100000
-lb <- 0.5
-
-#bulkMean1Vs1 <- DSAVEGetTotalVariationFromBulk(tcellCD4ProfilesTMMNormalized, 
-#                    pool4samples = FALSE, upperBound = ub,
-#                    lowerBound = lb, rescale = FALSE)
-#bulkMean4Vs4 = DSAVEGetTotalVariationFromBulk(tcellCD4ProfilesTMMNormalized, 
-#                    pool4samples = TRUE, upperBound = ub, na.rm = TRUE, 
-#                    lowerBound = lb, nComb = 10000L, rescale =FALSE)
 ```
 
 
