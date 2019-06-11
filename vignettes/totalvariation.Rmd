@@ -1,5 +1,5 @@
 ---
-title: "DSAVE-R Total Variation"
+title: "DSAVE Total Variation"
 author: "Juan Inda"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
