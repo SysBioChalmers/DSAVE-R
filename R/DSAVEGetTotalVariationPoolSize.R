@@ -8,12 +8,14 @@
 #' @param data a numeric matrix
 #' @param poolSize numeric value, it should be maximum half of the total size of the data
 #' in the data object
-#' @param upperBound filters out the genes with mean expression higher than this value
-#' @param lowerBound filters out the genes with mean expression lower than this value
-#' @param na.rm logical, sends na.rm value to the rowMeans function
-#' @param rescale logical, determine if the data should be rescaled
+#' @param upperBound filters out the genes with mean expression higher than this value.
+#' Defaults to 100,000, which in practice includes almost all genes.
+#' @param lowerBound filters out the genes with mean expression lower than this value. Defaults to 0.5.
+#' @param na.rm logical, sends na.rm value to the rowMeans function, should normally be true.
 #' @param seed positive integer for to set the seed of the datas
-#' @param repetitionPerSize positive integer how many times the variation is calculated at each
+#' @param repetitionPerSize Positive integer describing how many iterations that are used.
+#' Defaults to 30.
+#' @param rescale logical, determine if the data should be rescaled. Should normally be TRUE.
 #' pool size
 #' @importFrom methods is as
 #' @export

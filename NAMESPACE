@@ -3,6 +3,7 @@
 export(DSAVEAlignDataset)
 export(DSAVECalcBTMScore)
 export(DSAVEGenerateSNODataset)
+export(DSAVEGenerateTemplate)
 export(DSAVEGetGeneVariation)
 export(DSAVEGetSingleCellDivergence)
 export(DSAVEGetStandardTemplate)

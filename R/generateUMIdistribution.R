@@ -10,7 +10,7 @@
 #' @return a template object
 generateUMIDistribution = function(data, numUMI = 750){
   stopifnot(is.numeric(data), is.matrix(data))
-  stopifnot(is.integer(numUMI), length(numUMI) == 1)
+  stopifnot(numUMI == round(numUMI), length(numUMI) == 1)
   totalUMI <- sum(data)
   sumUMI <- colSums(data)
   totalTargetUMI <- dim(data)[2] * numUMI
