@@ -6,16 +6,9 @@
 \usage{
 createPackageVariables()
 }
-\value{
-nothing
-}
 \description{
-Sets up all package data except the standard template, which was done manually
-Make sure the current directory is the package root
-}
-\examples{
-\dontrun{ createPackageVariables()
-}
+Sets up all package data except the standard template, which was done manually.
+Make sure the current directory is the package root before calling this function.
 }
 \author{
 Johan Gustafsson, <gustajo@chalmers.se>

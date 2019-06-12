@@ -39,7 +39,7 @@ test_that("TR008 - DSAVEGetSingleCellDivergence",{
 
 
   #also make sure it runs for a real dataset
-  ds10 = LoadAndDownloadBCells();
+  ds10 = loadOrDownloadB10k();
   ds10 = ds10[, 1:100];
   lls10 = DSAVEGetSingleCellDivergence(ds10, 200, silent = TRUE);
   #check that we have no NA

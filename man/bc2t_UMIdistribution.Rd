@@ -3,18 +3,16 @@
 \docType{data}
 \name{bc2t_UMIdistribution}
 \alias{bc2t_UMIdistribution}
-\title{bc2t_UMIdistribution data set (NAME)}
-\format{Is it a matrix?}
+\title{bc2t_UMIdistribution}
+\format{Double-precision vector}
 \source{
-Where is it coming from?
+Calculated from the BC dataset.
 }
 \usage{
 bc2t_UMIdistribution
 }
 \description{
-Description 1
-}
-\details{
-Description 2
+Part of the DSAVE standard template. Describes number of counts for each cell in the
+down-sampled dataset after alignment.
 }
 \keyword{datasets}

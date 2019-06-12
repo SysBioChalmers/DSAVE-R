@@ -19,10 +19,8 @@
 #' @author Juan Inda, <inda@@chalmers.se>
 #' @return numeric vector
 #' @examples
-#' \dontrun{
 #' DSAVEGetTotalVariationFromBulk(sample, pool4samples = FALSE, upperBound = 100000,
 #' lowerBound = 0.5)
-#' }
 #'
 
 DSAVEGetTotalVariationFromBulk <- function(data, pool4samples, upperBound = 1e5,

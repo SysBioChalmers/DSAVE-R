@@ -1,7 +1,5 @@
 #' DSAVEGetGeneVariation
 #'
-#' Calculate Gene Variation
-#'
 #' Calculates the DSAVE gene-wise BTM variation metric.
 #'
 #' @param data numeric matrix, the input dataset (cell population)
@@ -14,11 +12,9 @@
 #' @param silent (optional) If true, no progress bar is shown. Defaults to FALSE
 #' @importFrom progress progress_bar
 #' @export
-#' @author Juan Inda, <inda@@chalmers.se>
+#' @author Juan Inda, <inda@@chalmers.se>, Johan Gustafsson, <gustajo@@chalmers.se>
 #' @return list(genes, logCVDifference, pVals, SNOVariances, SNOCountsPerGene)
-#' @examples
-#' \dontrun{templ <- DSAVEGetGeneVariation(ds, 1, 10000, 1000)
-#' }
+
 DSAVEGetGeneVariation <- function(data, lb=10, iterations = 100, maxNumCells=2000, silent=FALSE){
   stopifnot(is.numeric(data), is.matrix(data))
   stopifnot(iterations == round(iterations), length(iterations) == 1)
@@ -68,7 +64,7 @@ DSAVEGetGeneVariation <- function(data, lb=10, iterations = 100, maxNumCells=200
 
   SNOLogCVS <- matrix(0, nrow=numCountVals, ncol=iterations)
   SNOVariances <- SNOLogCVS
-  VarAndLog <- GetVarAndLogCV(data, colSums(data))
+  VarAndLog <- getVarAndLogCV(data, colSums(data))
   logCVDS <- VarAndLog[["logCV"]]
   varianceDS <- VarAndLog[["variances"]]
 
@@ -88,9 +84,9 @@ DSAVEGetGeneVariation <- function(data, lb=10, iterations = 100, maxNumCells=200
   SNOdata <- matrix(0, nrow = numCountVals, ncol = numCells)
 
   for( it in 1:iterations){
-    SNOdata <- GenSampDs(SNOdata, SNOCountsPerGene, SNOEdges)
+    SNOdata <- genSampDs(SNOdata, SNOCountsPerGene, SNOEdges)
     #so, use the UMIs per cell from the original dataset when TPM:ing
-    varAndLogCV <- GetVarAndLogCV(SNOdata, SNOUMIsPerCell)
+    varAndLogCV <- getVarAndLogCV(SNOdata, SNOUMIsPerCell)
     SNOLogCVS[,it] <- varAndLogCV[["logCV"]]
     SNOVariances[,it] <- varAndLogCV[["variances"]]
     if (!silent) {

@@ -25,15 +25,8 @@ contains more, to save computation time. Defaults to 2,000.}
 list(genes, logCVDifference, pVals, SNOVariances, SNOCountsPerGene)
 }
 \description{
-Calculate Gene Variation
-}
-\details{
 Calculates the DSAVE gene-wise BTM variation metric.
 }
-\examples{
-\dontrun{templ <- DSAVEGetGeneVariation(ds, 1, 10000, 1000)
-}
-}
 \author{
-Juan Inda, <inda@chalmers.se>
+Juan Inda, <inda@chalmers.se>, Johan Gustafsson, <gustajo@chalmers.se>
 }

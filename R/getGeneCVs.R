@@ -1,8 +1,6 @@
-#' GetGeneCVs
+#' getGeneCVs
 #'
-#' GetGeneCVs
-#'
-#' Calculate coefficient of variation
+#' Help function for DSAVECalcBTMScore. Calculates coefficient of variation (CV).
 #'
 #' @param ds numeric matrix
 #' @param toLog default FALSE, if TRUE calculation will be done on log transformed data
@@ -10,10 +8,7 @@
 #' @export
 #' @author Juan Inda, <inda@@chalmers.se>
 #' @return a vector
-#' @examples
-#' \dontrun{
-#' }
-GetGeneCVs <- function(ds, logTPMAddon, toLog=FALSE){
+getGeneCVs <- function(ds, logTPMAddon, toLog=FALSE){
   ds <- tpmDSAVE(ds)
   if(toLog){
     totset <- log(ds + logTPMAddon)

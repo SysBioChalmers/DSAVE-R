@@ -15,16 +15,17 @@ DSAVEAlignDataset(data, templInfo)
 a matrix
 }
 \description{
-Align a data set to a template
+Align a cell population to a template
 }
 \details{
-Aligns the dataset to the template, by removing genes, removing cells and down-sampling the data to match the template as good as possible.
-All datasets successfully aligned to the same template will have almost
+Aligns the cell population to the template, by removing genes, removing cells and down-sampling the
+data to match the template as good as possible.
+All cell populations successfully aligned to the same template will have almost
 identical sampling noise.
 }
 \examples{
-\dontrun{ DSAVEAlignDataset(data, templInfo)
-}
+dsAligned = DSAVEAlignDataset(data, templInfo)
+
 }
 \author{
 Juan Inda, <inda@chalmers.se>

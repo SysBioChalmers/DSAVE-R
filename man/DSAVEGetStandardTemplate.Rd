@@ -10,11 +10,7 @@ DSAVEGetStandardTemplate()
 the template
 }
 \description{
-Gets the standard template that is redistributed with the package
-}
-\examples{
-\dontrun{ DSAVEGetStandardTemplate()
-}
+Gets the standard template that is distributed with the package.
 }
 \author{
 Johan Gustafsson, <gustajo@chalmers.se>

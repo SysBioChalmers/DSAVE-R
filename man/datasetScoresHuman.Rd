@@ -4,7 +4,7 @@
 \name{datasetScoresHuman}
 \alias{datasetScoresHuman}
 \title{datasetScoresHuman}
-\format{list of lists, where the inner list contains the dataset name (as named 
+\format{list of lists, where the inner list contains the dataset name (as named
 in the DSAVE publication) and the DSAVE score.}
 \source{
 Calculated with the DSAVE-M package in MATLAB, but the results should
@@ -25,8 +25,8 @@ CD8T \tab Chen, J. et al. PBMC fixation and processing for Chromium single-cell 
 datasetScoresHuman
 }
 \description{
-DSAVE scores from public datasets evaluated with the standard template. 
-Can be used for comparison against the score generated to see if it is 
+DSAVE scores from public datasets evaluated with the standard template.
+Can be used for comparison against the score generated to see if it is
 comparable to scores from other datasets.
 }
 \keyword{datasets}

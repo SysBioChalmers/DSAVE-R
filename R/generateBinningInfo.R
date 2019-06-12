@@ -1,27 +1,22 @@
-#' BINNING INFORMATION
+#' generateBinningInfo
 #'
-#' Samples object elements and methods
-#'
-#' Sets the binning information
+#' Creates the part of the template called the binning information from a dataset.
 #'
 #' @param data Numeric matrix
-#' @param lbnonlog lower bound in original scale
-#' @param ubnonlog upper bound in original scale
+#' @param lbnonlog lower bound in original scale. Should stretch a bit outside the intended range.
+#' @param ubnonlog upper bound in original scale. Should stretch a bit outside the intended range.
 #' @param numPoints number of points for the distribution
 #' @param poolSize number of genes to pool at each point in the distribution
-#' @param step increas in lower and upper bound to get enough genes at each point in the distribution
+#' @param step increase in lower and upper bound to get enough genes at each point in the distribution
 #' @param toplim maximum number of iterations to obtain the frequency at each point in the distribution
-#' @param reScale maximum number of iterations to obtain the frequency at each point in the distribution
+#' @param rescale If the data should be rescaled to TPM before the calculation. Defaults to true.
 #' @export
 #' @author Juan Inda, <inda@@chalmers.se>
-#' @return a template object
-#' @examples
-#' \dontrun{
-#' }
+#' @return list(means, lower bounds, upper bounds)
 
 
-setBinningInfo = function(data = NULL, lbnonlog = NULL, ubnonlog = NULL,
-                          reScale = FALSE, numPoints = 1000L, poolSize = 500L,
+generateBinningInfo = function(data, lbnonlog = 5L, ubnonlog = 1300L,
+                          rescale = TRUE, numPoints = 1000L, poolSize = 500L,
                           step = 5e-4, toplim = 1000L){
   stopifnot(is.numeric(data), is.matrix(data))
   stopifnot(is.integer(lbnonlog), length(lbnonlog) == 1)
@@ -36,7 +31,7 @@ setBinningInfo = function(data = NULL, lbnonlog = NULL, ubnonlog = NULL,
   templInfo.binningInfo.means <- 10^meansLog
 
   data0 <- data
-  if(reScale){
+  if(rescale){
     cat("Re-scaling gene means \n")
     data <- tpmDSAVE(data)
     }

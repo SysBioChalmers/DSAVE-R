@@ -1,12 +1,11 @@
-#' GetVarAndLogCV
+#' getVarAndLogCV
 #'
-#' GetVarAndLogCV
+#' Help function for DSAVEGetGeneVariation. Calculates variation and log CV.
 #'
-#' GetVarAndLogCV
+#' getVarAndLogCV
 #'
 #' @param dsdata numeric matrix, the input dataset (cell population)
 #' @param UMIsPerCell number of UMIs to normalize by.
-#' @param GetVarAndLogCV ?
 #' @importFrom stats var
 #' @export
 #' @author Juan Inda, <inda@@chalmers.se>
@@ -15,7 +14,7 @@
 #' \dontrun{
 #' }
 
-GetVarAndLogCV <- function(dsdata, UMIsPerCell){
+getVarAndLogCV <- function(dsdata, UMIsPerCell){
   #tpm with specified UMIs per cell
   #There's no good way to do this without a loop in R
   for(i in 1:dim(dsdata)[2]){

@@ -1,10 +1,10 @@
 #' datasetScoresHuman
 #'
-#' DSAVE scores from public datasets evaluated with the standard template. 
-#' Can be used for comparison against the score generated to see if it is 
+#' DSAVE scores from public datasets evaluated with the standard template.
+#' Can be used for comparison against the score generated to see if it is
 #' comparable to scores from other datasets.
 #'
-#' @format list of lists, where the inner list contains the dataset name (as named 
+#' @format list of lists, where the inner list contains the dataset name (as named
 #' in the DSAVE publication) and the DSAVE score.
 #' @source Calculated with the DSAVE-M package in MATLAB, but the results should
 #' be the same.
@@ -18,6 +18,5 @@
 #'	CD4TMEM \tab	Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017). \tab ~10,000 FACS-sorted CD4+ T memory cells. All cells from the CD4TMEM dataset, in total 10,224 cells. \cr
 #'	HCA CB \tab Li, B. et al. Census of Immune Cells. Human Cell Atlas Data Portal (2018). \tab All T cells from patient 'CB1', 'CB2' and 'CB3' from the HCA CB dataset, in total 30,462 cells. \cr
 #'	CD8T \tab Chen, J. et al. PBMC fixation and processing for Chromium single-cell RNA sequencing. J. Transl. Med. 16, 198 (2018). \tab All cells from the TCD8 dataset, in total 5,662 cells. \cr
-
 #' }
 "datasetScoresHuman"

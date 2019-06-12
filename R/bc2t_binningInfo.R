@@ -1,10 +1,11 @@
-#' bc2t_binningInfo data set (NAME)
+#' bc2t_binningInfo
 #'
-#' Description 1
+#' Part of the DSAVE standard template. Describes the edges for the bins to use
+#' for calculating variation per gene expression.
 #'
-#' Description 2
-#'
-#' @format Is it a matrix?
-#' @source Where is it coming from?
+#' @format List with three fields: binninginfo.means, binninginfo.ubs and binninginfo.lbs,
+#' corresponding to the mean, upper bound and lower bound for each bin. Each of those is a
+#' list of 1,000 points.
+#' @source Calculated from the BC dataset
 #'
 "bc2t_binningInfo"

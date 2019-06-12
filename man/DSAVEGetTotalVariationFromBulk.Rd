@@ -36,10 +36,8 @@ of 4 randomly selected samples with the mean of 4 others. This expects a
 list of 8 samples.
 }
 \examples{
-\dontrun{
 DSAVEGetTotalVariationFromBulk(sample, pool4samples = FALSE, upperBound = 100000,
 lowerBound = 0.5)
-}
 
 }
 \author{

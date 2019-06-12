@@ -4,17 +4,14 @@
 \name{genesForTemplate}
 \alias{genesForTemplate}
 \title{genesForTemplate}
-\format{A Sample object}
+\format{string list}
 \source{
-10X single cell data from...
+The genes are the intersection of the genes available in four datasets; BC, OC, B10k and TCD8.
 }
 \usage{
 genesForTemplate
 }
 \description{
-Intersection of genes found in 4 datasets of single cell RNA-seq
-}
-\details{
-Intersection of genes found in 4 datasets of single cell RNA-seq
+Part of the standard template. Intersection of genes found in 4 datasets of single cell RNA-seq.
 }
 \keyword{datasets}
