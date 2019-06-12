@@ -24,7 +24,7 @@
 #' @return List containing total variation from the aligned and SNO cell populations over the gene expression range,
 #' the difference between those, the corresponding gene expression values, and finally the BTM score.
 #' @examples
-#' a = DSAVECalcBTMScore(data, templInfo)
+#' \dontrun{ a = DSAVECalcBTMScore(data, templInfo)}
 #'
 
 DSAVECalcBTMScore <- function(data, templInfo, skipAlignment=FALSE, iterations = 15,

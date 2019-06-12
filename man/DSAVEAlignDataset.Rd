@@ -24,7 +24,7 @@ All cell populations successfully aligned to the same template will have almost
 identical sampling noise.
 }
 \examples{
-dsAligned = DSAVEAlignDataset(data, templInfo)
+\dontrun{dsAligned = DSAVEAlignDataset(data, templInfo)}
 
 }
 \author{

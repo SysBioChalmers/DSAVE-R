@@ -15,7 +15,7 @@
 #' @author Juan Inda, <inda@@chalmers.se>
 #' @return a matrix
 #' @examples
-#' dsAligned = DSAVEAlignDataset(data, templInfo)
+#' \dontrun{dsAligned = DSAVEAlignDataset(data, templInfo)}
 #'
 
 DSAVEAlignDataset <- function(data, templInfo){

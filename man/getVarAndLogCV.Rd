@@ -20,10 +20,6 @@ Help function for DSAVEGetGeneVariation. Calculates variation and log CV.
 \details{
 getVarAndLogCV
 }
-\examples{
-\dontrun{
-}
-}
 \author{
 Juan Inda, <inda@chalmers.se>
 }
