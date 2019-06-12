@@ -1,8 +1,6 @@
-#' setUMIDistribution
+#' generateUMIDistribution
 #'
-#' Set UMI distribution
-#'
-#' Creates a UMI distribution for a template from a given cell population.
+#' Creates the part of the template called the UMI distribution from a dataset.
 #'
 #' @param data Numeric matrix
 #' @param numUMI average number of molecules per cell
@@ -10,7 +8,7 @@
 #' @export
 #' @author Juan Inda, <inda@@chalmers.se>
 #' @return a template object
-setUMIDistribution = function(data, numUMI = 750){
+generateUMIDistribution = function(data, numUMI = 750){
   stopifnot(is.numeric(data), is.matrix(data))
   stopifnot(is.integer(numUMI), length(numUMI) == 1)
   totalUMI <- sum(data)

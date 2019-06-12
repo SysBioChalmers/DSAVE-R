@@ -1,6 +1,6 @@
 test_that("TR006 - DSAVEGenerateSNODataset",{
 
-  ds = LoadAndDownloadBCells();
+  ds = loadOrDownloadB10k();
   ds2 = ds[, 1:100];
 
   ds3 = DSAVEGenerateSNODataset(ds2);

@@ -1,8 +1,6 @@
-#' setBinningInfo
+#' generateBinningInfo
 #'
 #' Creates the part of the template called the binning information from a dataset.
-#'
-#' Sets the binning information
 #'
 #' @param data Numeric matrix
 #' @param lbnonlog lower bound in original scale. Should stretch a bit outside the intended range.
@@ -17,7 +15,7 @@
 #' @return list(means, lower bounds, upper bounds)
 
 
-setBinningInfo = function(data, lbnonlog = 5L, ubnonlog = 1300L,
+generateBinningInfo = function(data, lbnonlog = 5L, ubnonlog = 1300L,
                           rescale = TRUE, numPoints = 1000L, poolSize = 500L,
                           step = 5e-4, toplim = 1000L){
   stopifnot(is.numeric(data), is.matrix(data))

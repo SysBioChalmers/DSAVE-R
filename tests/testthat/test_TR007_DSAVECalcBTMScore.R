@@ -1,6 +1,6 @@
 test_that("TR007 - DSAVECalcBTMScore",{
 
-  ds = LoadAndDownloadBCells();
+  ds = loadOrDownloadB10k();
 
   templInfo = DSAVEGetStandardTemplate();
 

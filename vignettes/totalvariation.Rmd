@@ -30,8 +30,8 @@ library(DSAVE)
 
 ```{r}
 data("datasetScoresHuman", package = "DSAVE")
-bcells <- LoadAndDownloadBCells()
-tcells <- LoadAndDownloadT4k()
+bcells <- loadOrDownloadB10k()
+tcells <- loadOrDownloadT4k()
 scTotalVariation_bcells <- list()
 scTotalVariation_tcells <- list()
 pools <- seq(3, 5000, by = 200)

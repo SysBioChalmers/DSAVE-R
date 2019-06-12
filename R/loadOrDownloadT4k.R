@@ -1,4 +1,4 @@
-#' LoadAndDownloadT4k
+#' loadOrDownloadT4k
 #'
 #' Gets the t4k dataset from 10x Genomics. The function tries to save the dataset as an
 #' .rds file in the package data folder to avoid having to download it every time it is
@@ -12,7 +12,7 @@
 #' @author Johan Gustafsson, <gustajo@@chalmers.se>
 #' @return the template
 
-LoadAndDownloadT4k <- function() {
+loadOrDownloadT4k <- function() {
   #solve the problem that the current directory is sometimes the package
   #root and sometimes in the testthat folder
   #root = dirname(is_r_package$find_file("DSAVE_ROOT_IDENTIFIER.txt"))

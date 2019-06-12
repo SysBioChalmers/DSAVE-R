@@ -23,7 +23,7 @@ library(DSAVE)
 - Download the B cells data set.
 
 ```{r}
-bcells <- LoadAndDownloadBCells()
+bcells <- loadOrDownloadB10k()
 ```
 
 - Subsample to 1000 cells and run DSAVEGetSingleCellDivergence

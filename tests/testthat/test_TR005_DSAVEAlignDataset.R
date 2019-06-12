@@ -2,7 +2,7 @@ test_that("TR005 - DSAVEAlignDataset",{
   # First, create a dataset that we know will have a higher UMI distribution
   # for all cells (depends on the current template that comes with the package)
   templInfo = DSAVEGetStandardTemplate();
-  ds = LoadAndDownloadBCells();
+  ds = loadOrDownloadB10k();
   ds2 = ds[, 4001:6000];
   ds3 = DSAVEAlignDataset(ds2, templInfo);
   ds3m = as.matrix(ds3);

@@ -70,8 +70,8 @@ DSAVECalcBTMScore <- function(data, templInfo, skipAlignment=FALSE, iterations =
 
     SNO <- DSAVEGenerateSNODataset(aligned)
 
-    alignedGeneCVs <- GetGeneCVs(aligned, logTPMAddon, toLog=useLogTransform);
-    SNOGeneCVs <- GetGeneCVs(SNO, logTPMAddon, toLog=useLogTransform)
+    alignedGeneCVs <- getGeneCVs(aligned, logTPMAddon, toLog=useLogTransform);
+    SNOGeneCVs <- getGeneCVs(SNO, logTPMAddon, toLog=useLogTransform)
 
 
     #throw away the most and least variable genes
@@ -97,11 +97,11 @@ DSAVECalcBTMScore <- function(data, templInfo, skipAlignment=FALSE, iterations =
       SNOData <- SNOData[-discard,]
     }
 
-    alCVs <- AverageIntoBins(alData, alignedGeneCVsRem, templInfo)
+    alCVs <- averageIntoBins(alData, alignedGeneCVsRem, templInfo)
     alXes <- alCVs[[2]]
     alCVs <- alCVs[[1]]
 
-    saCVs <- AverageIntoBins(SNOData, SNOGeneCVsRem, templInfo)
+    saCVs <- averageIntoBins(SNOData, SNOGeneCVsRem, templInfo)
     saXes <- saCVs[[2]]
     saCVs <- saCVs[[1]]
 

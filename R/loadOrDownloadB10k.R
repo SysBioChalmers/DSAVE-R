@@ -1,4 +1,4 @@
-#' LoadAndDownloadBCells
+#' loadOrDownloadB10k
 #'
 #' Gets the b10k dataset from 10x Genomics. The function tries to save the dataset as an
 #' .rds file in the package data folder to avoid having to download it every time it is
@@ -13,7 +13,7 @@
 #' @author Johan Gustafsson, <gustajo@@chalmers.se>
 #' @return the template
 
-LoadAndDownloadBCells <- function() {
+loadOrDownloadB10k <- function() {
   #solve the problem that the current directory is sometimes the package
   #root and sometimes in the testthat folder
   packageRoot = paste0(path.package("DSAVE"),"/data");
