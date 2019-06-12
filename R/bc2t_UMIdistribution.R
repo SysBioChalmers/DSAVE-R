@@ -1,10 +1,9 @@
-#' bc2t_UMIdistribution data set (NAME)
+#' bc2t_UMIdistribution
 #'
-#' Description 1
+#' Part of the DSAVE standard template. Describes number of counts for each cell in the
+#' down-sampled dataset after alignment.
 #'
-#' Description 2
-#'
-#' @format Is it a matrix?
-#' @source Where is it coming from?
+#' @format Double-precision vector
+#' @source Calculated from the BC dataset.
 #'
 "bc2t_UMIdistribution"

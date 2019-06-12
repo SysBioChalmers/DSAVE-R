@@ -17,14 +17,7 @@ GetGeneCVs(ds, logTPMAddon, toLog = FALSE)
 a vector
 }
 \description{
-GetGeneCVs
-}
-\details{
-Calculate coefficient of variation
-}
-\examples{
-\dontrun{
-}
+Help function for DSAVECalcBTMScore. Calculates coefficient of variation (CV).
 }
 \author{
 Juan Inda, <inda@chalmers.se>

@@ -15,9 +15,6 @@ A matrix
 \description{
 Standarizes by column making it sum to 1e6
 }
-\details{
-Standarizes by column making it sum to 1e6
-}
 \author{
 Juan Inda, <inda@chalmers.se>, Johan Gustafsson, <gustajo@chalmers.se>
 }

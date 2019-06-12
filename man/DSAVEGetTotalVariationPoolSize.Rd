@@ -31,17 +31,15 @@ pool size}
 numeric vector
 }
 \description{
-Calculate total variation with a specific pool size
+Calculates the total variation with a specific pool size.
 }
 \details{
 Calculates the average pairwise total variation between two pools of cells with specific size,
 with a TPM filtration on the genes.
 }
 \examples{
-\dontrun{
 DSAVEGetTotalVariationPoolSize(data, poolSize = 50, upperBound = 1000,
 lowerBound = 0.01, na.rm = TRUE, seed = 1, repetitionPerSize = 30, 0.5)
-}
 
 }
 \author{

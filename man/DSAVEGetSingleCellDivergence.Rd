@@ -21,21 +21,20 @@ be included. Defaults to 0 (meaning all genes are included).}
 \item{silent}{(optional) If true, no progress bar is shown. Defaults to FALSE}
 }
 \value{
-vector of divergence, one value per cell. The divergence is the
+vector of divergence, one value per cell.
+}
+\description{
+Calculates the DSAVE cell-wise variation metric.
+}
+\details{
+The divergence is the
 log-likelihood for getting the observed counts' distribution for each
 cell when sampling counts from the mean dataset gene expression. The
 values are negative, and the lower (i.e. more negative) the value, the
 more divergent the cell is.
 }
-\description{
-Calculate Cell Variation
-}
-\details{
-Calculates the DSAVE cell-wise variation metric.
-}
 \examples{
-\dontrun{templ <- DSAVEGetSingleCellDivergence(ds)
-}
+a = DSAVEGetSingleCellDivergence(ds)
 }
 \author{
 Johan Gustafsson, <gustajo@chalmers.se>

@@ -17,15 +17,11 @@ GenSampDs(data, countsPerGene, edges)
 list(logCV, variances)
 }
 \description{
-GenSampDs
+Help function for DSAVEGetGeneVariation. Generates a SNO dataset for the gene-wise metric,
+where the counts per gene is constant instead of counts per cell.
 }
 \details{
 GenSampDs
-}
-\examples{
-\dontrun{
-}
-
 }
 \author{
 Juan Inda, <inda@chalmers.se>

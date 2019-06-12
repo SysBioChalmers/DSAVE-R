@@ -1,12 +1,11 @@
 #' GetVarAndLogCV
 #'
-#' GetVarAndLogCV
+#' Help function for DSAVEGetGeneVariation. Calculates variation and log CV.
 #'
 #' GetVarAndLogCV
 #'
 #' @param dsdata numeric matrix, the input dataset (cell population)
 #' @param UMIsPerCell number of UMIs to normalize by.
-#' @param GetVarAndLogCV ?
 #' @importFrom stats var
 #' @export
 #' @author Juan Inda, <inda@@chalmers.se>

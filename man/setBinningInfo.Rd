@@ -2,41 +2,36 @@
 % Please edit documentation in R/setBinningInfo.R
 \name{setBinningInfo}
 \alias{setBinningInfo}
-\title{BINNING INFORMATION}
+\title{setBinningInfo}
 \usage{
-setBinningInfo(data = NULL, lbnonlog = NULL, ubnonlog = NULL,
-  reScale = FALSE, numPoints = 1000L, poolSize = 500L,
-  step = 5e-04, toplim = 1000L)
+setBinningInfo(data, lbnonlog = 5L, ubnonlog = 1300L, rescale = TRUE,
+  numPoints = 1000L, poolSize = 500L, step = 5e-04, toplim = 1000L)
 }
 \arguments{
 \item{data}{Numeric matrix}
 
-\item{lbnonlog}{lower bound in original scale}
+\item{lbnonlog}{lower bound in original scale. Should stretch a bit outside the intended range.}
 
-\item{ubnonlog}{upper bound in original scale}
+\item{ubnonlog}{upper bound in original scale. Should stretch a bit outside the intended range.}
 
-\item{reScale}{maximum number of iterations to obtain the frequency at each point in the distribution}
+\item{rescale}{If the data should be rescaled to TPM before the calculation. Defaults to true.}
 
 \item{numPoints}{number of points for the distribution}
 
 \item{poolSize}{number of genes to pool at each point in the distribution}
 
-\item{step}{increas in lower and upper bound to get enough genes at each point in the distribution}
+\item{step}{increase in lower and upper bound to get enough genes at each point in the distribution}
 
 \item{toplim}{maximum number of iterations to obtain the frequency at each point in the distribution}
 }
 \value{
-a template object
+list(means, lower bounds, upper bounds)
 }
 \description{
-Samples object elements and methods
+Creates the part of the template called the binning information from a dataset.
 }
 \details{
 Sets the binning information
-}
-\examples{
-\dontrun{
-}
 }
 \author{
 Juan Inda, <inda@chalmers.se>

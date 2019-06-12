@@ -1,6 +1,7 @@
 #' GenSampDs
 #'
-#' GenSampDs
+#' Help function for DSAVEGetGeneVariation. Generates a SNO dataset for the gene-wise metric,
+#' where the counts per gene is constant instead of counts per cell.
 #'
 #' GenSampDs
 #'
@@ -11,9 +12,6 @@
 #' @export
 #' @author Juan Inda, <inda@@chalmers.se>
 #' @return list(logCV, variances)
-#' @examples
-#' \dontrun{
-#' }
 #'
 GenSampDs <- function(data, countsPerGene, edges){
   new_data <- data

@@ -1,9 +1,10 @@
 #' DSAVEAlignDataset
 #'
-#' Align a data set to a template
+#' Align a cell population to a template
 #'
-#' Aligns the dataset to the template, by removing genes, removing cells and down-sampling the data to match the template as good as possible.
-#' All datasets successfully aligned to the same template will have almost
+#' Aligns the cell population to the template, by removing genes, removing cells and down-sampling the
+#' data to match the template as good as possible.
+#' All cell populations successfully aligned to the same template will have almost
 #' identical sampling noise.
 #'
 #' @param data matrix or sparse matrix, the type is preserved in the output
@@ -14,8 +15,8 @@
 #' @author Juan Inda, <inda@@chalmers.se>
 #' @return a matrix
 #' @examples
-#' \dontrun{ DSAVEAlignDataset(data, templInfo)
-#' }
+#' dsAligned = DSAVEAlignDataset(data, templInfo)
+#'
 
 DSAVEAlignDataset <- function(data, templInfo){
   stopifnot(is.matrix(data) | is(data, 'sparseMatrix'))

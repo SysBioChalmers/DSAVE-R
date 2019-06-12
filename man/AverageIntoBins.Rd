@@ -9,22 +9,20 @@ AverageIntoBins(TPMData, logcv, templInfo)
 \arguments{
 \item{TPMData}{numeric matrix, tpmdata}
 
-\item{logcv}{numeric vector, Gene Coefficient of Variation}
-
 \item{templInfo}{list with 5 elements}
+
+\item{logCV}{numeric vector, Gene Coefficient of Variation}
 }
 \value{
-a list with cv and meanGeneExpr
+a list with CV and meanGeneExpr
 }
 \description{
-AverageIntoBins
+Help function for the DSAVE Score calculation. Places genes into
+gene expression range bins and then calculates the mean for each
+bin.
 }
 \details{
 AverageIntoBins
-}
-\examples{
-\dontrun{
-}
 }
 \author{
 Juan Inda, <inda@chalmers.se>

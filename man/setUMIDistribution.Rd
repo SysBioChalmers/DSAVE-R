@@ -2,9 +2,9 @@
 % Please edit documentation in R/setUMIdistribution.R
 \name{setUMIDistribution}
 \alias{setUMIDistribution}
-\title{SET UMI DISTRIBUTION}
+\title{setUMIDistribution}
 \usage{
-setUMIDistribution(data = NULL, numUMI = 750)
+setUMIDistribution(data, numUMI = 750)
 }
 \arguments{
 \item{data}{Numeric matrix}
@@ -18,11 +18,7 @@ a template object
 Set UMI distribution
 }
 \details{
-Creates a UMI distribution
-}
-\examples{
-\dontrun{
-}
+Creates a UMI distribution for a template from a given cell population.
 }
 \author{
 Juan Inda, <inda@chalmers.se>

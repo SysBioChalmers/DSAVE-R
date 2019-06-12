@@ -10,14 +10,12 @@ GetVarAndLogCV(dsdata, UMIsPerCell)
 \item{dsdata}{numeric matrix, the input dataset (cell population)}
 
 \item{UMIsPerCell}{number of UMIs to normalize by.}
-
-\item{GetVarAndLogCV}{?}
 }
 \value{
 list(logCV, variances)
 }
 \description{
-GetVarAndLogCV
+Help function for DSAVEGetGeneVariation. Calculates variation and log CV.
 }
 \details{
 GetVarAndLogCV

@@ -1,18 +1,17 @@
 #' AverageIntoBins
 #'
-#' AverageIntoBins
+#' Help function for the DSAVE Score calculation. Places genes into
+#' gene expression range bins and then calculates the mean for each
+#' bin.
 #'
 #' AverageIntoBins
 #'
 #' @param TPMData numeric matrix, tpmdata
-#' @param logcv numeric vector, Gene Coefficient of Variation
+#' @param logCV numeric vector, Gene Coefficient of Variation
 #' @param templInfo list with 5 elements
 #' @export
 #' @author Juan Inda, <inda@@chalmers.se>
-#' @return a list with cv and meanGeneExpr
-#' @examples
-#' \dontrun{
-#' }
+#' @return a list with CV and meanGeneExpr
 
 AverageIntoBins <- function(TPMData, logcv, templInfo){
   avgRefExpr <- rowMeans(TPMData)

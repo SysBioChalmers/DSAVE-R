@@ -1,7 +1,5 @@
 #' DSAVEGetGeneVariation
 #'
-#' Calculate Gene Variation
-#'
 #' Calculates the DSAVE gene-wise BTM variation metric.
 #'
 #' @param data numeric matrix, the input dataset (cell population)
@@ -14,11 +12,9 @@
 #' @param silent (optional) If true, no progress bar is shown. Defaults to FALSE
 #' @importFrom progress progress_bar
 #' @export
-#' @author Juan Inda, <inda@@chalmers.se>
+#' @author Juan Inda, <inda@@chalmers.se>, Johan Gustafsson, <gustajo@@chalmers.se>
 #' @return list(genes, logCVDifference, pVals, SNOVariances, SNOCountsPerGene)
-#' @examples
-#' \dontrun{templ <- DSAVEGetGeneVariation(ds, 1, 10000, 1000)
-#' }
+
 DSAVEGetGeneVariation <- function(data, lb=10, iterations = 100, maxNumCells=2000, silent=FALSE){
   stopifnot(is.numeric(data), is.matrix(data))
   stopifnot(iterations == round(iterations), length(iterations) == 1)

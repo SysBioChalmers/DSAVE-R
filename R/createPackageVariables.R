@@ -1,15 +1,12 @@
 #' createPackageVariables
 #'
-#' Sets up all package data except the standard template, which was done manually
-#' Make sure the current directory is the package root
+#' Sets up all package data except the standard template, which was done manually.
+#' Make sure the current directory is the package root before calling this function.
 #'
 #' @importFrom graphics hist
 #' @export
 #' @author Johan Gustafsson, <gustajo@@chalmers.se>
-#' @return nothing
-#' @examples
-#' \dontrun{ createPackageVariables()
-#' }
+#'
 
 createPackageVariables <- function() {
 

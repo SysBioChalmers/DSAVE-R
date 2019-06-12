@@ -3,18 +3,18 @@
 \docType{data}
 \name{bc2t_binningInfo}
 \alias{bc2t_binningInfo}
-\title{bc2t_binningInfo data set (NAME)}
-\format{Is it a matrix?}
+\title{bc2t_binningInfo}
+\format{List with three fields: binninginfo.means, binninginfo.ubs and binninginfo.lbs,
+corresponding to the mean, upper bound and lower bound for each bin. Each of those is a
+list of 1,000 points.}
 \source{
-Where is it coming from?
+Calculated from the BC dataset
 }
 \usage{
 bc2t_binningInfo
 }
 \description{
-Description 1
-}
-\details{
-Description 2
+Part of the DSAVE standard template. Describes the edges for the bins to use
+for calculating variation per gene expression.
 }
 \keyword{datasets}

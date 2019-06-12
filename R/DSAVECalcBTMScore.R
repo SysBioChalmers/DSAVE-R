@@ -1,8 +1,12 @@
 #' DSAVECalcBTMScore
 #'
-#' Calculate BTM Score
+#' Calculates the DSAVE BTM Variation Score, which gives and overall score for the BTM variation across all genes.
+#' This metric is comparable across datasets.
 #'
-#' Calculate BTM Score
+#' The function generates sampling noise only (SNO) datasets for comparison with the real data,
+#' and subtracts the SNO total variation (which is sampling noise only) from the total variation of the
+#' cell population, yielding the BTM variation. Cell population alignment makes the metric comparable
+#' across cell populations and datasets.
 #'
 #' @param data numeric matrix (can be sparse), the input dataset (cell population)
 #' @param templInfo template information
@@ -16,11 +20,12 @@
 #' @importFrom methods is as
 #' @importFrom progress progress_bar
 #' @export
-#' @author Juan Inda, <inda@@chalmers.se>
-#' @return list
+#' @author Juan Inda, <inda@@chalmers.se>, Johan Gustafsson, <gustajo@@chalmers.se>
+#' @return List containing total variation from the aligned and SNO cell populations over the gene expression range,
+#' the difference between those, the corresponding gene expression values, and finally the BTM score.
 #' @examples
-#' \dontrun{
-#' }
+#' a = DSAVECalcBTMScore(data, templInfo)
+#'
 
 DSAVECalcBTMScore <- function(data, templInfo, skipAlignment=FALSE, iterations = 15,
                               useLogTransform=FALSE, logTPMAddon=1, silent=FALSE){

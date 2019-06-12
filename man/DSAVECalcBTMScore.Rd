@@ -24,18 +24,23 @@ DSAVECalcBTMScore(data, templInfo, skipAlignment = FALSE,
 \item{silent}{(optional) If true, no progress bar is shown. Defaults to FALSE}
 }
 \value{
-list
+List containing total variation from the aligned and SNO cell populations over the gene expression range,
+the difference between those, the corresponding gene expression values, and finally the BTM score.
 }
 \description{
-Calculate BTM Score
+Calculates the DSAVE BTM Variation Score, which gives and overall score for the BTM variation across all genes.
+This metric is comparable across datasets.
 }
 \details{
-Calculate BTM Score
+The function generates sampling noise only (SNO) datasets for comparison with the real data,
+and subtracts the SNO total variation (which is sampling noise only) from the total variation of the
+cell population, yielding the BTM variation. Cell population alignment makes the metric comparable
+across cell populations and datasets.
 }
 \examples{
-\dontrun{
-}
+a = DSAVECalcBTMScore(data, templInfo)
+
 }
 \author{
-Juan Inda, <inda@chalmers.se>
+Juan Inda, <inda@chalmers.se>, Johan Gustafsson, <gustajo@chalmers.se>
 }

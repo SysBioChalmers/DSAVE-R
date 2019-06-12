@@ -5,14 +5,13 @@
 #' This function uses a template dataset to compute the probability p that
 #' a molecule from a certain gene should be picked each time a new UMI is
 #' found. This is calculated from the counts value, i.e. counts/sum of all
-#' counts. This is based on a multinomial distribution, and it will select
-#' exactly the same number of UMIs that are in the original set using the
+#' counts. Counts are then sampled from a multinomial distribution
+#' drawing the same number of UMIs that are in the original set using the
 #' probabilities for the genes from the mean of the dataset sent in.
 #' Important that this is really UMI counts in this case, not TPM!
-#' Random multiplicative noise will be added (0 == no noise)
+#' Random multiplicative noise will be added if desired; (0 == no noise)
 #' noiseLevel should be 0 or greater. A standard random normal distributed
 #' noise multiplied by noiseLevel will be multiplied to the probabilities.
-#' templDSForProfile -
 #'
 #' @param templDs The input dataset (cell population), numeric matrix (can be sparse)
 #' @param numCells (optional) Can be used to specify the number of cells. Defaults to the number of cells in the input dataset.
@@ -24,10 +23,7 @@
 #' @importFrom stats runif rnorm
 #' @export
 #' @author Juan Inda, <inda@@chalmers.se>
-#' @return a matrix
-#' @examples
-#' \dontrun{ DSAVEGenerateSNODataset(ds)
-#' }
+#' @return a matrix containing the generated dataset
 
 DSAVEGenerateSNODataset <- function(templDs, numCells=NULL, noiseLevel=0, templDSForProfile=NULL){
   stopifnot(is.matrix(templDs) | is(templDs, 'sparseMatrix'))
