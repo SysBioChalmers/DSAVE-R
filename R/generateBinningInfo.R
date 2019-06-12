@@ -19,12 +19,12 @@ generateBinningInfo = function(data, lbnonlog = 5L, ubnonlog = 1300L,
                           rescale = TRUE, numPoints = 1000L, poolSize = 500L,
                           step = 5e-4, toplim = 1000L){
   stopifnot(is.numeric(data), is.matrix(data))
-  stopifnot(is.integer(lbnonlog), length(lbnonlog) == 1)
-  stopifnot(is.integer(ubnonlog), length(ubnonlog) == 1)
+  stopifnot(lbnonlog == round(lbnonlog), length(lbnonlog) == 1)
+  stopifnot(ubnonlog == round(ubnonlog), length(ubnonlog) == 1)
   stopifnot(lbnonlog < ubnonlog)
-  stopifnot(is.integer(numPoints), length(numPoints) == 1)
-  stopifnot(is.integer(poolSize), length(poolSize) == 1)
-  stopifnot(is.integer(toplim), length(toplim) == 1)
+  stopifnot(numPoints == round(numPoints), length(numPoints) == 1)
+  stopifnot(poolSize == round(poolSize), length(poolSize) == 1)
+  stopifnot(toplim == round(toplim), length(toplim) == 1)
   stopifnot(is.numeric(step), length(step) == 1)
 
   meansLog <- seq(log10(lbnonlog), log10(ubnonlog), length.out =numPoints)
