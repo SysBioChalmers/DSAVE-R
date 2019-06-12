@@ -14,18 +14,20 @@ DSAVEGetTotalVariationPoolSize(data, poolSize = 4, upperBound = 1e+05,
 \item{poolSize}{numeric value, it should be maximum half of the total size of the data
 in the data object}
 
-\item{upperBound}{filters out the genes with mean expression higher than this value}
+\item{upperBound}{filters out the genes with mean expression higher than this value.
+Defaults to 100,000, which in practice includes almost all genes.}
 
-\item{lowerBound}{filters out the genes with mean expression lower than this value}
+\item{lowerBound}{filters out the genes with mean expression lower than this value. Defaults to 0.5.}
 
-\item{na.rm}{logical, sends na.rm value to the rowMeans function}
+\item{na.rm}{logical, sends na.rm value to the rowMeans function, should normally be true.}
 
 \item{seed}{positive integer for to set the seed of the datas}
 
-\item{repetitionPerSize}{positive integer how many times the variation is calculated at each
-pool size}
+\item{repetitionPerSize}{Positive integer describing how many iterations that are used.
+Defaults to 30.}
 
-\item{rescale}{logical, determine if the data should be rescaled}
+\item{rescale}{logical, determine if the data should be rescaled. Should normally be TRUE.
+pool size}
 }
 \value{
 numeric vector
