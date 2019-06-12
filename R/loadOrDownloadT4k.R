@@ -16,14 +16,14 @@ loadOrDownloadT4k <- function() {
   #solve the problem that the current directory is sometimes the package
   #root and sometimes in the testthat folder
   #root = dirname(is_r_package$find_file("DSAVE_ROOT_IDENTIFIER.txt"))
-  packageRoot = paste0(path.package("DSAVE"),"/tempData");
+  #packageRoot = paste0(path.package("DSAVE"),"/tempData");
   #packageRoot = "H:/"; #add this line to test that save to temp folder instead works
-  a = TryLoadT4k(packageRoot)
-  if (is.null(a)) {
+  #a = TryLoadT4k(packageRoot)
+  #if (is.null(a)) {
     tmpdir = tempdir(check = TRUE)
     tmpdir = gsub('\\','/',tmpdir, fixed=TRUE)
     a = TryLoadT4k(tmpdir)
-  }
+  #}
 
   return(a)
 }
