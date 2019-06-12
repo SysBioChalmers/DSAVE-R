@@ -34,8 +34,8 @@ library(DSAVE)
 - Download the datasets to analyze.
 
 ```{r}
-bcells <- LoadAndDownloadBCells()
-tcells <- LoadAndDownloadT4k()
+bcells <- loadOrDownloadB10k()
+tcells <- loadOrDownloadT4k()
 ```
 
 - Calculate the Total Variation for different pool sizes.
