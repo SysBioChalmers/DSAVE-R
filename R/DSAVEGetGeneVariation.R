@@ -27,8 +27,10 @@ DSAVEGetGeneVariation <- function(data, lb=10, iterations = 100, maxNumCells=200
     data <- data[,id]
     #keep this line if we start using numCells below later
     numCells <- maxNumCells
+  } else{
+    id <- 1:dim(data)[2]
   }
-
+  ID_cells <- id
   if (!silent) {
     pb <- progress_bar$new(format = "Calculating gene variation [:bar] :percent eta: :eta",
                            total = iterations + 1, clear = FALSE)
@@ -122,5 +124,6 @@ DSAVEGetGeneVariation <- function(data, lb=10, iterations = 100, maxNumCells=200
 
   return(list(genes = genes, logCVDifference = logCVDifference,
               pVals = pVals, SNOVariances = SNOVariances,
-              SNOCountsPerGene = SNOCountsPerGene))
+              SNOCountsPerGene = SNOCountsPerGene,
+              cells = ID_cells))
 }
