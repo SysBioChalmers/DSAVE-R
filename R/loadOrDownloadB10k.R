@@ -16,7 +16,7 @@
 loadOrDownloadB10k <- function() {
   #solve the problem that the current directory is sometimes the package
   #root and sometimes in the testthat folder
-  packageRoot = paste0(path.package("DSAVE"),"/data");
+  packageRoot = paste0(path.package("DSAVE"),"/tempData");
   #packageRoot = "H:/"; #add this line to test that save to temp folder instead works
   a = TryLoadBCells(packageRoot)
   if (is.null(a)) {
@@ -30,10 +30,10 @@ loadOrDownloadB10k <- function() {
 
 TryLoadBCells <- function(root) {
 
-  RDAfilename = paste0(root,"/BCells.rds")
-  gzfilename = paste0(root,"/BCells.tar.gz")
-  extrDir = paste0(root,"/BCells")
-  dataDir = paste0(root,"/BCells/filtered_matrices_mex/hg19")
+  RDAfilename = paste0(root,"/B10k.rds")
+  gzfilename = paste0(root,"/B10k.tar.gz")
+  extrDir = paste0(root,"/B10k")
+  dataDir = paste0(root,"/B10k/filtered_matrices_mex/hg19")
   BCellsData = NULL
 
   out <- tryCatch(
