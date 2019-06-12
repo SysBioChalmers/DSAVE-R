@@ -4,7 +4,7 @@ author: "Juan Inda"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{DSAVE-R Total Variation}
+  %\VignetteIndexEntry{DSAVE-R Gene-wise Variation}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -26,7 +26,7 @@ library(DSAVE)
 bcells <- loadOrDownloadB10k()
 ```
 
-- Subsample to 1000 cells and run DSAVEGetSingleCellDivergence
+- Run DSAVEGetGeneVariation
 
 ```{r}
 bcells_gene_variation <- DSAVEGetGeneVariation(as.matrix(bcells), lb=10, iterations = 100, maxNumCells=2000, silent=FALSE)
@@ -56,9 +56,9 @@ ggplot(df, aes(x=V1, y=V2, colour = "B cells")) +
 - Probabilities
 
 ```{r}
-#totUMIs <- sum(bcells[bcells_gene_variation$genes, bcells_gene_variation$cells])
-#SNOvariances <- bcells_gene_variation$SNOVariances
-
+#It is to be noted that these p values are generated with too few iterations; that is why the 
+#graph is not smooth. We recommend at least 10,000 iterations to get proper p values, but that takes
+#much longer to run.
 
 pvals <- bcells_gene_variation$pVals
 #pvals_adj <- p.adjust(pvals, "BH")
