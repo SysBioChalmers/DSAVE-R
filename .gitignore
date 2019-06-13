@@ -6,3 +6,8 @@ inst/doc
 .RData
 data/*.rds
 doc/*
+.DS_Store
+.Rbuildignore
+.travis.yml
+.DSAVE.Rproj
+DSAVE_0.0.0.9000.tar.gz
