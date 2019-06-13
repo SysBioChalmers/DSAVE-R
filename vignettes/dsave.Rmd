@@ -1,6 +1,6 @@
 ---
 title: "DSAVE package"
-author: "Juan Inda, Johan Gustafsson"
+author: "Johan Gustafsson, Juan Inda"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -15,7 +15,7 @@ editor_options:
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
+  collapse = TRUE, fig.width = 7,
   comment = "#>"
 )
 ```
@@ -118,7 +118,6 @@ pb$terminate()
 
 ```
 
-
 - Plot the results
 
 ```{r , fig.show = 'asis'}
@@ -126,9 +125,9 @@ bulkMean1Vs1 <- rep(mean(bulkTotalVar1vs1[[1]][[2]]), 2)
 bulkMean4Vs4 <- rep(mean(bulkTotalVar4vs4[[1]][[2]]), 2)
 sc <- rbind(
   cbind(pools, sapply(scTotalVariation_bcells, 
-                      function(v) mean(v)), "B cells", "sc"), 
+                      function(v) mean(v)), "B10k", "sc"), 
   cbind(pools2, sapply(scTotalVariation_tcells, 
-                       function(v) mean(v)), "T cells", "sc"), 
+                       function(v) mean(v)), "T4k", "sc"), 
   cbind(c(pools[1],pools[length(pools)]), 
         bulkMean1Vs1, "single bulk sample", "bulk"),
   cbind(c(pools[1],pools[length(pools)]), 
@@ -156,6 +155,9 @@ ggplot(sc, aes(x=PoolSize, y=TotalVariation, group = Dataset)) +
 
 ```
 
+We can see that we need to pool around 1000 T cells to on average get down to bulk variation level,
+while we need twice as many of the B cells, likely depending on that the sampling noise is higher
+In the B10k dataset due to fewer reads. It is also to be noted that the number of cells that is needed in a pool highly depends on gene expression. For highly expressed genes, a few hundreds are enough, while for lowly expressed genes several thousands are needed.
 
 ## 3 BTM score
 
@@ -187,7 +189,7 @@ scores <- data.frame(t(sapply(datasetScoresHuman,
                               function(x) c(x[[1]], x[[2]]))),
                      stringsAsFactors = F)
 
-scores <- rbind.data.frame(scores,c("T-cells", tcells_btm$DSAVEScore))
+scores <- rbind.data.frame(scores,c("T4k", tcells_btm$DSAVEScore))
 scores$X2 <- as.numeric(scores$X2)
 
 ggplot(scores, aes( X1)) +
@@ -199,6 +201,7 @@ ggplot(scores, aes( X1)) +
 
 ```
 
+We can see that the T4k dataset has a BTM variation that is comparable to the other datasets and that the technical quality thus is what can be expected for single-cell RNA-Seq.
 
 ### 4 Gene-wise variation
 
@@ -215,7 +218,7 @@ id <- order(bcells_gene_variation$logCVDifference, decreasing = T)
 df <- as.data.frame(cbind(1:length(id), 
                           bcells_gene_variation$logCVDifference[id]))
 
-ggplot(df, aes(x=V1, y=V2, colour = "B cells")) + 
+ggplot(df, aes(x=V1, y=V2, colour = "B10k")) + 
   geom_line() +
   ggtitle("Variation per Gene") +
   xlab("Gene index") + ylab("BTM variation") +
@@ -226,6 +229,8 @@ ggplot(df, aes(x=V1, y=V2, colour = "B cells")) +
         axis.text.x = element_text(size = 10, angle = 90),
         axis.text.y = element_text(size = 10))
 ```
+
+It is clear that the variation varies much between genes. The stochasticity for a gene can be fairly high, especially for lowly expressed genes. Therefore, it is of interest to compare the p-values as well, where the null hypothesis is that the variation comes from sampling effects.
 
 - Plot the p-value per gene
 
@@ -242,7 +247,7 @@ df <- data.frame(gene = bcells_gene_variation$genes[id],
                  index = 1:length(pvals[id]), pvals = pvals[id])
 df$gene <- as.character(df$gene)
 
-ggplot(df, aes(x=index, y=pvals, colour = "B cells")) + 
+ggplot(df, aes(x=index, y=pvals, colour = "B10k")) + 
   geom_line() +
   ggtitle("p values per gene") +
   xlab("Gene index") + ylab("p value") +
@@ -254,6 +259,8 @@ ggplot(df, aes(x=index, y=pvals, colour = "B cells")) +
         axis.text.y = element_text(size = 10))
 
 ```
+
+We can see that there are fairly many genes with a low p-value. The p-values are not adjusted for multiple testing, which should be done if the function is used for searching for variable genes.
 
 
 ## 5 Cell-wise variation
@@ -314,13 +321,15 @@ ggplot(df, aes(x=bcells_cell_divergence, y=V2, colour = "Individual cell")) +
   geom_path(aes(linevalXes, linevalYs, colour="Mean log-likelihood"))
 ```
 
+We can see that cells with low number of UMIs are more divergent. Cells below a certain UMI count threshold are usually discarded in a quality control step. We can see that elevating that threshold would likely get rid of more divergent cells, however at the cost of loss of data. Also cells with a high UMI count are on average more divergent; this could be explained by that some of them are doublets, i.e. cases where two or more cells have been accidentally joined and treated as just one cell. Divergence could then come from that the joined cells are of different cell type.
+
 - Plot the Cell Divergence
 
 ```{r , fig.show = 'asis'}
 
 id <- order(bcells_cell_divergence, decreasing = F)
 df <- as.data.frame(cbind(1:length(bcells_cell_divergence), bcells_cell_divergence[id]))
-ggplot(df, aes(x=V1, y=V2, colour = "B cells")) + 
+ggplot(df, aes(x=V1, y=V2, colour = "B10k")) + 
   geom_line() +
   ggtitle("Cell Divergence") +
   xlab("Cell index") + ylab("Log-likelihood") +
@@ -332,4 +341,5 @@ ggplot(df, aes(x=V1, y=V2, colour = "B cells")) +
         axis.text.y = element_text(size = 10))
 ```
 
+We see that the divergence varies much between cells. A certain variation can be expected due to sampling effects though.
 
