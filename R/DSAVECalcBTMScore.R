@@ -19,6 +19,7 @@
 #' @importFrom graphics hist
 #' @importFrom methods is as
 #' @importFrom progress progress_bar
+#' @importFrom utils head tail
 #' @export
 #' @author Juan Inda, <inda@@chalmers.se>, Johan Gustafsson, <gustajo@@chalmers.se>
 #' @return List containing total variation from the aligned and SNO cell populations over the gene expression range,

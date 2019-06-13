@@ -19,7 +19,7 @@ of 4 randomly selected samples with the mean of 4 others}
 
 \item{na.rm}{logical, sends na.rm value to the rowMeans function}
 
-\item{nComb}{?}
+\item{nComb}{number of combinations}
 
 \item{rescale}{logical, determine if the data should be rescaled to TPM}
 }

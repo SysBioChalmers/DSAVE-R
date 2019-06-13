@@ -34,7 +34,7 @@ values are negative, and the lower (i.e. more negative) the value, the
 more divergent the cell is.
 }
 \examples{
-a = DSAVEGetSingleCellDivergence(ds)
+\dontrun{a = DSAVEGetSingleCellDivergence(data)}
 }
 \author{
 Johan Gustafsson, <gustajo@chalmers.se>

@@ -4,6 +4,7 @@
 #' Make sure the current directory is the package root before calling this function.
 #'
 #' @importFrom graphics hist
+#' @importFrom utils read.table
 #' @export
 #' @author Johan Gustafsson, <gustajo@@chalmers.se>
 #'

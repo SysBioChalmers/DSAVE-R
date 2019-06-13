@@ -8,6 +8,7 @@
 #' This function uses Seurat.
 #'
 #' @importFrom graphics hist
+#' @importFrom utils untar download.file
 #' @export
 #' @author Johan Gustafsson, <gustajo@@chalmers.se>
 #' @return the template

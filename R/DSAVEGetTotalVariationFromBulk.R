@@ -13,8 +13,9 @@
 #' @param upperBound filters out the genes with mean expression higher than this value
 #' @param lowerBound filters out the genes with mean expression lower than this value
 #' @param na.rm logical, sends na.rm value to the rowMeans function
-#' @param nComb ?
+#' @param nComb number of combinations
 #' @param rescale logical, determine if the data should be rescaled to TPM
+#' @importFrom utils combn
 #' @export
 #' @author Juan Inda, <inda@@chalmers.se>
 #' @return numeric vector

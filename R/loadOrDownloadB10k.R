@@ -9,6 +9,7 @@
 #'
 #' @importFrom graphics hist
 #' @importFrom Seurat Read10X
+#' @importFrom utils untar download.file
 #' @export
 #' @author Johan Gustafsson, <gustajo@@chalmers.se>
 #' @return the template
@@ -44,7 +45,7 @@ TryLoadBCells <- function(root) {
                       gzfilename, "internal")
         untar(gzfilename, exdir = extrDir)
         BCellsData <- Read10X(data.dir = dataDir)
-        saveRDS(BCellsData, file=RDAfilename)
+        #saveRDS(BCellsData, file=RDAfilename)
         file.remove(gzfilename)
         unlink(extrDir, recursive = TRUE) #deletes the directory
       }
