@@ -23,7 +23,7 @@
 #' @author Johan Gustafsson, <gustajo@@chalmers.se>
 #' @return vector of divergence, one value per cell.
 #' @examples
-#' a = DSAVEGetSingleCellDivergence(ds)
+#' \dontrun{a = DSAVEGetSingleCellDivergence(data)}
 DSAVEGetSingleCellDivergence <- function(data, minUMIsPerCell = 200, tpmLowerBound = 0, iterations = 15, silent=FALSE) {
   stopifnot(is.matrix(data) | is(data, 'sparseMatrix'))
   stopifnot(minUMIsPerCell == round(minUMIsPerCell), length(minUMIsPerCell) == 1)

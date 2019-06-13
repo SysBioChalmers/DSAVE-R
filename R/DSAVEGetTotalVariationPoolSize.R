@@ -22,8 +22,8 @@
 #' @author Juan Inda, <inda@@chalmers.se>
 #' @return numeric vector
 #' @examples
-#' DSAVEGetTotalVariationPoolSize(data, poolSize = 50, upperBound = 1000,
-#' lowerBound = 0.01, na.rm = TRUE, seed = 1, repetitionPerSize = 30, 0.5)
+#' \dontrun{DSAVEGetTotalVariationPoolSize(data, poolSize = 50, upperBound = 1000,
+#' lowerBound = 0.01, na.rm = TRUE, seed = 1, repetitionPerSize = 30, 0.5)}
 #'
 
 DSAVEGetTotalVariationPoolSize <- function(data, poolSize = 4, upperBound = 1e5,

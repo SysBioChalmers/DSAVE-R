@@ -10,9 +10,7 @@
 #' @export
 #' @author Juan Inda, <inda@@chalmers.se>
 #' @return list(logCV, variances)
-#' @examples
-#' \dontrun{
-#' }
+
 
 getVarAndLogCV <- function(dsdata, UMIsPerCell){
   #tpm with specified UMIs per cell

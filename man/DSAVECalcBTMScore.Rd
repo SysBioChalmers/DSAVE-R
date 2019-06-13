@@ -38,7 +38,7 @@ cell population, yielding the BTM variation. Cell population alignment makes the
 across cell populations and datasets.
 }
 \examples{
-a = DSAVECalcBTMScore(data, templInfo)
+\dontrun{ a = DSAVECalcBTMScore(data, templInfo)}
 
 }
 \author{
