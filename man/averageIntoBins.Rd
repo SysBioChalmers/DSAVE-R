@@ -9,9 +9,9 @@ averageIntoBins(TPMData, logcv, templInfo)
 \arguments{
 \item{TPMData}{numeric matrix, tpmdata}
 
-\item{templInfo}{list with 5 elements}
+\item{logcv}{numeric vector, Gene Coefficient of Variation}
 
-\item{logCV}{numeric vector, Gene Coefficient of Variation}
+\item{templInfo}{list with 5 elements}
 }
 \value{
 a list with CV and meanGeneExpr

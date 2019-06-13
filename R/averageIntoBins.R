@@ -7,7 +7,7 @@
 #' averageIntoBins
 #'
 #' @param TPMData numeric matrix, tpmdata
-#' @param logCV numeric vector, Gene Coefficient of Variation
+#' @param logcv numeric vector, Gene Coefficient of Variation
 #' @param templInfo list with 5 elements
 #' @export
 #' @author Juan Inda, <inda@@chalmers.se>
