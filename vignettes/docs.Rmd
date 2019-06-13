@@ -6,8 +6,8 @@ output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{DSAVE}
   %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown}
   %\usepackage[utf8]{inputenc}
+  %\VignetteEngine{knitr::rmarkdown}
 fig_width: 8 
 fig_height: 7
 editor_options: 

@@ -9,7 +9,6 @@
 #' @param TPMData numeric matrix, tpmdata
 #' @param logcv numeric vector, Gene Coefficient of Variation
 #' @param templInfo list with 5 elements
-#' @export
 #' @author Juan Inda, <inda@@chalmers.se>
 #' @return a list with CV and meanGeneExpr
 

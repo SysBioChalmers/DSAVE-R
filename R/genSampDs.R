@@ -9,7 +9,6 @@
 #' @param countsPerGene counts per gene
 #' @param edges edges
 #' @importFrom graphics hist
-#' @export
 #' @author Juan Inda, <inda@@chalmers.se>
 #' @return list(logCV, variances)
 #'
