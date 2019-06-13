@@ -7,6 +7,8 @@ vignette: >
   %\VignetteIndexEntry{DSAVE}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
+fig_width: 8 
+fig_height: 7
 editor_options: 
   
   chunk_output_type: console
@@ -270,8 +272,8 @@ We can see that there are fairly many genes with a low p-value. The p-values are
 ```{r}
 bcells_id <- sample(1:dim(bcells)[2], 1000)
 bcells_cell_divergence <- DSAVEGetSingleCellDivergence(bcells[,bcells_id],
-                              minUMIsPerCell = 200, tpmLowerBound = 0,
-                              iterations = 15,silent=FALSE)
+                                                       minUMIsPerCell = 200, tpmLowerBound = 0,
+                                                       iterations = 15,silent=FALSE)
 ```
 
 - Estimate the mean log-likelihood
@@ -342,4 +344,5 @@ ggplot(df, aes(x=V1, y=V2, colour = "B10k")) +
 ```
 
 We see that the divergence varies much between cells. A certain variation can be expected due to sampling effects though.
+
 
