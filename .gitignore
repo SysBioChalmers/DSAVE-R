@@ -1,14 +1,12 @@
 Meta
-doc
 inst/doc
 .Rproj.user
 .Rhistory
 .RData
 data/*.rds
-doc/*
+doc/*.R
+doc/*.Rmd
 .DS_Store
 .Rbuildignore
 .travis.yml
 .DSAVE.Rproj
-DSAVE_0.0.0.9000.tar.gz
-.*
