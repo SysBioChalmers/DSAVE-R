@@ -14,4 +14,4 @@ install_github("SysBioChalmers/DSAVE-R")
 
 The vignette can be found here:
 
-https://github.com/SysBioChalmers/DSAVE-R/tree/master/inst/doc/docs.html
+http://htmlpreview.github.io/?https://github.com/SysBioChalmers/DSAVE-R/blob/master/inst/doc/docs.html
