@@ -277,6 +277,7 @@ bcells_id <- sample(1:dim(bcells)[2], 1000)
 bcells_cell_divergence <- DSAVEGetSingleCellDivergence(bcells[,bcells_id],
                                                        minUMIsPerCell = 200, tpmLowerBound = 0,
                                                        iterations = 15,silent=FALSE)
+bcells_cell_divergence$lls
 ```
 
 - Estimate the mean log-likelihood

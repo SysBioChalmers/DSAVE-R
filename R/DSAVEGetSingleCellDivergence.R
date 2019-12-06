@@ -21,7 +21,7 @@
 #' @importFrom progress progress_bar
 #' @export
 #' @author Johan Gustafsson, <gustajo@@chalmers.se>
-#' @return vector of divergence, one value per cell.
+#' @return a list (lls = vector of divergence, one value per cell, geneLls = )
 #' @examples
 #' \dontrun{a = DSAVEGetSingleCellDivergence(data)}
 DSAVEGetSingleCellDivergence <- function(data, minUMIsPerCell = 200, tpmLowerBound = 0, iterations = 15, silent=FALSE) {
@@ -58,6 +58,11 @@ DSAVEGetSingleCellDivergence <- function(data, minUMIsPerCell = 200, tpmLowerBou
 
   allLls = matrix(0,iterations, numCells);
 
+  allGeneLls = array(0, dim = c(iterations, numGenes, numCells));
+
+
+  logFacs = GetLogFactorials(targetUMIsPerCell);
+
   #run several times since there is randomness in downsampling
   for (it in 1:iterations) {
     #downsample to the right number of UMIs per cell
@@ -85,10 +90,13 @@ DSAVEGetSingleCellDivergence <- function(data, minUMIsPerCell = 200, tpmLowerBou
     for (i in 1:numCells) {
       if (UMIsPerCell[i] < targetUMIsPerCell) {
         allLls[it,i] = NaN;
+        allGeneLls[it,,i] = NaN;
       } else {
         #calculate log likelihood from the
         #multinomial distribution
         allLls[it,i] = dmultinom(dsd[,i], sum(dsd[,i]), prob = prob, log = TRUE)
+        #Also fill in gene binomial pdf
+        allGeneLls[it,,i] = LogBinomialPDF(dsd[,i], prob = prob, logFacs);
       }
     }
     if (!silent) {
@@ -100,9 +108,15 @@ DSAVEGetSingleCellDivergence <- function(data, minUMIsPerCell = 200, tpmLowerBou
   #take the median of all runs
   lls = apply(allLls,2,median);
 
+  #replace all nan in the gene-wise with 0. So, nan means that the gene is not
+  #expressed, and then we are certain of the outcome -> PDF = 1
+  # ->log(PDF) = 0
+  allGeneLls[,is.nan(prob),] = 0;
+  geneLls = t(apply(allGeneLls, c(numGenes,numCells), median))
+
   if (!silent) {
     pb$terminate()
   }
 
-  return(lls)
+  return(list(lls = lls, geneLls = geneLls))
 }
