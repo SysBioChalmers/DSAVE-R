@@ -160,7 +160,7 @@ ggplot(sc, aes(x=PoolSize, y=TotalVariation, group = Dataset)) +
 
 ```
 
-We can see that we need to pool around 1000 T cells to on average get down to bulk variation level,
+We can see that we need to pool around 1500 T cells to on average get down to bulk variation level,
 while we need twice as many of the B cells, likely depending on that the sampling noise is higher
 In the B10k dataset due to fewer reads. It is also to be noted that the number of cells that is needed in a pool highly depends on gene expression. For highly expressed genes, a few hundreds are enough, while for lowly expressed genes several thousands are needed.
 
