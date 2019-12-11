@@ -21,7 +21,7 @@
 #' @importFrom progress progress_bar
 #' @export
 #' @author Johan Gustafsson, <gustajo@@chalmers.se>
-#' @return a list (lls = vector of divergence, one value per cell, geneLls = )
+#' @return a list (lls = vector of divergence, one value per cell, geneLls = gene-wise cell divergence, a matrix)
 #' @examples
 #' \dontrun{a = DSAVEGetSingleCellDivergence(data)}
 DSAVEGetSingleCellDivergence <- function(data, minUMIsPerCell = 200, tpmLowerBound = 0, iterations = 15, silent=FALSE) {

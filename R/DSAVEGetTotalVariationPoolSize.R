@@ -21,7 +21,7 @@
 #' @importFrom methods is as
 #' @export
 #' @author Juan Inda, <inda@@chalmers.se>, Johan Gustafsson, <gustajo@@chalmers.se>
-#' @return numeric vector
+#' @return a list(poolSizes = numeric vector, Rs = numeric vector (R metric for each pool size))
 #' @examples
 #' \dontrun{DSAVEGetTotalVariationPoolSize(data, poolSize = 50, upperBound = 1000,
 #' lowerBound = 0.01, na.rm = TRUE, seed = 1, repetitionPerSize = 30, 0.5)}
