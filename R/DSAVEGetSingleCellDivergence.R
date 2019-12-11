@@ -107,13 +107,24 @@ DSAVEGetSingleCellDivergence <- function(data, minUMIsPerCell = 200, tpmLowerBou
 
 
   #take the median of all runs
-  lls = apply(allLls,2,median);
+  #lls = apply(allLls,2,median);
+  lls = colMedians(allLls)
+  names(lls) = colnames(data)
 
   #replace all nan in the gene-wise with 0. So, nan means that the gene is not
   #expressed, and then we are certain of the outcome -> PDF = 1
   # ->log(PDF) = 0
   allGeneLls[,is.nan(prob),] = 0;
-  geneLls = t(apply(allGeneLls, c(3,2), median))
+
+  #calculate median with good performance (i.e. don't use apply!)
+  #geneLls = t(apply(allGeneLls, c(3,2), median))
+  #transform to 2 dimensions and use colMedians
+  allGeneLlsTrans = allGeneLls;
+  dim(allGeneLlsTrans)<- c(iterations, numCells*numGenes);
+  geneLls = colMedians(allGeneLlsTrans)
+  dim(geneLls) = c(numGenes,numCells)
+  row.names(geneLls) = row.names(data)
+  colnames(geneLls) = colnames(data)
 
   if (!silent) {
     pb$terminate()

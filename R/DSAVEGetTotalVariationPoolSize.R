@@ -38,7 +38,15 @@ DSAVEGetTotalVariationPoolSize <- function(data, poolSize = 4, upperBound = 1e5,
             is.logical(rescale), length(rescale) == 1,
             (is.null(seed) | is.integer(seed)),
             is.integer(repetitionPerSize), repetitionPerSize > 0)
-  data <- as.matrix(data)
+
+  #if sparse, prefilter matrix to save some memory and then convert to non-sparse
+  if (!is.matrix(data)) {
+    rm = sparse_Means(data, rowMeans = T)
+    sel = rm != 0
+    data = data[sel, , drop=FALSE]
+    data = as.matrix(data)
+  }
+
 
   if(poolSize > floor(dim(data)[2]/2)){
     stop("Cannot make non-overlapping pool of cells. Choose a smaller poolSize.")

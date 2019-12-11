@@ -15,7 +15,9 @@ Imports: R6,
          progress,
          methods,
          combinat,
-         Seurat
+         Seurat,
+		 robustbase,
+		 textTinyR
 RoxygenNote: 6.1.1
 Suggests: 
     knitr,
