@@ -44,6 +44,7 @@ DSAVEGetSingleCellDivergence <- function(data, minUMIsPerCell = 200, tpmLowerBou
   data = data[(me >= tpmLowerBound) & (me != 0), , drop=FALSE];
 
   numCells = dim(data)[2];
+  numGenes = dim(data)[1];
 
   #Figure out what to downsample to. If we have cells with fewer UMIs than
   #minUMIsPerCell, those can not be evaluated
@@ -112,7 +113,7 @@ DSAVEGetSingleCellDivergence <- function(data, minUMIsPerCell = 200, tpmLowerBou
   #expressed, and then we are certain of the outcome -> PDF = 1
   # ->log(PDF) = 0
   allGeneLls[,is.nan(prob),] = 0;
-  geneLls = t(apply(allGeneLls, c(numGenes,numCells), median))
+  geneLls = t(apply(allGeneLls, c(3,2), median))
 
   if (!silent) {
     pb$terminate()
