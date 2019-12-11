@@ -60,5 +60,9 @@ test_that("TR008 - DSAVEGetSingleCellDivergence",{
   geneLls = DSAVEGetSingleCellDivergence(dsgs, 4, silent = TRUE)$geneLls;
   expRes = dbinom(4, 4, 0.25, log = TRUE)
   expect_equal(geneLls[2,2], expRes, info = "TR008: Gene-wise divergence not ok", tolerance=1e-4, check.names=F)
-
   })
+
+
+
+
+

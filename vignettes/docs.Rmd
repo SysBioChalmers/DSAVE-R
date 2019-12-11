@@ -100,26 +100,11 @@ tcells <- loadOrDownloadT4k()
 - Calculate the Total Variation for different pool sizes.
 
 ```{r}
-scTotalVariation_bcells <- list()
-scTotalVariation_tcells <- list()
-pools <- c(100, 200, 500, 750, 1000, 1500, 2000, 3000, 4000, 5000)
-pools2 <- c(100, 200, 500, 750, 1000, 1500, 2250)
-pb <- progress_bar$new(format = "Calculating [:bar] :percent eta: :eta",
-                       total = length(pools) + length(pools2), clear = FALSE)
+scTotalVariation_bcells <- DSAVEGetTotalVariationPoolSize(bcells,
+        upperBound = 1e5, lowerBound = 5e-1)
 
-for(poolSize in pools){
-  scTotalVariation_bcells[[as.character(poolSize)]] <- DSAVEGetTotalVariationPoolSize(bcells,
-        poolSize = poolSize, upperBound = 1e5, lowerBound = 5e-1)
-  pb$tick();
-}
-
-for(poolSize in pools2){
-  scTotalVariation_tcells[[as.character(poolSize)]] <- DSAVEGetTotalVariationPoolSize(tcells,
-          poolSize = poolSize, upperBound = 1e5, lowerBound = 5e-1)
-  pb$tick();
-}
-
-pb$terminate()
+scTotalVariation_tcells <- DSAVEGetTotalVariationPoolSize(tcells,
+          upperBound = 1e5, lowerBound = 5e-1)
 
 ```
 
@@ -129,10 +114,8 @@ pb$terminate()
 bulkMean1Vs1 <- rep(mean(bulkTotalVar1vs1[[1]][[2]]), 2)
 bulkMean4Vs4 <- rep(mean(bulkTotalVar4vs4[[1]][[2]]), 2)
 sc <- rbind(
-  cbind(pools, sapply(scTotalVariation_bcells, 
-                      function(v) mean(v)), "B10k", "sc"), 
-  cbind(pools2, sapply(scTotalVariation_tcells, 
-                       function(v) mean(v)), "T4k", "sc"), 
+  cbind(scTotalVariation_bcells$poolSizes, scTotalVariation_bcells$Rs, "B10k", "sc"), 
+  cbind(scTotalVariation_tcells$poolSizes, scTotalVariation_tcells$Rs, "T4k", "sc"), 
   cbind(c(pools[1],pools[length(pools)]), 
         bulkMean1Vs1, "single bulk sample", "bulk"),
   cbind(c(pools[1],pools[length(pools)]), 

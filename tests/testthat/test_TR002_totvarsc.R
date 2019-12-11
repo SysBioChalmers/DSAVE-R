@@ -7,7 +7,7 @@ test_that("TR002 - Total variation in single-cell data",{
   rownames(ds) = c('A','B','C');
 
 
-  val = DSAVEGetTotalVariationPoolSize(ds, 1, 100, 0.5);
+  val = DSAVEGetTotalVariationPoolSize(ds, 100, 0.5, 1, silent = T)$Rs;
   expVal = log(2.05/1.05);
   # compensate for round off effects:
   #expVals = round(expVals,10);
