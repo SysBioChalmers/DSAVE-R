@@ -84,9 +84,19 @@ bulkTotalVar4vs4 <- list(list("PseudoTPM: 0.5-100k", bulkMean4Vs4_05_100k),
 usethis::use_data(bulkTotalVar1vs1, overwrite = T)
 usethis::use_data(bulkTotalVar4vs4, overwrite = T)
 
+#now save the pbmc68k cell types
+#first, read the file and the data
+pbmc68kmetadata  <- as.matrix(read.table("data/PBMC68000PatAFresh/filtered_matrices_mex/hg19/68k_pbmc_barcodes_annotation.tsv", header = T, sep = "\t"))
+#test that the order in both files is the same. It is...
+#library(Seurat)
+#pbmc68kdata <- Read10X(data.dir = "data/PBMC68000PatAFresh/filtered_matrices_mex/hg19/")
+#cn1 = colnames(pbmc68kdata)
+#cn2 = pbmc68kmetadata[,3]
+#sum(cn1 == cn2)
+#sum(cn1 != cn2)
 
-
-
+ctPbmc68k = as.factor(pbmc68kmetadata[,4])
+usethis::use_data(ctPbmc68k, overwrite = T)
 
 
 
