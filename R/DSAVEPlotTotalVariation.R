@@ -1,9 +1,7 @@
 #' DSAVEPlotTotalVariation
 #'
-#' Calculates the total variation with a specific pool size.
+#' Plots the total variation as a function of pool size, with bulk variation as reference.
 #'
-#' Calculates the average pairwise total variation between two pools of cells with specific size,
-#' with a TPM filtration on the genes.
 #'
 #' @param dsData Output from DSAVEGetTotalVariation or a list of such outputs
 #' @param dsnames The names of the dataset(s), either a string or a list of strings
@@ -12,7 +10,7 @@
 #' @author Johan Gustafsson, <gustajo@@chalmers.se>
 #' @return nothing
 #' @examples
-#' \dontrun{DSAVEPlotTotalVariation(data, divData)}
+#' \dontrun{DSAVEPlotTotalVariation(dsData, dsNames)}
 #'
 
 DSAVEPlotTotalVariation <- function(dsData, dsNames){
