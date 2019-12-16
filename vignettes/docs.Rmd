@@ -164,26 +164,15 @@ tcells_btm <- DSAVECalcBTMScore(tcells, templInfo, skipAlignment=FALSE,
 
 - Load the pre-calculated scores that are useful for comparison.
 
-```{r}
-data(datasetScoresHuman)
+```{r, fig.show = 'asis'}
+DSAVEPlotDSAVEScore(tcells_btm$DSAVEScore, "T4k", DSAVE::datasetScoresHuman)
+
+#data(datasetScoresHuman)
 ```
 
 - Plot the results.
 
 ```{r , fig.show = 'asis'}
-scores <- data.frame(t(sapply(datasetScoresHuman, 
-                              function(x) c(x[[1]], x[[2]]))),
-                     stringsAsFactors = F)
-
-scores <- rbind.data.frame(scores,c("T4k", tcells_btm$DSAVEScore))
-scores$X2 <- as.numeric(scores$X2)
-
-ggplot(scores, aes( X1)) +
-  geom_bar(aes(weight = X2)) +
-  coord_flip() +
-  ggtitle("Cell-to-cell Variation for Different Datasets") +
-  ylab("DSAVE BTM score") + xlab("") +
-  theme(axis.text.y = element_text(size = 10))
 
 ```
 
@@ -193,7 +182,7 @@ We can see that the T4k dataset has a BTM variation that is comparable to the ot
 ## 5 Cell-wise variation - detect misclassified cells
 
 - First we visualize the dataset using Seurat
-```{r}
+```{r, fig.show = 'asis'}
 
 so = CreateSeuratObject(counts = pbmc, project = "pbmc", min.cells = 0, min.features = 0)
 so <- NormalizeData(so, normalization.method = "LogNormalize", scale.factor = 10000)
@@ -224,16 +213,13 @@ clust7 = extractSeuratData(so, 7)
 We show both the cell classification from the authors and the clustering performed by a newer version of Seurat. Although similar, the newer clustering agrees better with the UMAP.
 
 - Now, each cluster has to be examined separately. As an example we look at the dendritic cells
-```{r}
+```{r, fig.show = 'asis'}
 
 dend = pbmc[, pbmcCellTypes == "Dendritic"]
-
-#min(colSums(as.matrix(dend)))
 
 dend_cell_divergence <- DSAVEGetSingleCellDivergence(dend,
                                                      minUMIsPerCell = 200, tpmLowerBound = 0,
                                                      iterations = 15,silent=FALSE)
-
 
 DSAVEPlotDivergence(dend, dend_cell_divergence)
 
@@ -243,7 +229,7 @@ The divergence plot shows each cell's UMI counts plotted against their divergenc
 
 We also take a look at cluster 7 from Seurat, which supposedly should be the same cell type
 
-```{r}
+```{r, fig.show = 'asis'}
 
 #also investigate the clustering from Seurat directly
 clust7_divergence <- DSAVEGetSingleCellDivergence(clust7,
@@ -277,7 +263,7 @@ We can see that the score is higher for the authors' classification, suggesting 
 
 - Subsample the *bcells* data to 1000 cells and run. First, UMI counts vs divergence:
 
-```{r}
+```{r, fig.show = 'asis'}
 bcells_id <- sample(1:dim(bcells)[2], 1000)
 subb = as.matrix(bcells[,bcells_id])
 bcells_cell_divergence <- DSAVEGetSingleCellDivergence(subb,
@@ -291,7 +277,7 @@ DSAVEDivUMIPlot(subb, bcells_cell_divergence)
 
 We can see that cells with low number of UMIs are more divergent. Cells below a certain UMI count threshold are usually discarded in a quality control step. We can see that elevating that threshold would likely get rid of more divergent cells, however at the cost of loss of data. Also cells with a high UMI count are on average more divergent; this could be explained by that some of them are doublets, i.e. cases where two or more cells have been accidentally joined and treated as just one cell. Divergence could then come from that the joined cells are of different cell type.
 
-```{r}
+```{r, fig.show = 'asis'}
 
 mitoGenes <- grep(pattern = "^MT-", x = row.names(subb), value = TRUE)
 fracMT <- colSums(subb[mitoGenes, ])/colSums(subb)
