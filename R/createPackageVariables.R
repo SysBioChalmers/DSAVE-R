@@ -27,6 +27,29 @@ datasetScoresHuman <- list(list("BC", 0.1371),
 
 usethis::use_data(datasetScoresHuman, overwrite = T)
 
+datasetScoresHuman1000 <- list(list("BC", 0.1361),
+                           list("OC", 0.0381),
+                           list("LC", 0.0279),
+                           list("LIVC", 0.1083),
+                           list("PBMC68k", 0.0352),
+                           list("B10k", 0.0194),
+                           list("CD4TMEM", 0.0142),
+                           list("HCA CB", 0.0174),
+                           list("CD8T", 0.0327))
+
+usethis::use_data(datasetScoresHuman1000, overwrite = T)
+
+datasetScoresHuman500 <- list(list("BC", 0.1311),
+                           list("OC", 0.0371),
+                           list("LC", 0.0283),
+                           list("LIVC", 0.1061),
+                           list("PBMC68k", 0.0345),
+                           list("B10k", 0.0193),
+                           list("CD4TMEM", 0.0161),
+                           list("HCA CB", 0.0180),
+                           list("CD8T", 0.0319))
+
+usethis::use_data(datasetScoresHuman500, overwrite = T)
 
 #bulk variation
 #This requires access to the data, which is not provided in the package
@@ -97,6 +120,35 @@ pbmc68kmetadata  <- as.matrix(read.table("data/PBMC68000PatAFresh/filtered_matri
 
 ctPbmc68k = as.factor(pbmc68kmetadata[,4])
 usethis::use_data(ctPbmc68k, overwrite = T)
+
+
+#import template stuff from matlab files
+a = readMat("templInfo2000BinningInfo.mat")
+tmp = a$c[,,1]
+binInf2000 = list(binningInfo.means = tmp$means[1,], binningInfo.lbs = tmp$lbs[1,], binningInfo.ubs = tmp$ubs[1,])
+usethis::use_data(binInf2000, overwrite = T)
+
+a = readMat("templInfo1000BinningInfo.mat")
+tmp = a$a[,,1]
+binInf1000 = list(binningInfo.means = tmp$means[1,], binningInfo.lbs = tmp$lbs[1,], binningInfo.ubs = tmp$ubs[1,])
+usethis::use_data(binInf1000, overwrite = T)
+
+a = readMat("templInfo500BinningInfo.mat")
+tmp = a$b[,,1]
+binInf500 = list(binningInfo.means = tmp$means[1,], binningInfo.lbs = tmp$lbs[1,], binningInfo.ubs = tmp$ubs[1,])
+usethis::use_data(binInf500, overwrite = T)
+
+a = readMat("templInfo2000UMIDistr.mat")
+UMIDistr2000 = a$c[1,]
+usethis::use_data(UMIDistr2000, overwrite = T)
+
+a = readMat("templInfo1000UMIDistr.mat")
+UMIDistr1000 = a$a[1,]
+usethis::use_data(UMIDistr1000, overwrite = T)
+
+a = readMat("templInfo500UMIDistr.mat")
+UMIDistr500 = a$b[1,]
+usethis::use_data(UMIDistr500, overwrite = T)
 
 
 

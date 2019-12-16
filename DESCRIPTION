@@ -1,10 +1,10 @@
 Package: DSAVE
-Title: Dissecting Cell-to-Cell Variation in Single-Cell RNA-Seq Data
+Title: DSAVE: Tools to Investigate Variation and Purity of Subpopulations in Single-Cell RNA-Seq Data
 Version: 0.0.0.9000
 Authors@R: c(
-    person(given = "Juan Salvador", family = "Inda Díaz", role = c("aut"), email = "inda@chalmers.se"),
-    person(given = "Johan", family = "Gustafsson", role = c("aut", "cre"), email = "johan.gson@gmail.se"))
-Description: Calculates DSAVE Total Cell Pool Variation Estimation, DSAVE Variation Score, DSAVE Gene-wise Variation Metric and DSAVE Cell-wise Variation Metric.
+    person(given = "Johan", family = "Gustafsson", role = c("aut", "cre"), email = "johan.gson@gmail.se"),
+	person(given = "Juan Salvador", family = "Inda Díaz", role = c("aut"), email = "inda@chalmers.se"))
+Description: Calculates DSAVE Total Cell Pool Variation Estimation, DSAVE Variation Score and DSAVE Cell-wise Variation Metric - useful for e.g. detecting misclassified cells.
 Depends: R (>= 3.5)
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -17,7 +17,9 @@ Imports: R6,
          combinat,
          Seurat,
 		 robustbase,
-		 textTinyR
+		 textTinyR,
+		 plotly,
+		 R.matlab
 RoxygenNote: 6.1.1
 Suggests: 
     knitr,
