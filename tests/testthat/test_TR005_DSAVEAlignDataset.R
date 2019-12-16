@@ -2,7 +2,9 @@ test_that("TR005 - DSAVEAlignDataset",{
   # First, create a dataset that we know will have a higher UMI distribution
   # for all cells (depends on the current template that comes with the package)
   templInfo = DSAVEGetStandardTemplate();
-  ds = loadOrDownloadB10k();
+  extrDir <- downloadData("http://cf.10xgenomics.com/samples/cell-exp/1.1.0/b_cells/b_cells_filtered_gene_bc_matrices.tar.gz", "B10k");
+  dataDir = paste0(extrDir,"/filtered_matrices_mex/hg19");
+  ds = Read10X(data.dir = dataDir);
   ds2 = ds[, 4001:6000];
   ds3 = DSAVEAlignDataset(ds2, templInfo);
   ds3m = as.matrix(ds3);

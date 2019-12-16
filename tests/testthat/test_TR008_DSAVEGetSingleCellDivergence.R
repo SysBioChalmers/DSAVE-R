@@ -38,7 +38,10 @@ test_that("TR008 - DSAVEGetSingleCellDivergence",{
   expect_true(is.na(lls4[4]) & !is.na(lls4[3]), info = "TR008: NA not ok")
 
   #also make sure it runs for a real dataset
-  ds10 = loadOrDownloadB10k();
+  extrDir <- downloadData("http://cf.10xgenomics.com/samples/cell-exp/1.1.0/b_cells/b_cells_filtered_gene_bc_matrices.tar.gz", "B10k");
+  dataDir = paste0(extrDir,"/filtered_matrices_mex/hg19");
+  ds10 = Read10X(data.dir = dataDir);
+
   ds10 = ds10[, 1:100];
   lls10 = DSAVEGetSingleCellDivergence(ds10, 200, silent = TRUE)$lls;
   #check that we have no NA

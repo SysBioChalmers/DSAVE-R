@@ -1,6 +1,9 @@
 test_that("TR006 - DSAVEGenerateSNODataset",{
 
-  ds = loadOrDownloadB10k();
+  extrDir <- downloadData("http://cf.10xgenomics.com/samples/cell-exp/1.1.0/b_cells/b_cells_filtered_gene_bc_matrices.tar.gz", "B10k");
+  dataDir = paste0(extrDir,"/filtered_matrices_mex/hg19");
+  ds = Read10X(data.dir = dataDir);
+
   ds2 = ds[, 1:100];
 
   ds3 = DSAVEGenerateSNODataset(ds2);
