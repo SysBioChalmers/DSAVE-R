@@ -105,35 +105,8 @@ scTotalVariation_tcells <- DSAVEGetTotalVariationPoolSize(tcells,
 - Plot the results
 
 ```{r , fig.show = 'asis'}
-bulkMean1Vs1 <- rep(mean(bulkTotalVar1vs1[[1]][[2]]), 2)
-bulkMean4Vs4 <- rep(mean(bulkTotalVar4vs4[[1]][[2]]), 2)
-sc <- rbind(
-  cbind(scTotalVariation_bcells$poolSizes, scTotalVariation_bcells$Rs, "B10k", "sc"), 
-  cbind(scTotalVariation_tcells$poolSizes, scTotalVariation_tcells$Rs, "T4k", "sc"), 
-  cbind(c(pools[1],pools[length(pools)]), 
-        bulkMean1Vs1, "single bulk sample", "bulk"),
-  cbind(c(pools[1],pools[length(pools)]), 
-        bulkMean4Vs4, "mean of 4 bulk samples", "bulk"))
 
-sc <- as.data.frame(sc)
-colnames(sc) <- c("PoolSize", "TotalVariation", "Dataset", "DataType")
-sc$PoolSize <- as.numeric(as.character(sc$PoolSize))
-sc$TotalVariation <- as.numeric(as.character(sc$TotalVariation))
-
-ggplot(sc, aes(x=PoolSize, y=TotalVariation, group = Dataset)) +
-  ggtitle("Variation per Cell Pool Size, CPM > 0.5") +
-  geom_line(aes(color = Dataset, linetype = DataType)) +
-  ylim(0, max(sc$TotalVariation)) +
-  theme(legend.title = element_text(size = 10),
-        legend.justification = c(1, 1),
-        legend.position = c(1, 1),
-        legend.text = element_text(size = 8),
-        axis.text.x = element_text(size = 10, angle = 90),
-        axis.text.y = element_text(size = 10)) + 
-  #ylab(bquote('Variation ( ~ R[mean])')) +
-  labs(y=expression(paste(Variation (R[mean] ))),
-       x="Pool size (number of cells)") +
-  guides(linetype = FALSE)
+DSAVEPlotTotalVariation(list(scTotalVariation_bcells, scTotalVariation_tcells), list("B cells", "T cells"))
 
 ```
 
