@@ -7,7 +7,7 @@
 #'
 #' @param data The UMI count data
 #' @param divData The output from the function DSAVEGetSingleCellDivergence
-#' @importFrom methods is as
+#' @importFrom plotly plot_ly layout
 #' @export
 #' @author Johan Gustafsson, <gustajo@@chalmers.se>
 #' @return nothing

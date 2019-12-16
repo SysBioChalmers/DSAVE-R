@@ -5,6 +5,7 @@
 #'
 #' @importFrom graphics hist
 #' @importFrom utils read.table
+#' @importFrom R.matlab readMat
 #' @export
 #' @author Johan Gustafsson, <gustajo@@chalmers.se>
 #'

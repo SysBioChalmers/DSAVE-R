@@ -16,6 +16,7 @@
 #' be included. Defaults to 0 (meaning all genes are included).
 #' @param silent (optional) If true, no progress bar is shown. Defaults to FALSE
 #' @importFrom stats median
+#' @importFrom robustbase colMedians
 #' @importFrom combinat dmnom
 #' @importFrom stats dmultinom
 #' @importFrom progress progress_bar

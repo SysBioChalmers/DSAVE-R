@@ -18,7 +18,7 @@
 #' @param rescale logical, determine if the data should be rescaled. Should normally be TRUE.
 #' pool size
 #' @param silent (optional) If true, no progress bar is shown. Defaults to FALSE
-#' @importFrom methods is as
+#' @importFrom textTinyR sparse_Means
 #' @export
 #' @author Juan Inda, <inda@@chalmers.se>, Johan Gustafsson, <gustajo@@chalmers.se>
 #' @return a list(poolSizes = numeric vector, Rs = numeric vector (R metric for each pool size))

@@ -10,7 +10,7 @@ DSAVEGetStandardTemplate()
 the template
 }
 \description{
-Gets the standard template that is distributed with the package.
+Gets the standard template that is distributed with the package.There are variants for 2000 (standard), 1000 and 500 cells.
 }
 \author{
 Johan Gustafsson, <gustajo@chalmers.se>

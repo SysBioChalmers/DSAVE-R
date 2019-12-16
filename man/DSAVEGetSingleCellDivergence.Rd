@@ -21,7 +21,7 @@ be included. Defaults to 0 (meaning all genes are included).}
 \item{silent}{(optional) If true, no progress bar is shown. Defaults to FALSE}
 }
 \value{
-vector of divergence, one value per cell.
+a list (lls = vector of divergence, one value per cell, geneLls = gene-wise cell divergence, a matrix)
 }
 \description{
 Calculates the DSAVE cell-wise variation metric.

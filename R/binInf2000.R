@@ -1,4 +1,4 @@
-#' bc2t_binningInfo
+#' binInf2000
 #'
 #' Part of the DSAVE standard template. Describes the edges for the bins to use
 #' for calculating variation per gene expression.
@@ -8,4 +8,4 @@
 #' list of 1,000 points.
 #' @source Calculated from the BC dataset
 #'
-"bc2t_binningInfo"
+"binInf2000"

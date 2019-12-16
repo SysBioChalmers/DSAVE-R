@@ -4,20 +4,20 @@
 \alias{DSAVEGetTotalVariationPoolSize}
 \title{DSAVEGetTotalVariationPoolSize}
 \usage{
-DSAVEGetTotalVariationPoolSize(data, poolSize = 4, upperBound = 1e+05,
-  lowerBound = 0.5, na.rm = TRUE, seed = NULL,
-  repetitionPerSize = 30L, rescale = TRUE)
+DSAVEGetTotalVariationPoolSize(data, upperBound = 1e+05,
+  lowerBound = 0.5, poolSizes = NA, na.rm = TRUE, seed = NULL,
+  repetitionPerSize = 30L, rescale = TRUE, silent = FALSE)
 }
 \arguments{
 \item{data}{a numeric matrix}
-
-\item{poolSize}{numeric value, it should be maximum half of the total size of the data
-in the data object}
 
 \item{upperBound}{filters out the genes with mean expression higher than this value.
 Defaults to 100,000, which in practice includes almost all genes.}
 
 \item{lowerBound}{filters out the genes with mean expression lower than this value. Defaults to 0.5.}
+
+\item{poolSizes}{list of numeric pool size values, all should be maximum half of the total
+size of the data in the data object}
 
 \item{na.rm}{logical, sends na.rm value to the rowMeans function, should normally be true.}
 
@@ -28,9 +28,11 @@ Defaults to 30.}
 
 \item{rescale}{logical, determine if the data should be rescaled. Should normally be TRUE.
 pool size}
+
+\item{silent}{(optional) If true, no progress bar is shown. Defaults to FALSE}
 }
 \value{
-numeric vector
+a list(poolSizes = numeric vector, Rs = numeric vector (R metric for each pool size))
 }
 \description{
 Calculates the total variation with a specific pool size.
@@ -45,5 +47,5 @@ lowerBound = 0.01, na.rm = TRUE, seed = 1, repetitionPerSize = 30, 0.5)}
 
 }
 \author{
-Juan Inda, <inda@chalmers.se>
+Juan Inda, <inda@chalmers.se>, Johan Gustafsson, <gustajo@chalmers.se>
 }
