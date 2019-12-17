@@ -37,17 +37,6 @@ The package works on cell populations containing similar cells. The cells are ex
 be classified into cell types if the dataset has a mix of cell types, and the total cell 
 population need to be divided into populations per cell type to give meaningful results. 
 
-DSAVE supports 4 types of calculations:
-
- 
- 
- * DSAVE Cell-Wise Variation - This metric measures the log-likelihood for that a cell is sampled from the 
- mean expression of the cell population. The lower (more negative) the log-likelihood is, the the cell 
- diverges from the mean of the population. The metric is comparable between cells in a cell population,
- but not across cell populations or datasets. The metric can for example be useful for finding thresholds
- for known cell filtration metrics, such as UMI counts and MT gene content.
-
-
 
 ## 2 Total Variation - estimation of cell population size needed for pooled expression profiles 
 
@@ -162,19 +151,13 @@ tcells_btm <- DSAVECalcBTMScore(tcells, templInfo, skipAlignment=FALSE,
                                 logTPMAddon=1, silent=FALSE)
 ```
 
-- Load the pre-calculated scores that are useful for comparison.
+- Plot the results.
 
 ```{r, fig.show = 'asis'}
 DSAVEPlotDSAVEScore(tcells_btm$DSAVEScore, "T4k", DSAVE::datasetScoresHuman)
 
-#data(datasetScoresHuman)
 ```
 
-- Plot the results.
-
-```{r , fig.show = 'asis'}
-
-```
 
 We can see that the T4k dataset has a BTM variation that is comparable to the other datasets and that the technical quality thus is what can be expected for single-cell RNA-Seq.
 
@@ -207,8 +190,6 @@ so <- FindNeighbors(so, dims = 1:10)
 so <- FindClusters(so, resolution = 0.5)
 DimPlot(so, reduction = "umap")
 
-clust7 = extractSeuratData(so, 7)
-
 ```
 We show both the cell classification from the authors and the clustering performed by a newer version of Seurat. Although similar, the newer clustering agrees better with the UMAP.
 
@@ -225,9 +206,15 @@ DSAVEPlotDivergence(dend, dend_cell_divergence)
 
 ```
 
-The divergence plot shows each cell's UMI counts plotted against their divergence The most divergent cells are the ones that have the lowest (i.e. most negative) divergence. By investigating the leftmost cells by hoovering over them with the mouse pointer, we can see which 5 genes that contribute the most to the divergence, and thus get an idea about which types of cells aremost divergent. For example, some cells have MT genes as most divergent genes, which may suggest that those are low quality cells. Furthermore, we see that some cells have the gene PPBP as highly divergent, suggesting that they may be megakaryocytes. NKG7 or GNLY show up for other cells, suggesting that they may be NK cells, while immunoglobin genes such as IGLL5 show up for others, suggesting a B cell lineage. 
+The divergence plot shows each cell's UMI counts plotted against their divergence The most divergent cells are the ones that have the lowest (i.e. most negative) divergence. By investigating the leftmost cells by hoovering over them with the mouse pointer, we can see which 5 genes that contribute the most to the divergence, and thus get an idea about which types of cells aremost divergent. For example, some cells can have MT genes as most divergent genes, which may suggest that those are low quality cells. Here, we see that some cells have the gene PPBP as highly divergent, suggesting that they may be megakaryocytes. NKG7 or GNLY show up for other cells, suggesting that they may be NK cells, while immunoglobin genes such as IGLL5 show up for others, suggesting a B cell lineage. 
 
-We also take a look at cluster 7 from Seurat, which supposedly should be the same cell type
+We also take a look at cluster 7 from Seurat, which supposedly should be the same cell type. First, extract the data from the Seurat object:
+
+```{r}
+clust7 = extractSeuratData(so, 7)
+```
+
+Then plot in the same way as above:
 
 ```{r, fig.show = 'asis'}
 
