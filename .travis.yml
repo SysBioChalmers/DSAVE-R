@@ -6,4 +6,4 @@ cache: packages
 script: 
   - |
     R CMD build .
-    travis_wait 60 R CMD check *tar.gz
+    travis_wait 60 R CMD check --no--vignettes *tar.gz
