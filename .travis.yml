@@ -6,4 +6,4 @@ cache: packages
 script: 
   - |
     R CMD build .
-    travis_wait 30 R CMD check packageName*tar.gz
+    travis_wait 60 R CMD check packageName*tar.gz
