@@ -3,4 +3,7 @@
 language: R
 sudo: false
 cache: packages
-install: travis_wait 30 mvn install
+script: 
+  - |
+    R CMD build .
+    travis_wait 40 R CMD check packageName*tar.gz
