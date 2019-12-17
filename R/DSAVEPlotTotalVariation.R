@@ -5,7 +5,7 @@
 #'
 #' @param dsData Output from DSAVEGetTotalVariation or a list of such outputs
 #' @param dsnames The names of the dataset(s), either a string or a list of strings
-#' @importFrom methods is as
+#' @importFrom ggplot2 ggplot
 #' @export
 #' @author Johan Gustafsson, <gustajo@@chalmers.se>
 #' @return nothing

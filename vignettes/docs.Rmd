@@ -84,10 +84,10 @@ tcells <- Read10X(data.dir = dataDir)
 extrDir <- downloadData("http://cf.10xgenomics.com/samples/cell-exp/1.1.0/fresh_68k_pbmc_donor_a/fresh_68k_pbmc_donor_a_filtered_gene_bc_matrices.tar.gz", "PBMC68k")
 dataDir = paste0(extrDir,"/filtered_matrices_mex/hg19")
 pbmc <- Read10X(data.dir = dataDir)
-#only use the 25000 first cells to speed up the demo
+#only use the 20000 first cells to speed up the demo
 
-pbmc = pbmc[,1:25000]
-pbmcCellTypes = ctPbmc68k[1:25000]
+pbmc = pbmc[,1:20000]
+pbmcCellTypes = ctPbmc68k[1:20000]
 
 ```
 

@@ -1,8 +1,8 @@
 #' DSAVEGetStandardTemplate
 #'
-#' Gets the standard template that is distributed with the package.There are variants for 2000 (standard), 1000 and 500 cells.
+#' Gets the standard template that is distributed with the package, requiring > 2000 cells.
+#' There are variants for 2000 (standard), 1000 and 500 cells.
 #'
-#' @importFrom graphics hist
 #' @export
 #' @author Johan Gustafsson, <gustajo@@chalmers.se>
 #' @return the template
@@ -18,6 +18,14 @@ DSAVEGetStandardTemplate <- function() {
   return(result)
 }
 
+#' DSAVEGetStandardTemplate1000
+#'
+#' Gets the standard template that is distributed with the package, requiring > 1000 cells.
+#'
+#' @export
+#' @author Johan Gustafsson, <gustajo@@chalmers.se>
+#' @return the template
+
 DSAVEGetStandardTemplate1000 <- function() {
   result = list()
   result$binningInfo <- DSAVE::binInf1000
@@ -29,6 +37,13 @@ DSAVEGetStandardTemplate1000 <- function() {
   return(result)
 }
 
+#' DSAVEGetStandardTemplate500
+#'
+#' Gets the standard template that is distributed with the package, requiring > 500 cells.
+#'
+#' @export
+#' @author Johan Gustafsson, <gustajo@@chalmers.se>
+#' @return the template
 DSAVEGetStandardTemplate500 <- function() {
   result = list()
   result$binningInfo <- DSAVE::binInf500
