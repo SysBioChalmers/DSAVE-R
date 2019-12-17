@@ -9,6 +9,7 @@ Depends: R (>= 3.5)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+biocViews:
 Imports: R6,
          graphics,
          stats,
