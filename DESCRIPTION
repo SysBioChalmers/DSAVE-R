@@ -17,12 +17,13 @@ Imports: R6,
          methods,
          combinat,
          Seurat,
-		 robustbase,
-		 textTinyR,
-		 plotly,
-		 R.matlab
+         robustbase,
+         textTinyR,
+         plotly,
+         R.matlab,
+         webshot
 RoxygenNote: 6.1.1
-Suggests: 
+Suggests:
     knitr,
     rmarkdown,
     ggplot2,
