@@ -3,7 +3,7 @@ Title: DSAVE: Tools to Investigate Variation and Purity of Subpopulations in Sin
 Version: 0.0.0.9000
 Authors@R: c(
     person(given = "Johan", family = "Gustafsson", role = c("aut", "cre"), email = "johan.gson@gmail.se"),
-	person(given = "Juan Salvador", family = "Inda Díaz", role = c("aut"), email = "inda@chalmers.se"))
+    person(given = "Juan Salvador", family = "Inda Díaz", role = c("aut"), email = "inda@chalmers.se"))
 Description: Calculates DSAVE Total Cell Pool Variation Estimation, DSAVE Variation Score and DSAVE Cell-wise Variation Metric - useful for e.g. detecting misclassified cells.
 Depends: R (>= 3.5)
 License: MIT + file LICENSE

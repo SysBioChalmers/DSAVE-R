@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'devel'
+      - 'master'
   pull_request:
     branches:
       - 'master'
@@ -18,7 +19,13 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v1
-      - name: Install dependencies
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update && apt-get install -y --no-install-recommends \
+          libxml2-dev \
+          libssl-dev \
+          libcurl4-openssl-dev
+      - name: Install package dependencies
         run: |-
           R -e "install.packages('devtools', repos='http://cran.us.r-project.org')"
           R -e "devtools::install_deps(dep = T)"
