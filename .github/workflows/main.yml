@@ -24,7 +24,8 @@ jobs:
           sudo apt-get update && apt-get install -y --no-install-recommends \
           libxml2-dev \
           libssl-dev \
-          libcurl4-openssl-dev
+          libcurl4-openssl-dev \
+          libpng-dev
       - name: Install package dependencies
         run: |-
           R -e "install.packages('devtools', repos='http://cran.us.r-project.org')"
