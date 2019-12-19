@@ -1,8 +1,14 @@
 name: CICD
 
-"on":
-  - push
-  - pull_request
+on:
+  push:
+    branches:
+      - 'devel'
+  pull_request:
+    branches:
+      - 'master'
+  schedule:
+    - cron:
 
 jobs:
   build:
@@ -16,9 +22,6 @@ jobs:
         run: |-
           R -e "install.packages('devtools', repos='http://cran.us.r-project.org')"
           R -e "devtools::install_deps(dep = T)"
-        with:
-          path: ~/R-library
-          key: R-library
       - name: Build package
         run: R CMD build .
       - name: Check package
