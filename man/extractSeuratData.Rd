@@ -6,6 +6,11 @@
 \usage{
 extractSeuratData(seuratObj, clusterId = NA)
 }
+\arguments{
+\item{seuratObj}{The Seurat object}
+
+\item{clusterId}{[optional] The id of the cluster, for example 6}
+}
 \value{
 the template
 }
