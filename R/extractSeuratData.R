@@ -1,4 +1,4 @@
-#' downloadData
+#' extractSeuratData
 #'
 #' Extracts the data from a Seurat object. Optionally, a cluster id can be sent in, to extract
 #' a subset of the data

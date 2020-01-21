@@ -2,7 +2,7 @@
 % Please edit documentation in R/extractSeuratData.R
 \name{extractSeuratData}
 \alias{extractSeuratData}
-\title{downloadData}
+\title{extractSeuratData}
 \usage{
 extractSeuratData(seuratObj, clusterId = NA)
 }
