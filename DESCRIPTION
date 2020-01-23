@@ -10,24 +10,28 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 biocViews:
-Imports: R6,
-         graphics,
-         stats,
-         progress,
-         methods,
+Imports: Biobase,
+         BiocGenerics,
+         DEoptimR,
          combinat,
-         Seurat,
-         robustbase,
-         textTinyR,
+         graphics,
+         methods,
+         multtest,
          plotly,
+         progress,
          R.matlab,
+         R6,
+         RcppArmadillo,
+         robustbase,
+         Seurat,
+         stats,
+         textTinyR,
          webshot
 RoxygenNote: 6.1.1
-Suggests:
-    knitr,
-    rmarkdown,
-    ggplot2,
-    testthat,
-    extraDistr,
-    usethis
+Suggests: extraDistr,
+          ggplot2,
+          knitr,
+          rmarkdown,
+          testthat,
+          usethis
 VignetteBuilder: knitr
