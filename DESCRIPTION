@@ -10,10 +10,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 biocViews:
-Imports: Biobase,
-         BiocGenerics,
-         DEoptimR,
-         combinat,
+Imports: combinat,
          graphics,
          methods,
          multtest,
@@ -21,12 +18,10 @@ Imports: Biobase,
          progress,
          R.matlab,
          R6,
-         RcppArmadillo,
          robustbase,
          Seurat,
          stats,
-         textTinyR,
-         webshot
+         textTinyR
 RoxygenNote: 6.1.1
 Suggests: extraDistr,
           ggplot2,
