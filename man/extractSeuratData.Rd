@@ -2,9 +2,14 @@
 % Please edit documentation in R/extractSeuratData.R
 \name{extractSeuratData}
 \alias{extractSeuratData}
-\title{downloadData}
+\title{extractSeuratData}
 \usage{
 extractSeuratData(seuratObj, clusterId = NA)
+}
+\arguments{
+\item{seuratObj}{The Seurat object}
+
+\item{clusterId}{[optional] The id of the cluster, for example 6}
 }
 \value{
 the template
