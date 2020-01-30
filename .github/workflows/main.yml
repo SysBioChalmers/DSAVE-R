@@ -30,5 +30,5 @@ jobs:
         run: R -e "install.packages('devtools', repos='https://cloud.r-project.org'); devtools::install_deps(dependencies = TRUE, build = FALSE, quiet = TRUE)"
       - name: Build and check package
         run: |-
-          R -e "devtools::build();"
+          R CMD build .
           R CMD check --no-vignettes *.tar.gz
