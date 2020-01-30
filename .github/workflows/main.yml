@@ -27,8 +27,8 @@ jobs:
           libcurl4-openssl-dev \
           libpng-dev
       - name: Install package dependencies
-        run: R -e "install.packages('devtools', repos='https://cloud.r-project.org'); devtools::install_deps(dependencies = TRUE, build = FALSE, quiet = TRUE); devtools::install_github(repo = 'krlmlr/ulimit')"
+        run: R -e "install.packages('devtools', repos='https://cloud.r-project.org'); devtools::install_deps(dependencies = TRUE, build = FALSE, quiet = TRUE)"
       - name: Build and check package
         run: |-
-          R -e "ulimit::memory_limit(6500); devtools::build();"
+          R -e "devtools::build();"
           R CMD check --no-vignettes *.tar.gz
