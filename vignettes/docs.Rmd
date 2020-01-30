@@ -11,6 +11,7 @@ vignette: >
 fig_width: 8
 fig_height: 7
 editor_options:
+
   chunk_output_type: console
 ---
 
@@ -54,7 +55,7 @@ library(ggplot2)
 library(DSAVE)
 library(progress)
 library(Seurat)
-library(plotly)
+library("plotly")
 ```
 
 - Download the datasets to analyze.
@@ -76,6 +77,13 @@ pbmc <- Read10X(data.dir = dataDir)
 
 pbmc = pbmc[,1:20000]
 pbmcCellTypes = ctPbmc68k[1:20000]
+
+#further filter out a fraction of the cells from cell types we will not use to speed up the demo
+toRem = (pbmcCellTypes == "CD8+/CD45RA+ Naive Cytotoxic") | (pbmcCellTypes == "CD8+ Cytotoxic T")
+toRem[15000:20000] = F
+pbmc = pbmc[,!toRem]
+pbmcCellTypes = pbmcCellTypes[!toRem]
+
 
 ```
 
@@ -193,57 +201,21 @@ DimPlot(so, reduction = "umap")
 We show both the cell classification from the authors and the clustering performed by a newer version of Seurat. Although similar, the newer clustering agrees better with the UMAP.
 
 - Now, each cluster has to be examined separately. As an example we look at the dendritic cells
-```{r}
-dend = pbmc[, pbmcCellTypes == "Dendritic"]
-```
+```{r, fig.show = 'asis'}
 
-```{r}
+dend = pbmc[, pbmcCellTypes == "Dendritic"]
+
 dend_cell_divergence <- DSAVEGetSingleCellDivergence(dend,
                                                      minUMIsPerCell = 200, tpmLowerBound = 0,
                                                      iterations = 15,silent=FALSE)
-```
 
-```{r, fig.show = 'asis'}
-
-data = dend
-divData = dend_cell_divergence
-
-  df <- as.data.frame(cbind(divData$lls, colSums(as.matrix(data))))
-
-  #Generate suitable text for hover
-  numCells = length(divData$lls)
-  ids = 1:numCells
-  templGene <- rep("", numCells)
-  templVal <- rep(0,numCells)
-
-  t5N = data.frame(gene1=templGene,gene2=templGene,gene3=templGene, gene4=templGene, gene5=templGene, stringsAsFactors = F)
-  t5V = data.frame(val1=templVal, val2=templVal, val3=templVal, val4=templVal, val5=templVal)
-
-  row.names(divData$geneLls) = as.character(row.names(divData$geneLls))
-  #fill using a loop
-  for (i in ids) {
-    a = sort(divData$geneLls[,i], decreasing = F)
-    t5N[i,] = names(a[1:5])
-    t5V[i,] = a[1:5]
-  }
-```
-
-```{r, fig.show = 'asis'}
-  p = plot_ly(data = df, x=~V1, y=~V2, type="scatter", mode="markers",
-              text = ~paste(ids, '<br>',
-                            t5N[,1], " ", t5V[,1], "<br>",
-                            t5N[,2], " ", t5V[,2], "<br>",
-                            t5N[,3], " ", t5V[,3], "<br>",
-                            t5N[,4], " ", t5V[,4], "<br>",
-                            t5N[,5], " ", t5V[,5], "<br>")) %>%
-    layout(xaxis = list(title="Divergence"), yaxis = list(title="UMI counts"), title="Interactive Divergence Plot")
-  p
+DSAVEPlotDivergence(dend, dend_cell_divergence)
 
 ```
 
 The divergence plot shows each cell's UMI counts plotted against their divergence The most divergent cells are the ones that have the lowest (i.e. most negative) divergence. By investigating the leftmost cells by hoovering over them with the mouse pointer, we can see which 5 genes that contribute the most to the divergence, and thus get an idea about which types of cells aremost divergent. For example, some cells can have MT genes as most divergent genes, which may suggest that those are low quality cells. Here, we see that some cells have the gene PPBP as highly divergent, suggesting that they may be megakaryocytes. NKG7 or GNLY show up for other cells, suggesting that they may be NK cells, while immunoglobin genes such as IGLL5 show up for others, suggesting a B cell lineage.
 
-We also take a look at cluster 7 from Seurat, which supposedly should be the same cell type. First, extract the data from the Seurat object:
+We also take a look at cluster 7 from Seurat, which is a cluster of similar cells. First, extract the data from the Seurat object:
 
 ```{r}
 clust7 = extractSeuratData(so, 7)
