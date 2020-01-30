@@ -84,7 +84,7 @@ toRem[15000:20000] = F
 pbmc = pbmc[,!toRem]
 pbmcCellTypes = pbmcCellTypes[!toRem]
 
-
+gc()
 ```
 
 - Calculate the Total Variation for different pool sizes.
@@ -95,7 +95,7 @@ scTotalVariation_bcells <- DSAVEGetTotalVariationPoolSize(bcells,
 
 scTotalVariation_tcells <- DSAVEGetTotalVariationPoolSize(tcells,
           upperBound = 1e5, lowerBound = 5e-1)
-
+gc()
 ```
 
 - Plot the results
@@ -103,7 +103,7 @@ scTotalVariation_tcells <- DSAVEGetTotalVariationPoolSize(tcells,
 ```{r , fig.show = 'asis'}
 
 DSAVEPlotTotalVariation(list(scTotalVariation_bcells, scTotalVariation_tcells), list("B cells", "T cells"))
-
+gc()
 ```
 
 We can see that we need to pool around 1500 T cells to on average get down to bulk variation level,
@@ -148,6 +148,7 @@ is shown further down in this document:
 
 ```{r}
 templInfo <- DSAVEGetStandardTemplate()
+gc()
 ```
 
 - Calculate BTM Score.
@@ -156,13 +157,14 @@ templInfo <- DSAVEGetStandardTemplate()
 tcells_btm <- DSAVECalcBTMScore(tcells, templInfo, skipAlignment=FALSE,
                                 iterations = 15, useLogTransform=FALSE,
                                 logTPMAddon=1, silent=FALSE)
+gc()
 ```
 
 - Plot the results.
 
 ```{r, fig.show = 'asis'}
 DSAVEPlotDSAVEScore(tcells_btm$DSAVEScore, "T4k", DSAVE::datasetScoresHuman)
-
+gc()
 ```
 
 
@@ -196,7 +198,7 @@ DimPlot(so, reduction = "umap", group.by = "extCellTypes")
 so <- FindNeighbors(so, dims = 1:10)
 so <- FindClusters(so, resolution = 0.5)
 DimPlot(so, reduction = "umap")
-
+gc()
 ```
 We show both the cell classification from the authors and the clustering performed by a newer version of Seurat. Although similar, the newer clustering agrees better with the UMAP.
 
@@ -210,7 +212,7 @@ dend_cell_divergence <- DSAVEGetSingleCellDivergence(dend,
                                                      iterations = 15,silent=FALSE)
 
 DSAVEPlotDivergence(dend, dend_cell_divergence)
-
+gc()
 ```
 
 The divergence plot shows each cell's UMI counts plotted against their divergence The most divergent cells are the ones that have the lowest (i.e. most negative) divergence. By investigating the leftmost cells by hoovering over them with the mouse pointer, we can see which 5 genes that contribute the most to the divergence, and thus get an idea about which types of cells aremost divergent. For example, some cells can have MT genes as most divergent genes, which may suggest that those are low quality cells. Here, we see that some cells have the gene PPBP as highly divergent, suggesting that they may be megakaryocytes. NKG7 or GNLY show up for other cells, suggesting that they may be NK cells, while immunoglobin genes such as IGLL5 show up for others, suggesting a B cell lineage.
@@ -219,6 +221,7 @@ We also take a look at cluster 7 from Seurat, which is a cluster of similar cell
 
 ```{r}
 clust7 = extractSeuratData(so, 7)
+gc()
 ```
 
 Then plot in the same way as above:
@@ -231,7 +234,7 @@ clust7_divergence <- DSAVEGetSingleCellDivergence(clust7,
                                                      iterations = 15,silent=FALSE)
 
 DSAVEPlotDivergence(clust7, clust7_divergence)
-
+gc()
 ```
 
 We see less misclassified cells here in general, although there seem to still be some NK cells present.
@@ -248,7 +251,7 @@ dend_score <- DSAVECalcBTMScore(dend, templ)
 
 clust7_score$DSAVEScore
 dend_score$DSAVEScore
-
+gc()
 ```
 
 We can see that the score is higher for the authors' classification, suggesting that the newer Seurat clustering leads to more homogenous clusters in this case.
@@ -264,8 +267,7 @@ bcells_cell_divergence <- DSAVEGetSingleCellDivergence(subb,
                                                        minUMIsPerCell = 200, tpmLowerBound = 0,
                                                        iterations = 15,silent=FALSE)
 DSAVEDivUMIPlot(subb, bcells_cell_divergence)
-
-
+gc()
 ```
 
 
@@ -285,7 +287,7 @@ bcells_cell_divergence_no_MT <- DSAVEGetSingleCellDivergence(subbNoMT,
                                                        iterations = 15,silent=FALSE)
 
 DSAVEDivParamPlot(bcells_cell_divergence_no_MT, fracMT, "MT Content")
-
+gc()
 ```
 
 It is evident that cells with high mitochondrial content are more divergent, dispite that the the mitochondrial genes are not part of the calculation. This suggest that a high mitochondrial content is a sign of low quality for cells, which is also commonly used in many processing pipelines.
