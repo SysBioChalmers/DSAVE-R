@@ -21,10 +21,10 @@ Imports: combinat,
          robustbase,
          Seurat,
          stats,
-         textTinyR
+         textTinyR,
+         ggplot2
 RoxygenNote: 6.1.1
 Suggests: extraDistr,
-          ggplot2,
           knitr,
           rmarkdown,
           testthat,
