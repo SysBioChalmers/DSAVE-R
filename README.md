@@ -1,5 +1,7 @@
 # DSAVE (Down-SAmpling based Variation Estimation)
 
+![](https://github.com/mihai-sysbio/DSAVE-R/workflows/Build%20vignette%20and%20package/badge.svg)
+
 Installation:
 
 1. Install and load devtools:
