@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - 'devel'
-      - 'master'
-      - 'feature/commit-push'
   pull_request:
     branches:
       - 'master'
@@ -33,9 +31,12 @@ jobs:
         run: |-
           R CMD build .
           R CMD check --no-vignettes --no-manual *.tar.gz
+          ls *
       - name: Auto-commit files
         uses: stefanzweifel/git-auto-commit-action@v2.5.0
         with:
           commit_message: update vignette output html
+          branch: devel
+          file_pattern: \*.html
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
