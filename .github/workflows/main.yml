@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'devel'
+      - 'master'
   pull_request:
     branches:
       - 'master'
@@ -17,7 +18,9 @@ jobs:
       image: rstudio/r-base:3.6-bionic
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.GITHUB_HEAD_REF }}
       - name: Install system dependencies
         run: |
           sudo apt-get update && apt-get install -y --no-install-recommends \
@@ -31,12 +34,11 @@ jobs:
         run: |-
           R CMD build .
           R CMD check --no-vignettes --no-manual *.tar.gz
-          ls *
       - name: Auto-commit files
         uses: stefanzweifel/git-auto-commit-action@v2.5.0
         with:
           commit_message: update vignette output html
-          branch: devel
+          branch: ${{ github.GITHUB_HEAD_REF }}
           file_pattern: \*.html
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
