@@ -4,14 +4,10 @@ inst/doc
 .Rhistory
 .RData
 data/*.rds
-doc/*.R
-doc/*.Rmd
-.DS_Store
+doc/
 .Rbuildignore
 .travis.yml
 .DSAVE.Rproj
-data/.DS_Store
-man/.DS_Store
-vignettes/.DS_Store
-R/.DS_Store
 .DS_Store
+DSAVE.Rcheck/
+*.tar.gz

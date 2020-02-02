@@ -3,31 +3,30 @@ Title: DSAVE: Tools to Investigate Variation and Purity of Subpopulations in Sin
 Version: 0.0.0.9000
 Authors@R: c(
     person(given = "Johan", family = "Gustafsson", role = c("aut", "cre"), email = "johan.gson@gmail.se"),
-	person(given = "Juan Salvador", family = "Inda Díaz", role = c("aut"), email = "inda@chalmers.se"))
+    person(given = "Juan Salvador", family = "Inda Díaz", role = c("aut"), email = "inda@chalmers.se"))
 Description: Calculates DSAVE Total Cell Pool Variation Estimation, DSAVE Variation Score and DSAVE Cell-wise Variation Metric - useful for e.g. detecting misclassified cells.
 Depends: R (>= 3.5)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 biocViews:
-Imports: R6,
+Imports: combinat,
          graphics,
-         stats,
-         progress,
          methods,
-         combinat,
-         Seurat,
-         robustbase,
-         textTinyR,
+         multtest,
          plotly,
+         progress,
          R.matlab,
-         webshot
+         R6,
+         robustbase,
+         Seurat,
+         stats,
+         textTinyR,
+         ggplot2
 RoxygenNote: 6.1.1
-Suggests:
-    knitr,
-    rmarkdown,
-    ggplot2,
-    testthat,
-    extraDistr,
-    usethis
+Suggests: extraDistr,
+          knitr,
+          rmarkdown,
+          testthat,
+          usethis
 VignetteBuilder: knitr

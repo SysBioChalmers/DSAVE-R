@@ -1,25 +1,38 @@
-name: CICD
+name: Build vignette and package
 
-"on":
-  - push
-  - pull_request
+on:
+  push:
+    branches:
+      - 'devel'
+  schedule:
+    - cron: '0 6 * * 1'
 
 jobs:
-  build:
+  run:
     runs-on: ubuntu-18.04
     container:
       image: rstudio/r-base:3.6-bionic
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v1
-      - name: Install dependencies
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update && apt-get install -y --no-install-recommends \
+          libxml2-dev \
+          libssl-dev \
+          libcurl4-openssl-dev \
+          libpng-dev
+      - name: Install R package dependencies
+        run: R -e "install.packages('devtools', repos='https://cloud.r-project.org'); devtools::install_deps(dependencies = TRUE, build = FALSE, quiet = TRUE)"
+      - name: Build and check R package
         run: |-
-          R -e "install.packages('devtools', repos='http://cran.us.r-project.org')"
-          R -e "devtools::install_deps(dep = T)"
+          R CMD build .
+          R CMD check --no-vignettes --no-manual *.tar.gz
+      - name: Auto-commit vignette
+        uses: stefanzweifel/git-auto-commit-action@v2.5.0
         with:
-          path: ~/R-library
-          key: R-library
-      - name: Build package
-        run: R CMD build .
-      - name: Check package
-        run: R CMD check --no-vignettes *.tar.gz
+          commit_message: update vignette output html
+          branch: devel
+          file_pattern: docs/index.html
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
