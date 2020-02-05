@@ -3,7 +3,7 @@ name: Build vignette and package
 on:
   push:
     branches:
-      - 'devel'
+      - 'develop'
   schedule:
     - cron: '0 6 * * 1'
 
@@ -28,11 +28,12 @@ jobs:
         run: |-
           R CMD build .
           R CMD check --no-vignettes --no-manual *.tar.gz
+          cp inst/doc/docs.html docs/index.html
       - name: Auto-commit vignette
         uses: stefanzweifel/git-auto-commit-action@v2.5.0
         with:
           commit_message: update vignette output html
-          branch: devel
-          file_pattern: docs/index.html
+          branch: develop
+          file_pattern: \*.html
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
