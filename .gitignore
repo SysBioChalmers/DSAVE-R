@@ -1,10 +1,9 @@
 Meta
-inst/doc
 .Rproj.user
 .Rhistory
 .RData
 data/*.rds
-doc/
+./doc/
 .Rbuildignore
 .travis.yml
 .DSAVE.Rproj
