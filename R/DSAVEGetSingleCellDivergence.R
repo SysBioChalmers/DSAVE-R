@@ -131,5 +131,5 @@ DSAVEGetSingleCellDivergence <- function(data, minUMIsPerCell = 200, tpmLowerBou
     pb$terminate()
   }
 
-  return(list(lls = lls, geneLls = geneLls))
+  return(list(lls = -lls, geneLls = -geneLls))
 }

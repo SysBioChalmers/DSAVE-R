@@ -30,7 +30,7 @@ DSAVEPlotDivergence <- function(data, divData){
   row.names(divData$geneLls) = as.character(row.names(divData$geneLls))
   #fill using a loop
   for (i in ids) {
-    a = sort(divData$geneLls[,i], decreasing = F)
+    a = sort(divData$geneLls[,i], decreasing = T)
     t5N[i,] = names(a[1:5])
     t5V[i,] = a[1:5]
   }
@@ -43,6 +43,6 @@ DSAVEPlotDivergence <- function(data, divData){
                             t5N[,3], " ", t5V[,3], "<br>",
                             t5N[,4], " ", t5V[,4], "<br>",
                             t5N[,5], " ", t5V[,5], "<br>")) %>%
-    layout(xaxis = list(title="Log likelihood"), yaxis = list(title="UMI counts"), title="Interactive Divergence Plot")
+    layout(xaxis = list(title="Cell divergence"), yaxis = list(title="UMI counts"), title="Interactive Divergence Plot")
   p
 }
