@@ -2,10 +2,9 @@ name: Build vignette and package
 
 on:
   push:
-    branches:
-      - 'develop'
+    branches: [ master, develop ]
   schedule:
-    - cron: '0 6 * * 1'
+    - cron: '0 8 1 * *'
 
 jobs:
   run:
