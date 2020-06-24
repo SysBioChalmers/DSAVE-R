@@ -43,6 +43,6 @@ DSAVEPlotDivergence <- function(data, divData){
                             t5N[,3], " ", t5V[,3], "<br>",
                             t5N[,4], " ", t5V[,4], "<br>",
                             t5N[,5], " ", t5V[,5], "<br>")) %>%
-    layout(xaxis = list(title="Divergence"), yaxis = list(title="UMI counts"), title="Interactive Divergence Plot")
+    layout(xaxis = list(title="Log likelihood"), yaxis = list(title="UMI counts"), title="Interactive Divergence Plot")
   p
 }
