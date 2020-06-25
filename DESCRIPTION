@@ -28,5 +28,6 @@ Suggests: extraDistr,
           knitr,
           rmarkdown,
           testthat,
-          usethis
+          usethis,
+          webshot
 VignetteBuilder: knitr
