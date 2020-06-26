@@ -4,8 +4,15 @@
 \alias{DSAVEGetTotalVariationFromBulk}
 \title{DSAVEGetTotalVariationFromBulk}
 \usage{
-DSAVEGetTotalVariationFromBulk(data, pool4samples, upperBound = 1e+05,
-  lowerBound = 0.5, na.rm = TRUE, nComb = 1000L, rescale = TRUE)
+DSAVEGetTotalVariationFromBulk(
+  data,
+  pool4samples,
+  upperBound = 1e+05,
+  lowerBound = 0.5,
+  na.rm = TRUE,
+  nComb = 1000L,
+  rescale = TRUE
+)
 }
 \arguments{
 \item{data}{a numericl matrix}

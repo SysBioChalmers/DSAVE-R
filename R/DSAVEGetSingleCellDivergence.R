@@ -2,10 +2,10 @@
 #'
 #' Calculates the DSAVE cell-wise variation metric.
 #'
-#' The divergence is the
+#' The divergence is the negative
 #' log-likelihood for getting the observed counts' distribution for each
 #' cell when sampling counts from the mean dataset gene expression. The
-#' values are negative, and the lower (i.e. more negative) the value, the
+#' values are positive, and the higher the value, the
 #' more divergent the cell is.
 #'
 #' @param data numeric matrix (can be sparse), the input dataset (cell population)
@@ -22,7 +22,7 @@
 #' @importFrom progress progress_bar
 #' @export
 #' @author Johan Gustafsson, <gustajo@@chalmers.se>
-#' @return a list (lls = vector of divergence, one value per cell, geneLls = gene-wise cell divergence, a matrix)
+#' @return a list (divs = vector of divergence, one value per cell, geneDivs = gene-wise cell divergence, a matrix)
 #' @examples
 #' \dontrun{a = DSAVEGetSingleCellDivergence(data)}
 DSAVEGetSingleCellDivergence <- function(data, minUMIsPerCell = 200, tpmLowerBound = 0, iterations = 15, silent=FALSE) {
@@ -131,5 +131,5 @@ DSAVEGetSingleCellDivergence <- function(data, minUMIsPerCell = 200, tpmLowerBou
     pb$terminate()
   }
 
-  return(list(lls = -lls, geneLls = -geneLls))
+  return(list(divs = -lls, geneDivs = -geneLls))
 }

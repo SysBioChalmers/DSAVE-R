@@ -16,10 +16,10 @@
 #'
 
 DSAVEPlotDivergence <- function(data, divData){
-  df <- as.data.frame(cbind(divData$lls, colSums(as.matrix(data))))
+  df <- as.data.frame(cbind(divData$divs, colSums(as.matrix(data))))
 
   #Generate suitable text for hover
-  numCells = length(divData$lls)
+  numCells = length(divData$divs)
   ids = 1:numCells
   templGene <- rep("", numCells)
   templVal <- rep(0,numCells)
@@ -27,10 +27,10 @@ DSAVEPlotDivergence <- function(data, divData){
   t5N = data.frame(gene1=templGene,gene2=templGene,gene3=templGene, gene4=templGene, gene5=templGene, stringsAsFactors = F)
   t5V = data.frame(val1=templVal, val2=templVal, val3=templVal, val4=templVal, val5=templVal)
 
-  row.names(divData$geneLls) = as.character(row.names(divData$geneLls))
+  row.names(divData$geneDivs) = as.character(row.names(divData$geneDivs))
   #fill using a loop
   for (i in ids) {
-    a = sort(divData$geneLls[,i], decreasing = T)
+    a = sort(divData$geneDivs[,i], decreasing = T)
     t5N[i,] = names(a[1:5])
     t5V[i,] = a[1:5]
   }

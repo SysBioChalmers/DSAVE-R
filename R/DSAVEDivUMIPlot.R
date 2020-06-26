@@ -14,7 +14,7 @@
 
 DSAVEDivUMIPlot <- function(data, divData){
   numUMIs <- colSums(as.matrix(data))
-  df = data.frame(div=divData$lls, numUMIs = numUMIs)
+  df = data.frame(div=divData$divs, numUMIs = numUMIs)
   ind = sort(numUMIs, index.return=T)$ix
   df = df[ind,]
 
@@ -24,13 +24,13 @@ DSAVEDivUMIPlot <- function(data, divData){
   ggplot(df, aes(x=div, y=numUMIs, colour = "Individual cell")) +
     geom_point() +
     ggtitle("UMI Counts vs Cell Divergence") +
-    xlab("Log-likelihood") + ylab("UMI counts") +
+    xlab("Divergence") + ylab("UMI counts") +
     theme(legend.justification = c(1, 1),
           legend.title=element_blank(),
           legend.position = c(1, 1),
           legend.text = element_text(size = 8),
           axis.text.x = element_text(size = 10, angle = 90),
           axis.text.y = element_text(size = 10)) +
-    geom_path(aes(pred, df$numUMIs, colour="Mean log-likelihood"))
+    geom_path(aes(pred, numUMIs, colour="Mean Divergence"))
 
 }

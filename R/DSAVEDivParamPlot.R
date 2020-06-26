@@ -13,7 +13,7 @@
 #'
 
 DSAVEDivParamPlot <- function(divData, paramData, paramName = "Param"){
-  df = data.frame(div=divData$lls, param = paramData)
+  df = data.frame(div=divData$divs, param = paramData)
   ind = sort(paramData, index.return=T)$ix
   df = df[ind,]
 
@@ -23,13 +23,13 @@ DSAVEDivParamPlot <- function(divData, paramData, paramName = "Param"){
   ggplot(df, aes(x=div, y=param, colour = "Individual cell")) +
     geom_point() +
     ggtitle(paste0(paramName, " vs Cell Divergence")) +
-    xlab("Log-likelihood") + ylab(paramName) +
+    xlab("Divergence") + ylab(paramName) +
     theme(legend.justification = c(1, 1),
           legend.title=element_blank(),
           legend.position = c(1, 1),
           legend.text = element_text(size = 8),
           axis.text.x = element_text(size = 10, angle = 90),
           axis.text.y = element_text(size = 10)) +
-    geom_path(aes(pred, df$param, colour="Mean log-likelihood"))
+    geom_path(aes(pred, param, colour="Mean divergence"))
 
 }

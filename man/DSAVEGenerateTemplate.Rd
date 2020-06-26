@@ -4,9 +4,14 @@
 \alias{DSAVEGenerateTemplate}
 \title{DSAVEGenerateTemplate}
 \usage{
-DSAVEGenerateTemplate(ds, genesToUse = NULL, numCells = 2000,
-  numUMIs = 750, fractionUpperOutliers = 0.025,
-  fractionLowerOutliers = 0.025)
+DSAVEGenerateTemplate(
+  ds,
+  genesToUse = NULL,
+  numCells = 2000,
+  numUMIs = 750,
+  fractionUpperOutliers = 0.025,
+  fractionLowerOutliers = 0.025
+)
 }
 \arguments{
 \item{ds}{a dataset, numerical matrix with genes as row names}

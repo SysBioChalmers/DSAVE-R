@@ -203,15 +203,18 @@ dend_cell_divergence <- DSAVEGetSingleCellDivergence(dend,
                                                      iterations = 15,silent=FALSE)
 
 DSAVEPlotDivergence(dend, dend_cell_divergence)
+rm(dend_cell_divergence)
 
 ```
 
-The divergence plot shows each cell's UMI counts plotted against their divergence The most divergent cells are the ones that have the lowest (i.e. most negative) divergence. By investigating the leftmost cells by hoovering over them with the mouse pointer, we can see which 5 genes that contribute the most to the divergence, and thus get an idea about which types of cells aremost divergent. For example, some cells can have MT genes as most divergent genes, which may suggest that those are low quality cells. Here, we see that some cells have the gene PPBP as highly divergent, suggesting that they may be megakaryocytes. NKG7 or GNLY show up for other cells, suggesting that they may be NK cells, while immunoglobin genes such as IGLL5 show up for others, suggesting a B cell lineage. 
+The divergence plot shows each cell's UMI counts plotted against their divergence. The most divergent cells are the ones that have the highest divergence. By investigating the rightmost cells by hoovering over them with the mouse pointer, we can see which 5 genes that contribute the most to the divergence, and thus get an idea about which types of cells are most divergent. For example, some cells can have MT genes as most divergent genes, which may suggest that those are low quality cells. Here, we see that some cells have the gene PPBP as highly divergent, suggesting that they may be megakaryocytes. NKG7 or GNLY show up for other cells, suggesting that they may be NK cells, while immunoglobin genes such as IGLL5 show up for others, suggesting a B cell lineage. 
 
 We also take a look at cluster 7 from Seurat, which supposedly should be the same cell type. First, extract the data from the Seurat object:
 
 ```{r}
 clust7 = extractSeuratData(so, 7)
+#clean up, we don't need the Seurat object anymore
+rm(so)
 ```
 
 Then plot in the same way as above:
@@ -224,6 +227,8 @@ clust7_divergence <- DSAVEGetSingleCellDivergence(clust7,
                                                      iterations = 15,silent=FALSE)
 
 DSAVEPlotDivergence(clust7, clust7_divergence)
+#clean up memory
+rm(clust7_divergence)
 
 ```
 
@@ -252,7 +257,7 @@ We can see that the score is higher for the authors' classification, suggesting 
 
 ```{r, fig.show = 'asis'}
 bcells_id <- sample(1:dim(bcells)[2], 1000)
-subb = as.matrix(bcells[,bcells_id])
+subb = bcells[,bcells_id]
 bcells_cell_divergence <- DSAVEGetSingleCellDivergence(subb,
                                                        minUMIsPerCell = 200, tpmLowerBound = 0,
                                                        iterations = 15,silent=FALSE)
@@ -262,12 +267,13 @@ DSAVEDivUMIPlot(subb, bcells_cell_divergence)
 ```
 
 
-We can see that cells with low number of UMIs are more divergent. Cells below a certain UMI count threshold are usually discarded in a quality control step. We can see that elevating that threshold would likely get rid of more divergent cells, however at the cost of loss of data. Also cells with a high UMI count are on average more divergent; this could be explained by that some of them are doublets, i.e. cases where two or more cells have been accidentally joined and treated as just one cell. Divergence could then come from that the joined cells are of different cell type.
+We can see that cells with low number of UMIs are more divergent. Cells below a certain UMI count threshold are usually discarded in a quality control step. We can see that elevating that threshold would likely get rid of more divergent cells, however at the cost of loss of data. Also cells with a high UMI count are on average more divergent; this could potentially be explained by that some of them are doublets, i.e. cases where two or more cells have been accidentally joined and treated as just one cell. Divergence could then come from that the joined cells are of different cell type.
 
 ```{r, fig.show = 'asis'}
+library(textTinyR)
 
 mitoGenes <- grep(pattern = "^MT-", x = row.names(subb), value = TRUE)
-fracMT <- colSums(subb[mitoGenes, ])/colSums(subb)
+fracMT <- sparse_Sums(subb[mitoGenes, ], rowSums = F)/sparse_Sums(subb, rowSums = F)
 
 #for mitochondrial content, it makes sense to calculate the divergence without the MT genes, 
 #because these in themselves affect the divergence:

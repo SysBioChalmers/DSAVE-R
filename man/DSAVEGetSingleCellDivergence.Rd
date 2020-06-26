@@ -4,8 +4,13 @@
 \alias{DSAVEGetSingleCellDivergence}
 \title{DSAVEGetSingleCellDivergence}
 \usage{
-DSAVEGetSingleCellDivergence(data, minUMIsPerCell = 200,
-  tpmLowerBound = 0, iterations = 15, silent = FALSE)
+DSAVEGetSingleCellDivergence(
+  data,
+  minUMIsPerCell = 200,
+  tpmLowerBound = 0,
+  iterations = 15,
+  silent = FALSE
+)
 }
 \arguments{
 \item{data}{numeric matrix (can be sparse), the input dataset (cell population)}
@@ -21,16 +26,16 @@ be included. Defaults to 0 (meaning all genes are included).}
 \item{silent}{(optional) If true, no progress bar is shown. Defaults to FALSE}
 }
 \value{
-a list (lls = vector of divergence, one value per cell, geneLls = gene-wise cell divergence, a matrix)
+a list (divs = vector of divergence, one value per cell, geneDivs = gene-wise cell divergence, a matrix)
 }
 \description{
 Calculates the DSAVE cell-wise variation metric.
 }
 \details{
-The divergence is the
+The divergence is the negative
 log-likelihood for getting the observed counts' distribution for each
 cell when sampling counts from the mean dataset gene expression. The
-values are negative, and the lower (i.e. more negative) the value, the
+values are positive, and the higher the value, the
 more divergent the cell is.
 }
 \examples{
