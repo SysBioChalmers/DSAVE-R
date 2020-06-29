@@ -4,8 +4,12 @@
 \alias{DSAVEGenerateSNODataset}
 \title{DSAVEGenerateSNODataset}
 \usage{
-DSAVEGenerateSNODataset(templDs, numCells = NULL, noiseLevel = 0,
-  templDSForProfile = NULL)
+DSAVEGenerateSNODataset(
+  templDs,
+  numCells = NULL,
+  noiseLevel = 0,
+  templDSForProfile = NULL
+)
 }
 \arguments{
 \item{templDs}{The input dataset (cell population), numeric matrix (can be sparse)}

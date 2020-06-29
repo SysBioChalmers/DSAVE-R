@@ -4,9 +4,16 @@
 \alias{generateBinningInfo}
 \title{generateBinningInfo}
 \usage{
-generateBinningInfo(data, lbnonlog = 5L, ubnonlog = 1300L,
-  rescale = TRUE, numPoints = 1000L, poolSize = 500L, step = 5e-04,
-  toplim = 1000L)
+generateBinningInfo(
+  data,
+  lbnonlog = 5L,
+  ubnonlog = 1300L,
+  rescale = TRUE,
+  numPoints = 1000L,
+  poolSize = 500L,
+  step = 5e-04,
+  toplim = 1000L
+)
 }
 \arguments{
 \item{data}{Numeric matrix}

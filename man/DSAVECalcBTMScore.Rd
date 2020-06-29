@@ -4,9 +4,15 @@
 \alias{DSAVECalcBTMScore}
 \title{DSAVECalcBTMScore}
 \usage{
-DSAVECalcBTMScore(data, templInfo, skipAlignment = FALSE,
-  iterations = 15, useLogTransform = FALSE, logTPMAddon = 1,
-  silent = FALSE)
+DSAVECalcBTMScore(
+  data,
+  templInfo,
+  skipAlignment = FALSE,
+  iterations = 15,
+  useLogTransform = FALSE,
+  logTPMAddon = 1,
+  silent = FALSE
+)
 }
 \arguments{
 \item{data}{numeric matrix (can be sparse), the input dataset (cell population)}

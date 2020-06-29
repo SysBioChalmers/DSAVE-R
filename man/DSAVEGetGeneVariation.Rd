@@ -4,8 +4,13 @@
 \alias{DSAVEGetGeneVariation}
 \title{DSAVEGetGeneVariation}
 \usage{
-DSAVEGetGeneVariation(data, lb = 10, iterations = 100,
-  maxNumCells = 2000, silent = FALSE)
+DSAVEGetGeneVariation(
+  data,
+  lb = 10,
+  iterations = 100,
+  maxNumCells = 2000,
+  silent = FALSE
+)
 }
 \arguments{
 \item{data}{numeric matrix, the input dataset (cell population)}

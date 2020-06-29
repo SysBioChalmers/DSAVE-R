@@ -4,9 +4,17 @@
 \alias{DSAVEGetTotalVariationPoolSize}
 \title{DSAVEGetTotalVariationPoolSize}
 \usage{
-DSAVEGetTotalVariationPoolSize(data, upperBound = 1e+05,
-  lowerBound = 0.5, poolSizes = NA, na.rm = TRUE, seed = NULL,
-  repetitionPerSize = 30L, rescale = TRUE, silent = FALSE)
+DSAVEGetTotalVariationPoolSize(
+  data,
+  upperBound = 1e+05,
+  lowerBound = 0.5,
+  poolSizes = NA,
+  na.rm = TRUE,
+  seed = NULL,
+  repetitionPerSize = 30L,
+  rescale = TRUE,
+  silent = FALSE
+)
 }
 \arguments{
 \item{data}{a numeric matrix}
