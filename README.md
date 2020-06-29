@@ -1,5 +1,7 @@
 # DSAVE (Down-SAmpling based Variation Estimation)
 
+![](https://github.com/sysbiochalmers/DSAVE-R/workflows/Build%20vignette%20and%20package/badge.svg)
+
 Installation:
 
 1. Install and load devtools:
@@ -12,4 +14,4 @@ library(devtools)
 
 install_github("SysBioChalmers/DSAVE-R")
 
-The vignette can be found [here](http://htmlpreview.github.io/?https://github.com/SysBioChalmers/DSAVE-R/blob/master/inst/doc/docs.html)
+The vignette can be found [here](https://sysbiochalmers.github.io/DSAVE-R/)
