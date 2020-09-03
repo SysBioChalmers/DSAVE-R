@@ -21,6 +21,7 @@ DSAVEGenerateTemplate <- function(ds, genesToUse = NULL, numCells = 2000, numUMI
   stopifnot((is.matrix(ds) | is(ds, 'sparseMatrix')),
             numCells == round(numCells), length(numCells) == 1,
             numUMIs == round(numUMIs), length(numUMIs) == 1,
+            dim(ds)[2] >= numCells,
             is.numeric(fractionUpperOutliers), length(fractionUpperOutliers) == 1,
             is.numeric(fractionLowerOutliers), length(fractionLowerOutliers) == 1)
 
@@ -33,6 +34,9 @@ DSAVEGenerateTemplate <- function(ds, genesToUse = NULL, numCells = 2000, numUMI
     ds = ds[indices, , drop=FALSE]
 
   }
+
+  #select numCells cells:
+  ds = ds[, sample(dim(ds)[2], numCells)]
 
   m = as.matrix(ds)
 

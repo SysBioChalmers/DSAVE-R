@@ -22,7 +22,8 @@ Imports: combinat,
          Seurat,
          stats,
          textTinyR,
-         ggplot2
+         ggplot2,
+		 downloader
 RoxygenNote: 7.0.2
 Suggests: extraDistr,
           knitr,

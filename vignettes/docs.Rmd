@@ -48,7 +48,7 @@ population need to be divided into populations per cell type to give meaningful 
  mean expression of the cell population.
 
 
-- Load the package.
+- Load the package and set random seed for reproducibility.
 
 ```{r}
 library(ggplot2)
@@ -56,21 +56,23 @@ library(DSAVE)
 library(progress)
 library(Seurat)
 library("plotly")
+set.seed(1)
 ```
 
 - Download the datasets to analyze.
-The data is first downloaded and then read into a sparse matrix using the Seurat function Read10X. Note that the input to all functions expects a cell population where all cells are of the same cell type. This happens to be the case for the B10k and T4k datasets, but not for PBMC68k.
+The data is first downloaded and then read into a sparse matrix using the Seurat function Read10X. Note that the input to all functions expects a cell population where all cells are of the same cell type. This happens to be the case for the B10k and T4k datasets, but not for PBMC68k. If the
+download fails, which may happen due to access permissions, it is possible to download and extract the file manually. The dataDir variable should then be set to the folder in which the data was extracted.
 
 ```{r}
-extrDir <- downloadData("http://cf.10xgenomics.com/samples/cell-exp/1.1.0/b_cells/b_cells_filtered_gene_bc_matrices.tar.gz", "B10k")
+extrDir <- downloadData("https://cf.10xgenomics.com/samples/cell-exp/1.1.0/b_cells/b_cells_filtered_gene_bc_matrices.tar.gz", "B10k")
 dataDir = paste0(extrDir,"/filtered_matrices_mex/hg19")
 bcells <- Read10X(data.dir = dataDir)
 
-extrDir <- downloadData("http://cf.10xgenomics.com/samples/cell-exp/2.1.0/t_4k/t_4k_filtered_gene_bc_matrices.tar.gz", "T4k")
+extrDir <- downloadData("https://cf.10xgenomics.com/samples/cell-exp/2.1.0/t_4k/t_4k_filtered_gene_bc_matrices.tar.gz", "T4k")
 dataDir = paste0(extrDir,"/filtered_gene_bc_matrices/GRCh38")
 tcells <- Read10X(data.dir = dataDir)
 
-extrDir <- downloadData("http://cf.10xgenomics.com/samples/cell-exp/1.1.0/fresh_68k_pbmc_donor_a/fresh_68k_pbmc_donor_a_filtered_gene_bc_matrices.tar.gz", "PBMC68k")
+extrDir <- downloadData("https://cf.10xgenomics.com/samples/cell-exp/1.1.0/fresh_68k_pbmc_donor_a/fresh_68k_pbmc_donor_a_filtered_gene_bc_matrices.tar.gz", "PBMC68k")
 dataDir = paste0(extrDir,"/filtered_matrices_mex/hg19")
 pbmc <- Read10X(data.dir = dataDir)
 #only use the 20000 first cells to speed up the demo
@@ -112,9 +114,9 @@ in the B10k dataset due to fewer reads. It is also to be noted that the number o
 in a pool highly depends on gene expression. For highly expressed genes, a few hundreds are enough, while
 for lowly expressed genes several thousands are needed.
 
-## 3 Variation score
+## 3 BTM Variation score
 
-The DSAVE variation score is a metric describing the non-sampling part of the cell-to-cell variation in single-cell
+The DSAVE BTM variation score is a metric describing the non-sampling part of the cell-to-cell variation in single-cell
 RNA-Seq data. It is useful both as a technical quality metric (including the cell type annotation process if applicable)
 and as a way to compare different clustering methods on a specific dataset.
 
@@ -171,9 +173,10 @@ gc()
 We can see that the T4k dataset has a BTM variation that is comparable to the other datasets and that the technical quality thus is what can be expected for single-cell RNA-Seq.
 
 
-## 5 Cell-wise variation - detect misclassified cells
+## 5 Evaluate clustering and detect misclassified cells
+This section shows a typical use case, where the clustering is improved in a second clustering iteration using a newer clustering method.
 
-- First we visualize the dataset using Seurat
+- First we visualize the dataset using Seurat using the clustering provided by the authors:
 ```{r, fig.show = 'asis'}
 
 so = CreateSeuratObject(counts = pbmc, project = "pbmc", min.cells = 0, min.features = 0)
@@ -194,13 +197,8 @@ so[["extCellTypes"]] = pbmcCellTypes
 so <- RunUMAP(so, dims = 1:10)
 DimPlot(so, reduction = "umap", group.by = "extCellTypes")
 
-#show data extraction from Seurat:
-so <- FindNeighbors(so, dims = 1:10)
-so <- FindClusters(so, resolution = 0.5)
-DimPlot(so, reduction = "umap")
 gc()
 ```
-We show both the cell classification from the authors and the clustering performed by a newer version of Seurat. Although similar, the newer clustering agrees better with the UMAP.
 
 - Now, each cluster has to be examined separately. As an example we look at the dendritic cells
 ```{r, fig.show = 'asis'}
@@ -218,7 +216,27 @@ rm(dend_cell_divergence)
 ```
 
 The divergence plot shows each cell's UMI counts plotted against their divergence. The most divergent cells are the ones that have the highest divergence. By investigating the rightmost cells by hoovering over them with the mouse pointer, we can see which 5 genes that contribute the most to the divergence, and thus get an idea about which types of cells are most divergent. For example, some cells can have MT genes as most divergent genes, which may suggest that those are low quality cells. Here, we see that some cells have the gene PPBP as highly divergent, suggesting that they may be megakaryocytes. NKG7 or GNLY show up for other cells, suggesting that they may be NK cells, while immunoglobin genes such as IGLL5 show up for others, suggesting a B cell lineage. 
-We also take a look at cluster 7 from Seurat, which is a cluster of similar cells. First, extract the data from the Seurat object:
+
+We also calculate the BTM variation score, with a template for fewer cells:
+
+```{r}
+btm_old_clust <- DSAVECalcBTMScore(dend, DSAVEGetStandardTemplate500())
+DSAVEPlotDSAVEScore(btm_old_clust$DSAVEScore, "OldClust", DSAVE::datasetScoresHuman500)
+gc()
+```
+
+We now use the newer clustering in Seurat:
+```{r, fig.show = 'asis'}
+
+#show data extraction from Seurat:
+so <- FindNeighbors(so, dims = 1:10)
+so <- FindClusters(so, resolution = 0.5)
+DimPlot(so, reduction = "umap")
+gc()
+```
+
+
+We now investigate cluster 7 from the new clustering, which is a cluster of similar cells. First, extract the data from the Seurat object:
 
 ```{r}
 clust7 = extractSeuratData(so, 7)
@@ -243,24 +261,54 @@ gc()
 
 ```
 
-We see less misclassified cells here in general, although there seem to still be some NK cells present.
+We see less misclassified cells here in general, although there seem to still be some NK cells present. 
 
-## 6 Compare clustering methods using the DSAVE BTM Variation Score
-
-We can use the DSAVE BTM score to get an idea about which of the cell populations examined above that exhibit the most variation, which could serve as a metric of clustering quality:
-
+We also plot the BTM variation score for the new clustering
 ```{r}
+btm_new_clust <- DSAVECalcBTMScore(clust7, DSAVEGetStandardTemplate500())
+DSAVEPlotDSAVEScore(btm_new_clust$DSAVEScore, "NewClust", DSAVE::datasetScoresHuman500)
 
-templ <- DSAVEGetStandardTemplate500();
-clust7_score <- DSAVECalcBTMScore(clust7, templ)
-dend_score <- DSAVECalcBTMScore(dend, templ)
+btm_old_clust$DSAVEScore
+btm_new_clust$DSAVEScore
 
-clust7_score$DSAVEScore
-dend_score$DSAVEScore
+rm(btm_old_clust)
+rm(btm_new_clust)
 gc()
 ```
 
-We can see that the score is higher for the authors' classification, suggesting that the newer Seurat clustering leads to more homogenous clusters in this case.
+
+We also see that the BTM variation score has decreased considerably, suggesting a better clustering performance.It seems that the new clustering is a better choice. 
+
+It is now possible to further elaborate with clustering parameters with more iterations. If we are satisfied with the clustering performance, it is now possible to manually remove cells. A suggestion would be to remove cells expressing NK cells from this particular cluster. Since these cells are potentially doublets (they still ended up in this cluster), we will simply remove them from the dataset here.Two potential markers, as given by the interactive divergence plot, are "GZMB" and "NKG7".
+
+First investigate those genes:
+
+```{r}
+clust7Purified = clust7
+#investigate those genes
+h1 = hist(clust7[rownames(clust7) == "GZMB",], breaks = seq(-0.5, 19.5, by=1))
+h1$counts 
+
+h2 = hist(clust7[rownames(clust7) == "NKG7",], breaks = seq(-0.5, 19.5, by=1))
+h2$counts 
+
+```
+
+For GZMB, the number of cells with zero counts is high(496), the cells with one count is low (3), and there are several cells with higher values. This suggests that the gene is highly expressed, but present in few cells, which makes it an excellent marker.
+For NKG7, the number of cells with one count is much higher(59), suggesting that the gene is expressed and present in more cells (some happen to have zero value although it is expressed in the cell). There is a risk that this gene is lowly expressed in the cells that are supposed to
+be in cluster 7. We will here therefore play safe and only remove cells that have six or more counts of this gene, although this strategy is open for debate.
+
+```{r}
+clust7Purified = clust7
+#investigate those genes
+toRemove = clust7[rownames(clust7) == "GZMB",] >= 1 | clust7[rownames(clust7) == "NKG7",] >= 6;
+print(paste0("To remove: ", sum(toRemove)))
+clust7Purified = clust7Purified[, !toRemove]
+dim(clust7)
+dim(clust7Purified)
+
+```
+
 
 ## 6 Plot the UMI Counts and mitochondrial content vs Cell Divergence to estimate suitable thresholds for cell filtering
 
@@ -298,3 +346,32 @@ gc()
 ```
 
 It is evident that cells with high mitochondrial content are more divergent, dispite that the the mitochondrial genes are not part of the calculation. This suggest that a high mitochondrial content is a sign of low quality for cells, which is also commonly used in many processing pipelines.
+
+## 7 Template generation
+
+Templates are generally usable within the same species, as long as the dataset contains enough cells and has enough counts per cell. 
+To generate a template, a dataset with clustering information (called master) from a species is needed, where only one cell population is used. 
+
+Here, we generate the template from the bcells dataset (where all bcells are considered a cell population):
+
+```{r, fig.show = 'asis'}
+bcellsRed = bcells[rowSums(bcells) > 3,] #remove empty genes to speed things up for this demo
+newTemplate = DSAVEGenerateTemplate (bcells, genesToUse = NULL, numCells = 500, numUMIs = 750,
+                                  fractionUpperOutliers = 0.025, fractionLowerOutliers = 0.025)
+#test it
+testScore <- DSAVECalcBTMScore(tcells, newTemplate)
+testScore$DSAVEScore
+
+```
+
+genesToUse is a list of genes that can be specified to limit the genes to include. This may be useful if the master dataset may contain genes in the matrix that are not present in some datasets - such genes are better to avoid. A way to create such a gene list is to use the intersection of the available genes in multiple datasets.
+
+numCells defines how many cells that will be used in each iteration in the calculations. A cell population must contain this many cells to work with a template.
+
+numUMIs sets the average number of UMIs that are needed in the cells for a cell population.
+
+fractionUpperOutliers and fractionLowerOutliers sets the fraction of genes with the highest and lowest variation that should be discarded before the calculation. In the default setting, the 2.5 % genes with highest respectively lowest variation will be discarded.
+
+Template generation involves random sampling, why a template should be saved to disk rather than being regenerated for each run!
+
+
