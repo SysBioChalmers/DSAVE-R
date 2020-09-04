@@ -4,7 +4,9 @@
 \name{UMIDistr2000}
 \alias{UMIDistr2000}
 \title{UMIDistr2000}
-\format{Double-precision vector}
+\format{
+Double-precision vector
+}
 \source{
 Calculated from the BC dataset.
 }

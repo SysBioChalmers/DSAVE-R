@@ -30,7 +30,7 @@ downloadData <- function(url, filenameBase, locDir = tempdir(check = TRUE)) {
   out <- tryCatch(
     {
       #download, untar and load the bcell data and then store it in a .rda file
-      download(url, destfile = gzfilename)
+      downloader::download(url, destfile = gzfilename)
       untar(gzfilename, exdir = extrDir)
       file.remove(gzfilename)
     },

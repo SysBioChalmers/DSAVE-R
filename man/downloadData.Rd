@@ -4,13 +4,20 @@
 \alias{downloadData}
 \title{downloadData}
 \usage{
-downloadData(url, filenameBase)
+downloadData(url, filenameBase, locDir = tempdir(check = TRUE))
+}
+\arguments{
+\item{url}{The URL to download}
+
+\item{filenameBase}{The dataset name to use as filename}
+
+\item{locDir}{The directory in which the data can be stored on your disk}
 }
 \value{
 the template
 }
 \description{
-Gets the b10k dataset from 10x Genomics. The function tries to save the dataset as an
+Downloads a dataset. The function tries to save the dataset as an
 .rds file in the package data folder to avoid having to download it every time it is
 requested. If that folder is not writable for some reason, it will use the temp folder,
 which is cleared when you exit R, meaning it will have to be be downloaded again. In such cases, we

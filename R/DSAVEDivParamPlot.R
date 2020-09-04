@@ -4,6 +4,7 @@
 #'
 #' @param divData The output from the function DSAVEGetSingleCellDivergence
 #' @param paramData Vector containing the param value for each cell.
+#' @param paramName Name of the parameter in the plot
 #' @importFrom methods is as
 #' @export
 #' @author Johan Gustafsson, <gustajo@@chalmers.se>

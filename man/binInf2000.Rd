@@ -4,9 +4,11 @@
 \name{binInf2000}
 \alias{binInf2000}
 \title{binInf2000}
-\format{List with three fields: binninginfo.means, binninginfo.ubs and binninginfo.lbs,
+\format{
+List with three fields: binninginfo.means, binninginfo.ubs and binninginfo.lbs,
 corresponding to the mean, upper bound and lower bound for each bin. Each of those is a
-list of 1,000 points.}
+list of 1,000 points.
+}
 \source{
 Calculated from the BC dataset
 }

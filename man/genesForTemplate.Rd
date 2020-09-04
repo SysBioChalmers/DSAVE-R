@@ -4,7 +4,9 @@
 \name{genesForTemplate}
 \alias{genesForTemplate}
 \title{genesForTemplate}
-\format{string list}
+\format{
+string list
+}
 \source{
 The genes are the intersection of the genes available in four datasets; BC, OC, B10k and TCD8.
 }

@@ -4,7 +4,9 @@
 \name{bulkTotalVar4vs4}
 \alias{bulkTotalVar4vs4}
 \title{bulkTotalVar4vs4}
-\format{list of lists, where the inner list contains the expression interval and the variation.}
+\format{
+list of lists, where the inner list contains the expression interval and the variation.
+}
 \source{
 We downloaded 8 bulk RNA-Seq samples (FPKM) from the BLUEPRINT Epigenome Project31.
 The samples were taken from the project EGAD00001001173 and have the following sample IDs:

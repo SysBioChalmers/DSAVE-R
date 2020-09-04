@@ -9,7 +9,7 @@ DSAVEPlotTotalVariation(dsData, dsNames)
 \arguments{
 \item{dsData}{Output from DSAVEGetTotalVariation or a list of such outputs}
 
-\item{dsnames}{The names of the dataset(s), either a string or a list of strings}
+\item{dsNames}{The names of the dataset(s), either a string or a list of strings}
 }
 \value{
 nothing

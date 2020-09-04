@@ -4,8 +4,10 @@
 \name{datasetScoresHuman}
 \alias{datasetScoresHuman}
 \title{datasetScoresHuman}
-\format{list of lists, where the inner list contains the dataset name (as named
-in the DSAVE publication) and the DSAVE score.}
+\format{
+list of lists, where the inner list contains the dataset name (as named
+in the DSAVE publication) and the DSAVE score.
+}
 \source{
 Calculated with the DSAVE-M package in MATLAB, but the results should
 be the same.

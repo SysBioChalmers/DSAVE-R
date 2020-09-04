@@ -10,6 +10,8 @@ DSAVEDivParamPlot(divData, paramData, paramName = "Param")
 \item{divData}{The output from the function DSAVEGetSingleCellDivergence}
 
 \item{paramData}{Vector containing the param value for each cell.}
+
+\item{paramName}{Name of the parameter in the plot}
 }
 \value{
 -
