@@ -56,6 +56,7 @@ library(DSAVE)
 library(progress)
 library(Seurat)
 library("plotly")
+library("downloader")
 set.seed(1)
 ```
 
@@ -86,7 +87,6 @@ toRem[15000:20000] = F
 pbmc = pbmc[,!toRem]
 pbmcCellTypes = pbmcCellTypes[!toRem]
 
-gc()
 ```
 
 - Calculate the Total Variation for different pool sizes.
@@ -97,7 +97,6 @@ scTotalVariation_bcells <- DSAVEGetTotalVariationPoolSize(bcells,
 
 scTotalVariation_tcells <- DSAVEGetTotalVariationPoolSize(tcells,
           upperBound = 1e5, lowerBound = 5e-1)
-gc()
 ```
 
 - Plot the results
@@ -105,7 +104,7 @@ gc()
 ```{r , fig.show = 'asis'}
 
 DSAVEPlotTotalVariation(list(scTotalVariation_bcells, scTotalVariation_tcells), list("B cells", "T cells"))
-gc()
+
 ```
 
 We can see that we need to pool around 1500 T cells to on average get down to bulk variation level,
@@ -150,7 +149,6 @@ is shown further down in this document:
 
 ```{r}
 templInfo <- DSAVEGetStandardTemplate()
-gc()
 ```
 
 - Calculate BTM Score.
@@ -159,14 +157,12 @@ gc()
 tcells_btm <- DSAVECalcBTMScore(tcells, templInfo, skipAlignment=FALSE,
                                 iterations = 15, useLogTransform=FALSE,
                                 logTPMAddon=1, silent=FALSE)
-gc()
 ```
 
 - Plot the results.
 
 ```{r, fig.show = 'asis'}
 DSAVEPlotDSAVEScore(tcells_btm$DSAVEScore, "T4k", DSAVE::datasetScoresHuman)
-gc()
 ```
 
 
@@ -197,7 +193,6 @@ so[["extCellTypes"]] = pbmcCellTypes
 so <- RunUMAP(so, dims = 1:10)
 DimPlot(so, reduction = "umap", group.by = "extCellTypes")
 
-gc()
 ```
 
 - Now, each cluster has to be examined separately. As an example we look at the dendritic cells
@@ -210,19 +205,17 @@ dend_cell_divergence <- DSAVEGetSingleCellDivergence(dend,
                                                      iterations = 15,silent=FALSE)
 
 DSAVEPlotDivergence(dend, dend_cell_divergence)
-gc()
 rm(dend_cell_divergence)
 
 ```
 
-The divergence plot shows each cell's UMI counts plotted against their divergence. The most divergent cells are the ones that have the highest divergence. By investigating the rightmost cells by hoovering over them with the mouse pointer, we can see which 5 genes that contribute the most to the divergence, and thus get an idea about which types of cells are most divergent. For example, some cells can have MT genes as most divergent genes, which may suggest that those are low quality cells. Here, we see that some cells have the gene PPBP as highly divergent, suggesting that they may be megakaryocytes. NKG7 or GNLY show up for other cells, suggesting that they may be NK cells, while immunoglobin genes such as IGLL5 show up for others, suggesting a B cell lineage. 
+The divergence plot shows each cell's UMI counts plotted against their divergence. The most divergent cells are the ones that have the highest divergence. By investigating the rightmost cells by hoovering over them with the mouse pointer, we can see which 5 genes that contribute the most to the divergence, and thus get an idea about which types of cells are most divergent. For example, some cells have the gene PPBP as highly divergent, suggesting that they may be megakaryocytes, while NKG7 or GNLY show up for other cells, suggesting that they may be NK cells. 
 
 We also calculate the BTM variation score, with a template for fewer cells:
 
 ```{r}
 btm_old_clust <- DSAVECalcBTMScore(dend, DSAVEGetStandardTemplate500())
 DSAVEPlotDSAVEScore(btm_old_clust$DSAVEScore, "OldClust", DSAVE::datasetScoresHuman500)
-gc()
 ```
 
 We now use the newer clustering in Seurat:
@@ -232,7 +225,6 @@ We now use the newer clustering in Seurat:
 so <- FindNeighbors(so, dims = 1:10)
 so <- FindClusters(so, resolution = 0.5)
 DimPlot(so, reduction = "umap")
-gc()
 ```
 
 
@@ -242,7 +234,6 @@ We now investigate cluster 7 from the new clustering, which is a cluster of simi
 clust7 = extractSeuratData(so, 7)
 #clean up, we don't need the Seurat object anymore
 rm(so)
-gc()
 ```
 
 Then plot in the same way as above:
@@ -257,7 +248,6 @@ clust7_divergence <- DSAVEGetSingleCellDivergence(clust7,
 DSAVEPlotDivergence(clust7, clust7_divergence)
 #clean up memory
 rm(clust7_divergence)
-gc()
 
 ```
 
@@ -273,13 +263,12 @@ btm_new_clust$DSAVEScore
 
 rm(btm_old_clust)
 rm(btm_new_clust)
-gc()
 ```
 
 
 We also see that the BTM variation score has decreased considerably, suggesting a better clustering performance.It seems that the new clustering is a better choice. 
 
-It is now possible to further elaborate with clustering parameters with more iterations. If we are satisfied with the clustering performance, it is now possible to manually remove cells. A suggestion would be to remove cells expressing NK cells from this particular cluster. Since these cells are potentially doublets (they still ended up in this cluster), we will simply remove them from the dataset here.Two potential markers, as given by the interactive divergence plot, are "GZMB" and "NKG7".
+It is possible to further elaborate with clustering parameters with more iterations. When we are satisfied with the clustering performance, it is now possible to manually remove cells. A suggestion would be to remove cells expressing NK cell genes from this particular cluster. Since these cells are potentially doublets (they still ended up in this cluster), we will simply remove them from the dataset here.Two potential markers, as given by the interactive divergence plot, are "GZMB" and "NKG7". GZMB is also expressed in T cells, but such cells would also be misclassified.
 
 First investigate those genes:
 
@@ -321,7 +310,6 @@ bcells_cell_divergence <- DSAVEGetSingleCellDivergence(subb,
                                                        minUMIsPerCell = 200, tpmLowerBound = 0,
                                                        iterations = 15,silent=FALSE)
 DSAVEDivUMIPlot(subb, bcells_cell_divergence)
-gc()
 ```
 
 
@@ -342,21 +330,20 @@ bcells_cell_divergence_no_MT <- DSAVEGetSingleCellDivergence(subbNoMT,
                                                        iterations = 15,silent=FALSE)
 
 DSAVEDivParamPlot(bcells_cell_divergence_no_MT, fracMT, "MT Content")
-gc()
 ```
 
 It is evident that cells with high mitochondrial content are more divergent, dispite that the the mitochondrial genes are not part of the calculation. This suggest that a high mitochondrial content is a sign of low quality for cells, which is also commonly used in many processing pipelines.
 
 ## 7 Template generation
 
-Templates are generally usable within the same species, as long as the dataset contains enough cells and has enough counts per cell. 
-To generate a template, a dataset with clustering information (called master) from a species is needed, where only one cell population is used. 
+Templates are generally usable within the same species, as long as the cell population contains enough cells and has enough counts per cell. 
+To generate a template, a dataset with clustering information (called master) from a species is needed. Only one of the cell populations is used. 
 
 Here, we generate the template from the bcells dataset (where all bcells are considered a cell population):
 
 ```{r, fig.show = 'asis'}
 bcellsRed = bcells[rowSums(bcells) > 3,] #remove empty genes to speed things up for this demo
-newTemplate = DSAVEGenerateTemplate (bcells, genesToUse = NULL, numCells = 500, numUMIs = 750,
+newTemplate = DSAVEGenerateTemplate (bcellsRed, genesToUse = NULL, numCells = 500, numUMIs = 750,
                                   fractionUpperOutliers = 0.025, fractionLowerOutliers = 0.025)
 #test it
 testScore <- DSAVECalcBTMScore(tcells, newTemplate)
@@ -372,6 +359,6 @@ numUMIs sets the average number of UMIs that are needed in the cells for a cell 
 
 fractionUpperOutliers and fractionLowerOutliers sets the fraction of genes with the highest and lowest variation that should be discarded before the calculation. In the default setting, the 2.5 % genes with highest respectively lowest variation will be discarded.
 
-Template generation involves random sampling, why a template should be saved to disk rather than being regenerated for each run!
+Template generation involves random sampling; therefore a template should be saved to disk rather than being regenerated for each run!
 
 
