@@ -7,6 +7,7 @@
 DSAVEGetSingleCellDivergence(
   data,
   minUMIsPerCell = 200,
+  numGenesGW = 5,
   tpmLowerBound = 0,
   iterations = 15,
   silent = FALSE
@@ -18,6 +19,8 @@ DSAVEGetSingleCellDivergence(
 \item{minUMIsPerCell}{All cells are downsampled to this number of counts, or.
 higher if possible without losing cells. The result is NA for cells with lower counts.}
 
+\item{numGenesGW}{The number of gene specific divergence values to store per cell. Will store the most divergent ones}
+
 \item{tpmLowerBound}{(optional) TPM lower bound, genes below this will not
 be included. Defaults to 0 (meaning all genes are included).}
 
@@ -26,7 +29,7 @@ be included. Defaults to 0 (meaning all genes are included).}
 \item{silent}{(optional) If true, no progress bar is shown. Defaults to FALSE}
 }
 \value{
-a list (divs = vector of divergence, one value per cell, geneDivs = gene-wise cell divergence, a matrix)
+a list (divs = vector of divergence, one value per cell, geneDivGenes = The top divergent genes per cell, a matrix, geneDivVals = The corresponding divergence values for the divergent genes per cell)
 }
 \description{
 Calculates the DSAVE cell-wise variation metric.

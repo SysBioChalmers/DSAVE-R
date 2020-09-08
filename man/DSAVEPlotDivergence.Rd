@@ -15,7 +15,7 @@ DSAVEPlotDivergence(data, divData)
 nothing
 }
 \description{
-Calculates the total variation with a specific pool size.
+Creates an interactive plotly plot showing cell divergence and gene divergence per cell
 }
 \details{
 Calculates the average pairwise total variation between two pools of cells with specific size,

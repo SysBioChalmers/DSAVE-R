@@ -2,25 +2,31 @@ test_that("TR008 - DSAVEGetSingleCellDivergence",{
 
   d <- rbind(c(0,1,2,1),c(3,3,1,2));
   ds <- as.matrix(d);
+  rownames(ds) = c("A","B")
 
   divs = DSAVEGetSingleCellDivergence(ds, 3, silent = TRUE)$divs;
 
   ds11 <- matrix(1,30000,2);
+  rownames(ds11) = paste0("A",1:30000)
   divs11 = DSAVEGetSingleCellDivergence(ds11, 400, silent = TRUE)$divs;
 
 
   d2 <- rbind(c(0,14,2,1),c(17,0,1,2));
   ds2 <- as.matrix(d2);
+  rownames(ds2) = paste0("A",1:2)
 
   divs2 = DSAVEGetSingleCellDivergence(ds2, 3, silent = TRUE)$divs;
 
   d3 <- rbind(c(0,3,2,1),c(3,0,1,2));
   ds3 <- as.matrix(d3);
+  rownames(ds3) = paste0("A",1:2)
 
   divs3 = DSAVEGetSingleCellDivergence(ds3, 3, silent = TRUE)$divs;
 
   d4 <- rbind(c(0,14,5,1),c(17,0,1,2));
   ds4 <- as.matrix(d4);
+  rownames(ds4) = paste0("A",1:2)
+
   divs4 = DSAVEGetSingleCellDivergence(ds4, 6, silent = TRUE)$divs;
 
   #check that more divergent cells get higher divergence
@@ -60,9 +66,19 @@ test_that("TR008 - DSAVEGetSingleCellDivergence",{
   expRes1 = dbinom(8, 8, 0.25, log = TRUE)
   expect_equal(a[1], expRes1, info = "TR008: LogBinomialPDF not ok", tolerance=1e-4, check.names=F)
 
-  geneDivs = DSAVEGetSingleCellDivergence(dsgs, 4, silent = TRUE)$geneDivs;
+  gd = DSAVEGetSingleCellDivergence(dsgs, 4, silent = TRUE)
   expRes = -dbinom(4, 4, 0.25, log = TRUE)
-  expect_equal(geneDivs[2,2], expRes, info = "TR008: Gene-wise divergence not ok", tolerance=1e-4, check.names=F)
+  expect_equal(gd$geneDivVals[2,2], expRes, info = "TR008: Gene-wise divergence not ok", tolerance=1e-4, check.names=F)
+
+  dgs2 <- cbind(c(0,1,8,0),c(4,1,0,4), c(0,1,8,0), c(4,1,0,4));
+  dsgs2 <- as.matrix(dgs2);
+  row.names(dsgs2) = c("A", "B", "C","D")
+  colnames(dsgs2) = c("Cell A", "Cell B", "Cell C", "Cell D")
+  gd2 = DSAVEGetSingleCellDivergence(dsgs2, 9, silent = TRUE)
+  expRes = as.matrix(cbind(c("C","B"),c("C","B"), c("C","B"), c("C","B")));
+  expect_equal(gd2$geneDivGenes[c(1,4),], expRes, info = "TR008: Gene-wise gene not ok", check.names=F)
+
+
   })
 
 

@@ -23,7 +23,9 @@ Imports: combinat,
          stats,
          textTinyR,
          ggplot2,
-		 downloader
+		 downloader,
+		 dynutils,
+		 matrixStats
 RoxygenNote: 7.1.0
 Suggests: extraDistr,
           knitr,
