@@ -16,7 +16,14 @@
 #'
 
 DSAVEPlotDivergence <- function(data, divData){
-  df <- as.data.frame(cbind(divData$divs, colSums(as.matrix(data))))
+
+  if (dynutils::is_sparse(data)) {
+    y = sparse_Sums(data, rowSums=F)
+  } else {
+    y = colSums(as.matrix(data))
+  }
+
+  x=divData$divs
 
   #Generate suitable text for hover
   numCells = length(divData$divs)
@@ -37,7 +44,7 @@ DSAVEPlotDivergence <- function(data, divData){
   t5N = t(divData$geneDivGenes)
   t5V = t(divData$geneDivVals)
 
-  p = plot_ly(data = df, x=~V1, y=~V2, type="scatter", mode="markers",
+  p = plot_ly(x=x, y=y, type="scatter", mode="markers",
               text = ~paste(ids, '<br>',
                             t5N[,1], " ", t5V[,1], "<br>",
                             t5N[,2], " ", t5V[,2], "<br>",
