@@ -15,3 +15,5 @@ library(devtools)
 install_github("SysBioChalmers/DSAVE-R")
 
 The vignette can be found [here](https://sysbiochalmers.github.io/DSAVE-R/)
+
+Link to the paper in which DSAVE is described (and can be used for citation): https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0243360
