@@ -4,15 +4,18 @@
 \alias{DSAVEPlotTotalVariation}
 \title{DSAVEPlotTotalVariation}
 \usage{
-DSAVEPlotTotalVariation(dsData, dsNames)
+DSAVEPlotTotalVariation(dsData, dsNames, bulkIndex = 1)
 }
 \arguments{
 \item{dsData}{Output from DSAVEGetTotalVariation or a list of such outputs}
 
 \item{dsNames}{The names of the dataset(s), either a string or a list of strings}
+
+\item{[optional]}{bulkIndex A number 1-5, representing the following pseudo-TPM values: 1: 0.5-100k,
+2: 0.5-2, 3: 0.5-50, 4: 0.5-50, 5: 2-100. Defaults to 1.}
 }
 \value{
-nothing
+the ggplot object
 }
 \description{
 Plots the total variation as a function of pool size, with bulk variation as reference.

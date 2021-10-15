@@ -5,15 +5,17 @@
 #'
 #' @param dsData Output from DSAVEGetTotalVariation or a list of such outputs
 #' @param dsNames The names of the dataset(s), either a string or a list of strings
+#' @param [optional] bulkIndex A number 1-5, representing the following pseudo-TPM values: 1: 0.5-100k,
+#' 2: 0.5-2, 3: 0.5-50, 4: 0.5-50, 5: 2-100. Defaults to 1.
 #' @importFrom ggplot2 ggplot
 #' @export
 #' @author Johan Gustafsson, <gustajo@@chalmers.se>
-#' @return nothing
+#' @return the ggplot object
 #' @examples
 #' \dontrun{DSAVEPlotTotalVariation(dsData, dsNames)}
 #'
 
-DSAVEPlotTotalVariation <- function(dsData, dsNames){
+DSAVEPlotTotalVariation <- function(dsData, dsNames, bulkIndex=1){
   #detect if in param is a list - since the dsData is a list in itself, check for the Rs column...
   if (!(is.list(dsData) & is.null(dsData$Rs))) {
     dsData = list(dsData)
@@ -25,8 +27,8 @@ DSAVEPlotTotalVariation <- function(dsData, dsNames){
     stop("Mismatch in length between in params");
   }
 
-  bulkMean1Vs1 <- rep(mean(bulkTotalVar1vs1[[1]][[2]]), 2)
-  bulkMean4Vs4 <- rep(mean(bulkTotalVar4vs4[[1]][[2]]), 2)
+  bulkMean1Vs1 <- rep(mean(bulkTotalVar1vs1[[bulkIndex]][[2]]), 2)
+  bulkMean4Vs4 <- rep(mean(bulkTotalVar4vs4[[bulkIndex]][[2]]), 2)
 
   minVals = rep(0,length(dsData));
   maxVals = rep(0,length(dsData));
@@ -51,7 +53,7 @@ DSAVEPlotTotalVariation <- function(dsData, dsNames){
   sc$Dataset = unlist(sc$Dataset)
   sc$DataType = unlist(sc$DataType)
 
-  ggplot(sc, aes(x=PoolSize, y=TotalVariation, group = Dataset)) +
+  return (ggplot(sc, aes(x=PoolSize, y=TotalVariation, group = Dataset)) +
     ggtitle("Variation per Cell Pool Size, CPM > 0.5") +
     geom_line(aes(color = Dataset, linetype = DataType)) +
     ylim(0, max(sc$TotalVariation)) +
@@ -64,6 +66,6 @@ DSAVEPlotTotalVariation <- function(dsData, dsNames){
     #ylab(bquote('Variation ( ~ R[mean])')) +
     labs(y=expression(paste(Variation (R[mean] ))),
          x="Pool size (number of cells)") +
-    guides(linetype = FALSE)
+    guides(linetype = FALSE))
 
 }
