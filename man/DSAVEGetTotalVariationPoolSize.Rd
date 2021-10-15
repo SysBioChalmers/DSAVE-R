@@ -9,10 +9,9 @@ DSAVEGetTotalVariationPoolSize(
   upperBound = 1e+05,
   lowerBound = 0.5,
   poolSizes = NA,
-  na.rm = TRUE,
-  seed = NULL,
   repetitionPerSize = 30L,
   rescale = TRUE,
+  allowSubSampling = FALSE,
   silent = FALSE
 )
 }
@@ -27,15 +26,14 @@ Defaults to 100,000, which in practice includes almost all genes.}
 \item{poolSizes}{list of numeric pool size values, all should be maximum half of the total
 size of the data in the data object}
 
-\item{na.rm}{logical, sends na.rm value to the rowMeans function, should normally be true.}
-
-\item{seed}{positive integer for to set the seed of the datas}
-
 \item{repetitionPerSize}{Positive integer describing how many iterations that are used.
 Defaults to 30.}
 
 \item{rescale}{logical, determine if the data should be rescaled. Should normally be TRUE.
 pool size}
+
+\item{allowSubSampling}{[optional] If true, the function will reduce the dataset used to
+2 times the max pool size used. This is to save memory usage for large datasets. Defaults to FALSE.}
 
 \item{silent}{(optional) If true, no progress bar is shown. Defaults to FALSE}
 }

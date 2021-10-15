@@ -25,7 +25,8 @@ Imports: combinat,
          ggplot2,
 		 downloader,
 		 dynutils,
-		 matrixStats
+		 matrixStats,
+		 Matrix
 RoxygenNote: 7.1.0
 Suggests: extraDistr,
           knitr,

@@ -11,12 +11,12 @@
 #' @param lowerBound filters out the genes with mean expression lower than this value. Defaults to 0.5.
 #' @param poolSizes list of numeric pool size values, all should be maximum half of the total
 #' size of the data in the data object
-#' @param na.rm logical, sends na.rm value to the rowMeans function, should normally be true.
-#' @param seed positive integer for to set the seed of the datas
 #' @param repetitionPerSize Positive integer describing how many iterations that are used.
 #' Defaults to 30.
 #' @param rescale logical, determine if the data should be rescaled. Should normally be TRUE.
 #' pool size
+#' @param allowSubSampling [optional] If true, the function will reduce the dataset used to
+#' 2 times the max pool size used. This is to save memory usage for large datasets. Defaults to FALSE.
 #' @param silent (optional) If true, no progress bar is shown. Defaults to FALSE
 #' @importFrom textTinyR sparse_Means
 #' @export
@@ -28,16 +28,14 @@
 #'
 
 DSAVEGetTotalVariationPoolSize <- function(data, upperBound = 1e5, lowerBound = 5e-1,
-                                           poolSizes = NA, na.rm = TRUE, seed = NULL,
-                                           repetitionPerSize = 30L, rescale = TRUE,
+                                           poolSizes = NA,
+                                           repetitionPerSize = 30L, rescale = TRUE, allowSubSampling = FALSE,
                                            silent=FALSE){
   #print("Control parameters")
   stopifnot((is.matrix(data) |  is(data, 'sparseMatrix')),
             is.numeric(upperBound), length(upperBound) == 1,
             is.numeric(lowerBound), length(lowerBound) == 1,
-            is.logical(na.rm), length(na.rm) == 1,
             is.logical(rescale), length(rescale) == 1,
-            (is.null(seed) | is.integer(seed)),
             is.integer(repetitionPerSize), repetitionPerSize > 0)
 
   if (is.na(poolSizes)) {
@@ -65,55 +63,92 @@ DSAVEGetTotalVariationPoolSize <- function(data, upperBound = 1e5, lowerBound = 
   }
 
 
-  #if sparse, prefilter genes to save some memory and then convert to non-sparse
   if (!is.matrix(data)) {
+    #Sparse matrix, special code for this
+
+    #If the dataset has more cells than 2 times the largest pool size, reduce the dataset to save memory when converting to a full matrix
+    if (allowSubSampling & (ncol(data) > 2*max(poolSizes))) {
+      data = data[, sample(ncol(data), 2*max(poolSizes)), drop=FALSE]
+    }
     rm = sparse_Means(data, rowMeans = T)
     sel = rm != 0
     data = data[sel, , drop=FALSE]
-    data = as.matrix(data)
+    #Normalize to TPM/CPM
+    if(rescale) {
+      colsms = sparse_Sums(data, rowSums = FALSE)
+      data = Matrix::t(Matrix::t(data)*10^6/colsms)
+    }
+    #Test:
+    #sparse_Sums(data, rowSums = FALSE) - ok
+
+    results = rep(0, length(poolSizes))
+
+    #Filter genes
+    #row_means <- rowMeans(data)
+    row_means <- sparse_Means(data, rowMeans = TRUE)
+    sel = (row_means >= lowerBound) & (row_means <= upperBound)
+    data <- data[sel, , drop=FALSE]
+    numCells = ncol(data)
+    ind = 1:ncol(data)
+
+
+    #loop through all sizes
+    for (i in 1:length(poolSizes)) {
+      meanSum = 0
+      for (j in 1:repetitionPerSize) {
+        #Don't use sample with a vector, it behaves differently when the vector is of size 1!
+        a <- sample(numCells, poolSizes[i])
+        indNoA <- ind[-a, drop=FALSE]
+        b = indNoA[sample(numCells-poolSizes[i], poolSizes[i]),drop=FALSE]
+        a <- sparse_Means(data[,a,drop=FALSE], rowMeans = TRUE)
+        b <- sparse_Means(data[,b,drop=FALSE], rowMeans = TRUE)
+        meanSum = meanSum + mean(abs(log((a + 0.05) / (b + 0.05))))
+      }
+      results[i] = meanSum/repetitionPerSize;
+
+      if (!silent) {
+        pb$tick()
+      }
+    }
+  } else {
+    #Normalize to TPM/CPM
+    if(rescale) {
+      data <- tpmDSAVE(data)
+    }
+
+    #Test:
+    #colSums(data) - ok
+
+    results = rep(0, length(poolSizes))
+
+    #Filter genes
+    row_means <- rowMeans(data)
+    sel = (row_means >= lowerBound) & (row_means <= upperBound)
+    data <- data[sel, , drop=FALSE]
+    numCells = ncol(data)
+    ind = 1:ncol(data)
+
+
+    #loop through all sizes
+    for (i in 1:length(poolSizes)) {
+      meanSum = 0
+      for (j in 1:repetitionPerSize) {
+        #Don't use sample with a vector, it behaves differently when the vector is of size 1!
+        a <- sample(numCells, poolSizes[i])
+        indNoA <- ind[-a, drop=FALSE]
+        b = indNoA[sample(numCells-poolSizes[i], poolSizes[i]),drop=FALSE]
+        a <- rowMeans(data[,a,drop=FALSE])
+        b <- rowMeans(data[,b,drop=FALSE])
+        meanSum = meanSum + mean(abs(log((a + 0.05) / (b + 0.05))))
+      }
+      results[i] = meanSum/repetitionPerSize;
+
+      if (!silent) {
+        pb$tick()
+      }
+    }
   }
 
-  results = rep(0, length(poolSizes))
-
-  #Normalize to TPM/CPM
-  if(rescale) data <- tpmDSAVE(data)
-  #Filter genes
-  row_means <- rowMeans(data, na.rm = na.rm)
-  sel = (row_means >= lowerBound) & (row_means <= upperBound)
-  data <- data[sel, , drop=FALSE]
-
-  #loop through all sizes
-  for (i in 1:length(poolSizes)) {
-
-    #Create combinations
-    ind <- as.integer(1:dim(data)[2])
-    ix <- 1
-    numCells = dim(data)[2]
-    combs.list <- list()
-    if(!is.null(seed)) set.seed(seed)
-
-    while(ix <= repetitionPerSize ) {
-      #Don't use sample with a vector, it behaves differently when the vector is of size 1!
-      ind.tmp <- ind
-      a <- sample(numCells, poolSizes[i])
-      ind.tmp <- ind[-a, drop=FALSE]
-      b <- ind.tmp[sample(numCells-poolSizes[i], poolSizes[i]),drop=FALSE]
-      combs.list[[ix]] <- list(a = a, b = b)
-      ix <- ix + 1
-
-    }
-    #Calculate variation
-    mean_vector <- sapply(combs.list, function(v){
-      a <- rowMeans(data[,v$a,drop=FALSE], na.rm = na.rm)
-      b <- rowMeans(data[,v$b,drop=FALSE], na.rm = na.rm)
-      mean(abs(log((a + 0.05) / (b + 0.05))))
-    })
-
-    results[i] = mean(mean_vector);
-    if (!silent) {
-      pb$tick()
-    }
-  }
 
   if (!silent) {
     pb$terminate()
