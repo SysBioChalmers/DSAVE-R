@@ -6,7 +6,7 @@
 #' @param dsData Output from DSAVEGetTotalVariation or a list of such outputs
 #' @param dsNames The names of the dataset(s), either a string or a list of strings
 #' @param [optional] bulkIndex A number 1-5, representing the following pseudo-TPM values: 1: 0.5-100k,
-#' 2: 0.5-2, 3: 0.5-50, 4: 0.5-50, 5: 2-100. Defaults to 1.
+#' 2: 0.5-2, 3: 100-100k, 4: 0.5-50, 5: 2-100. Defaults to 1.
 #' @importFrom ggplot2 ggplot
 #' @export
 #' @author Johan Gustafsson, <gustajo@@chalmers.se>
@@ -53,8 +53,20 @@ DSAVEPlotTotalVariation <- function(dsData, dsNames, bulkIndex=1){
   sc$Dataset = unlist(sc$Dataset)
   sc$DataType = unlist(sc$DataType)
 
+  if (bulkIndex == 1) {
+    strCPM = "CPM range: 0.5 - "
+  } else if (bulkIndex == 2) {
+    strCPM = "CPM range: 0.5 - 2"
+  } else if (bulkIndex == 3) {
+    strCPM = "CPM range: 100 - "
+  } else if (bulkIndex == 4) {
+    strCPM = "CPM range: 0.5 - 50"
+  } else { #assume 5
+    strCPM = "CPM range: 2 - 100"
+  }
+
   return (ggplot(sc, aes(x=PoolSize, y=TotalVariation, group = Dataset)) +
-    ggtitle("Variation per Cell Pool Size, CPM > 0.5") +
+    ggtitle(paste0("Variation per Cell Pool Size. ", strCPM)) +
     geom_line(aes(color = Dataset, linetype = DataType)) +
     ylim(0, max(sc$TotalVariation)) +
     theme(legend.title = element_text(size = 10),

@@ -12,7 +12,7 @@ DSAVEPlotTotalVariation(dsData, dsNames, bulkIndex = 1)
 \item{dsNames}{The names of the dataset(s), either a string or a list of strings}
 
 \item{[optional]}{bulkIndex A number 1-5, representing the following pseudo-TPM values: 1: 0.5-100k,
-2: 0.5-2, 3: 0.5-50, 4: 0.5-50, 5: 2-100. Defaults to 1.}
+2: 0.5-2, 3: 100-100k, 4: 0.5-50, 5: 2-100. Defaults to 1.}
 }
 \value{
 the ggplot object
